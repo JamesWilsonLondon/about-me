@@ -24,17 +24,6 @@
       margin-top: 20px;
       font-size: 1.1em;
       color: #444;
-      opacity: 0;
-      transition: opacity 0.4s ease;
-    }
-    #fact.show {
-      opacity: 1;
-    }
-    #mood {
-      font-size: 0.9em;
-      color: #666;
-      margin-top: 5px;
-      font-style: italic;
     }
     button {
       background-color: #4CAF50;
@@ -72,72 +61,8 @@
     <button id="copyButton">Copy Fact</button>
   </div>
   <p id="fact"></p>
-  <p id="mood"></p>
 
   <p id="creator">This project was created by James Wilson</p>
 
   <script>
-    const facts = [
-      "Hedgehogs can run up to 6 miles in a single night!",
-      "Hedgehogs have about 5,000 spines on their back.",
-      "A group of hedgehogs is called a 'prickle'.",
-      "Hedgehogs are lactose intolerant – no milk for these little guys!",
-      "Baby hedgehogs are called 'hoglets'.",
-      "Hedgehogs have been around for 15 million years!",
-      "Hedgehogs hibernate in winter to save energy.",
-      "A hedgehog's heart beats up to 300 times per minute when active!",
-      "Hedgehogs use their spines to protect themselves from predators.",
-      "They have poor eyesight but a great sense of smell and hearing.",
-      "Hedgehogs are nocturnal – they’re active at night.",
-      "Hedgehogs can swim surprisingly well!",
-      "In the wild, hedgehogs eat insects, worms, and even small frogs.",
-      "Hedgehogs can live up to 7 years in the wild (longer in captivity).",
-      "Some cultures see hedgehogs as symbols of good luck and protection."
-    ];
-
-    const moods = [
-      "Sleepy Hedgehog",
-      "Curious Hedgehog",
-      "Adventurous Hedgehog",
-      "Chill Hedgehog",
-      "Spiky but Sweet",
-      "Always Up for Snacks"
-    ];
-
-    const factButton = document.getElementById('factButton');
-    const factElement = document.getElementById('fact');
-    const moodElement = document.getElementById('mood');
-    const hedgehog = document.getElementById('hedgehog');
-    const copyButton = document.getElementById('copyButton');
-
-    function showFact() {
-      const randomIndex = Math.floor(Math.random() * facts.length);
-      const randomMoodIndex = Math.floor(Math.random() * moods.length);
-      factElement.textContent = facts[randomIndex];
-      moodElement.textContent = moods[randomMoodIndex];
-
-      // Animate fade-in
-      factElement.classList.add('show');
-      setTimeout(() => factElement.classList.remove('show'), 400);
-
-      // Animate hedgehog emoji
-      hedgehog.style.transform = 'rotate(20deg)';
-      setTimeout(() => hedgehog.style.transform = 'rotate(-20deg)', 150);
-      setTimeout(() => hedgehog.style.transform = 'rotate(0deg)', 300);
-    }
-
-    factButton.addEventListener('click', showFact);
-
-    copyButton.addEventListener('click', () => {
-      const fact = factElement.textContent;
-      if (fact) {
-        navigator.clipboard.writeText(fact).then(() => {
-          alert('Fact copied to clipboard!');
-        });
-      } else {
-        alert('No fact to copy yet! Click "Get Fact" first.');
-      }
-    });
-  </script>
-</body>
-</html>
+    c
