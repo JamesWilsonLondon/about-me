@@ -133,9 +133,15 @@
     copyButton.addEventListener('click', () => {
       const fact = factElement.textContent;
       if (fact) {
-        navigator.clipboard.writeText(fact).then(() => {
-          alert('Fact copied to clipboard!');
-        });
+        try {
+          navigator.clipboard.writeText(fact).then(() => {
+            alert('Fact copied to clipboard!');
+          }).catch(() => {
+            alert('Clipboard feature not supported in this browser.');
+          });
+        } catch (err) {
+          alert('Clipboard feature not supported.');
+        }
       } else {
         alert('No fact to copy yet! Click "Get Fact" first.');
       }
