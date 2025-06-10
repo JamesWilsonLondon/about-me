@@ -6,63 +6,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 72 72%22><text y=%2252%22 font-size=%2250%22>🦔</text></svg>">
   <style>
+    :root {
+      --primary: #ff5c00; /* PostHog orange */
+      --text: #000;
+      --bg: #f5f5f5;
+      --button-bg: #ff5c00;
+      --button-text: #fff;
+      --button-hover: #e04e00;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 40px 20px;
-      background: linear-gradient(45deg, #f5f5f5, #e0f7fa);
-      max-width: 500px;
-      margin: auto;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+      text-align: left;
+      color: var(--text);
+      background-color: var(--bg);
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+      line-height: 1.5;
     }
-    #hedgehog {
-      font-size: 3em;
-      display: block;
+
+    h1 {
+      font-size: 2em;
       margin-bottom: 10px;
-      transition: transform 0.3s;
-    }
-    #fact {
-      margin-top: 20px;
-      font-size: 1.1em;
-      color: #444;
-    }
-    button {
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      font-size: 1em;
-      cursor: pointer;
-      border-radius: 5px;
-      margin: 5px 10px;
-      display: inline-block;
-    }
-    button:hover {
-      background-color: #45a049;
-    }
-    #copyButton {
-      background-color: #2196F3;
-    }
-    #copyButton:hover {
-      background-color: #1976D2;
-    }
-    #creator {
-      margin-top: 30px;
-      font-size: 0.85em;
-      color: #777;
-    }
-  </style>
-</head>
-<body>
-  <h1>Hedgehog Facts Spinner</h1>
-
-  <p id="hedgehog">🦔</p>
-  <div>
-    <button id="factButton">Get Fact</button>
-    <button id="copyButton">Copy Fact</button>
-  </div>
-  <p id="fact"></p>
-
-  <p id="creator">This project was created by James Wilson</p>
-
-  <script>
-    c
