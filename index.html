@@ -24,7 +24,17 @@
       margin-top: 20px;
       font-size: 1.1em;
       color: #444;
-      transition: transform 0.2s ease;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    #fact.show {
+      opacity: 1;
+    }
+    #mood {
+      font-size: 0.9em;
+      color: #666;
+      margin-top: 5px;
+      font-style: italic;
     }
     button {
       background-color: #4CAF50;
@@ -62,6 +72,7 @@
     <button id="copyButton">Copy Fact</button>
   </div>
   <p id="fact"></p>
+  <p id="mood"></p>
 
   <p id="creator">This project was created by James Wilson</p>
 
@@ -84,16 +95,32 @@
       "Some cultures see hedgehogs as symbols of good luck and protection."
     ];
 
+    const moods = [
+      "Sleepy Hedgehog",
+      "Curious Hedgehog",
+      "Adventurous Hedgehog",
+      "Chill Hedgehog",
+      "Spiky but Sweet",
+      "Always Up for Snacks"
+    ];
+
     const factButton = document.getElementById('factButton');
     const factElement = document.getElementById('fact');
+    const moodElement = document.getElementById('mood');
     const hedgehog = document.getElementById('hedgehog');
     const copyButton = document.getElementById('copyButton');
 
     function showFact() {
       const randomIndex = Math.floor(Math.random() * facts.length);
+      const randomMoodIndex = Math.floor(Math.random() * moods.length);
       factElement.textContent = facts[randomIndex];
-      factElement.style.transform = 'scale(1.1)';
-      setTimeout(() => factElement.style.transform = 'scale(1)', 200);
+      moodElement.textContent = moods[randomMoodIndex];
+
+      // Animate fade-in
+      factElement.classList.add('show');
+      setTimeout(() => factElement.classList.remove('show'), 400);
+
+      // Animate hedgehog emoji
       hedgehog.style.transform = 'rotate(20deg)';
       setTimeout(() => hedgehog.style.transform = 'rotate(-20deg)', 150);
       setTimeout(() => hedgehog.style.transform = 'rotate(0deg)', 300);
