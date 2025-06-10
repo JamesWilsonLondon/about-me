@@ -22,4 +22,124 @@
       background-color: var(--bg);
       max-width: 600px;
       margin: 40px auto;
-      p
+      padding: 20px;
+      line-height: 1.5;
+    }
+
+    h1 {
+      font-size: 2em;
+      margin-bottom: 10px;
+    }
+
+    p {
+      margin: 10px 0;
+    }
+
+    #hedgehog {
+      font-size: 2.5em;
+      display: block;
+      margin: 15px 0;
+      transition: transform 0.3s;
+      text-align: center;
+    }
+
+    button {
+      background-color: var(--button-bg);
+      color: var(--button-text);
+      border: none;
+      padding: 10px 20px;
+      font-size: 1em;
+      cursor: pointer;
+      border-radius: 5px;
+      margin-right: 10px;
+      margin-top: 10px;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: var(--button-hover);
+    }
+
+    #copyButton {
+      background-color: #2196F3;
+    }
+
+    #copyButton:hover {
+      background-color: #1976D2;
+    }
+
+    #fact {
+      font-size: 1.1em;
+      margin-top: 20px;
+      background: #fff;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    #creator {
+      margin-top: 30px;
+      font-size: 0.85em;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <h1>Hedgehog Facts Spinner</h1>
+
+  <p id="hedgehog">🦔</p>
+
+  <button id="factButton">Get Fact</button>
+  <button id="copyButton">Copy Fact</button>
+
+  <p id="fact"></p>
+
+  <p id="creator">This project was created by James Wilson</p>
+
+  <script>
+    const facts = [
+      "Hedgehogs can run up to 6 miles in a single night!",
+      "Hedgehogs have about 5,000 spines on their back.",
+      "A group of hedgehogs is called a 'prickle'.",
+      "Hedgehogs are lactose intolerant – no milk for these little guys!",
+      "Baby hedgehogs are called 'hoglets'.",
+      "Hedgehogs have been around for 15 million years!",
+      "Hedgehogs hibernate in winter to save energy.",
+      "A hedgehog's heart beats up to 300 times per minute when active!",
+      "Hedgehogs use their spines to protect themselves from predators.",
+      "They have poor eyesight but a great sense of smell and hearing.",
+      "Hedgehogs are nocturnal – they’re active at night.",
+      "Hedgehogs can swim surprisingly well!",
+      "In the wild, hedgehogs eat insects, worms, and even small frogs.",
+      "Hedgehogs can live up to 7 years in the wild (longer in captivity).",
+      "Some cultures see hedgehogs as symbols of good luck and protection."
+    ];
+
+    const factButton = document.getElementById('factButton');
+    const factElement = document.getElementById('fact');
+    const hedgehog = document.getElementById('hedgehog');
+    const copyButton = document.getElementById('copyButton');
+
+    function showFact() {
+      const randomIndex = Math.floor(Math.random() * facts.length);
+      factElement.textContent = facts[randomIndex];
+      // Animate hedgehog emoji
+      hedgehog.style.transform = 'rotate(20deg)';
+      setTimeout(() => hedgehog.style.transform = 'rotate(-20deg)', 150);
+      setTimeout(() => hedgehog.style.transform = 'rotate(0deg)', 300);
+    }
+
+    factButton.addEventListener('click', showFact);
+
+    copyButton.addEventListener('click', () => {
+      const fact = factElement.textContent;
+      if (fact) {
+        navigator.clipboard.writeText(fact).then(() => {
+          alert('Fact copied to clipboard!');
+        });
+      } else {
+        alert('No fact to copy yet! Click "Get Fact" first.');
+      }
+    });
+  </script>
+</body>
+</html>
