@@ -3,76 +3,115 @@
 <head>
   <meta charset="UTF-8">
   <title>Hedgehog Facts Spinner</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       font-family: Arial, sans-serif;
       text-align: center;
-      padding: 50px;
-      background-color: #f5f5f5;
+      padding: 40px 20px;
+      background: linear-gradient(45deg, #f5f5f5, #e0f7fa);
+      max-width: 500px;
+      margin: auto;
+    }
+    #hedgehog {
+      font-size: 3em;
+      display: block;
+      margin-bottom: 10px;
+      transition: transform 0.3s;
     }
     #fact {
       margin-top: 20px;
-      font-size: 1.2em;
+      font-size: 1.1em;
       color: #444;
+      transition: transform 0.2s ease;
     }
     button {
       background-color: #4CAF50;
       color: white;
       border: none;
-      padding: 10px 20px;
+      padding: 10px 15px;
       font-size: 1em;
       cursor: pointer;
       border-radius: 5px;
+      margin: 5px 10px;
+      display: inline-block;
     }
     button:hover {
       background-color: #45a049;
     }
-    #creator {
-      margin-top: 40px;
-      font-size: 0.9em;
+    #copyButton {
+      background-color: #2196F3;
+    }
+    #copyButton:hover {
+      background-color: #1976D2;
+    }
+    #creator, footer {
+      margin-top: 30px;
+      font-size: 0.85em;
       color: #777;
     }
   </style>
 </head>
 <body>
   <h1>Hedgehog Facts Spinner 🦔</h1>
-  <button id="factButton">Get Hedgehog Fact</button>
+
+  <p id="hedgehog">🦔</p>
+  <div>
+    <button id="factButton">Get Fact</button>
+    <button id="copyButton">Copy Fact</button>
+  </div>
   <p id="fact"></p>
 
   <p id="creator">This project was created by James Wilson</p>
 
-  <script>
-    // This function is called directly by the button
-    function showFact() {
-      const facts = [
-        "Hedgehogs can run up to 6 miles in a single night!",
-        "Hedgehogs have about 5,000 spines on their back.",
-        "A group of hedgehogs is called a 'prickle'.",
-        "Hedgehogs are lactose intolerant – no milk for these little guys!",
-        "Baby hedgehogs are called 'hoglets'.",
-        "Hedgehogs have been around for 15 million years!"
-      ];
+  <footer>Made with ❤️ by James Wilson</footer>
 
+  <script>
+    const facts = [
+      "Hedgehogs can run up to 6 miles in a single night!",
+      "Hedgehogs have about 5,000 spines on their back.",
+      "A group of hedgehogs is called a 'prickle'.",
+      "Hedgehogs are lactose intolerant – no milk for these little guys!",
+      "Baby hedgehogs are called 'hoglets'.",
+      "Hedgehogs have been around for 15 million years!",
+      "Hedgehogs hibernate in winter to save energy.",
+      "A hedgehog's heart beats up to 300 times per minute when active!",
+      "Hedgehogs use their spines to protect themselves from predators.",
+      "They have poor eyesight but a great sense of smell and hearing.",
+      "Hedgehogs are nocturnal – they’re active at night.",
+      "Hedgehogs can swim surprisingly well!",
+      "In the wild, hedgehogs eat insects, worms, and even small frogs.",
+      "Hedgehogs can live up to 7 years in the wild (longer in captivity).",
+      "Some cultures see hedgehogs as symbols of good luck and protection."
+    ];
+
+    const factButton = document.getElementById('factButton');
+    const factElement = document.getElementById('fact');
+    const hedgehog = document.getElementById('hedgehog');
+    const copyButton = document.getElementById('copyButton');
+
+    function showFact() {
       const randomIndex = Math.floor(Math.random() * facts.length);
-      document.getElementById('fact').textContent = facts[randomIndex];
+      factElement.textContent = facts[randomIndex];
+      factElement.style.transform = 'scale(1.1)';
+      setTimeout(() => factElement.style.transform = 'scale(1)', 200);
+      hedgehog.style.transform = 'rotate(20deg)';
+      setTimeout(() => hedgehog.style.transform = 'rotate(-20deg)', 150);
+      setTimeout(() => hedgehog.style.transform = 'rotate(0deg)', 300);
     }
 
-    // Attach the click event directly to the button
-    document.getElementById('factButton').addEventListener('click', showFact);
+    factButton.addEventListener('click', showFact);
+
+    copyButton.addEventListener('click', () => {
+      const fact = factElement.textContent;
+      if (fact) {
+        navigator.clipboard.writeText(fact).then(() => {
+          alert('Fact copied to clipboard!');
+        });
+      } else {
+        alert('No fact to copy yet! Click "Get Fact" first.');
+      }
+    });
   </script>
-</body>
-</html>
-
-<!DOCTYPE html>
-<html>
-<head>
-  <title>My Site</title>
-</head>
-<body>
-
-  <!-- Add your GitHub profile link below -->
-  <p>Check out my GitHub: 
-    <a href="https://github.com/jameswilsonlondon" target="_blank">jameswilsonlondon</a>
-  </p>
 </body>
 </html>
