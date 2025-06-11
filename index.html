@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Hedgehog facts spinner</title>
+  <title>Hedgehog Facts Spinner</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 72 72'><text y='52' font-size='50'>🦔</text></svg>">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
@@ -11,20 +11,30 @@
       --primary: #f59e0b;
       --primary-dark: #d97706;
       --bg: #f5f5f5;
+      --text: #000;
       --button-text: #111;
       --button-bg: #f59e0b;
       --button-border: #d97706;
     }
 
+    body.dark {
+      --bg: #1f2937;
+      --text: #f9fafb;
+      --button-text: #f9fafb;
+      --button-bg: #d97706;
+      --button-border: #f59e0b;
+    }
+
     body {
       font-family: 'Inter', sans-serif;
       text-align: left;
-      color: #000;
+      color: var(--text);
       background-color: var(--bg);
       max-width: 600px;
       margin: 40px auto;
       padding: 20px;
       line-height: 1.5;
+      transition: background-color 0.3s, color 0.3s;
     }
 
     h1 {
@@ -50,20 +60,19 @@
       font-size: 1em;
       border-radius: 8px;
       padding: 10px 20px;
-      margin-right: 10px;
-      margin-top: 10px;
+      margin: 10px 10px 0 0;
       cursor: pointer;
       box-shadow: 0 2px 0 var(--button-border);
-      transition: transform 0.1s ease, box-shadow 0.1s ease;
+      transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.3s, color 0.3s, border-color 0.3s;
     }
 
-    #factButton {
+    #factButton, #toggleButton {
       background-color: var(--button-bg);
       color: var(--button-text);
       border: 1px solid var(--button-border);
     }
 
-    #factButton:hover {
+    #factButton:hover, #toggleButton:hover {
       transform: translateY(1px);
       box-shadow: 0 1px 0 var(--button-border);
     }
@@ -72,6 +81,11 @@
       background-color: #fff;
       color: #111;
       border: 1px solid var(--button-border);
+    }
+
+    body.dark #copyButton {
+      background-color: #374151;
+      color: #f9fafb;
     }
 
     #copyButton:hover {
@@ -85,6 +99,12 @@
       background: #fff;
       padding: 10px;
       border-radius: 5px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    body.dark #fact {
+      background: #374151;
+      color: #f9fafb;
     }
 
     #fact.empty {
@@ -97,43 +117,49 @@
       font-size: 0.85em;
       color: #555;
     }
+
+    body.dark #creator {
+      color: #ccc;
+    }
   </style>
 </head>
 <body>
-  <h1>hedgehog facts spinner</h1>
+  <h1>Hedgehog Facts Spinner</h1>
 
   <p id="hedgehog">🦔</p>
 
-  <button id="factButton">get fact</button>
-  <button id="copyButton">copy fact</button>
+  <button id="factButton">Get Fact</button>
+  <button id="copyButton">Copy Fact</button>
+  <button id="toggleButton">Toggle Dark Mode</button>
 
   <p id="fact" class="empty">Click the orange button to unleash a spiky surprise!</p>
 
-  <p id="creator">this project was created by james wilson</p>
+  <p id="creator">This project was created by James Wilson</p>
 
   <script>
     const facts = [
-      "hedgehogs can run up to 6 miles in a single night!",
-      "hedgehogs have about 5,000 spines on their back.",
-      "a group of hedgehogs is called a 'prickle'.",
-      "hedgehogs are lactose intolerant – no milk for these little guys!",
-      "baby hedgehogs are called 'hoglets'.",
-      "hedgehogs have been around for 15 million years!",
-      "hedgehogs hibernate in winter to save energy.",
-      "a hedgehog's heart beats up to 300 times per minute when active!",
-      "hedgehogs use their spines to protect themselves from predators.",
-      "they have poor eyesight but a great sense of smell and hearing.",
-      "hedgehogs are nocturnal – they’re active at night.",
-      "hedgehogs can swim surprisingly well!",
-      "in the wild, hedgehogs eat insects, worms, and even small frogs.",
-      "hedgehogs can live up to 7 years in the wild (longer in captivity).",
-      "some cultures see hedgehogs as symbols of good luck and protection."
+      "Hedgehogs can run up to 6 miles in a single night!",
+      "Hedgehogs have about 5,000 spines on their back.",
+      "A group of hedgehogs is called a 'prickle'.",
+      "Hedgehogs are lactose intolerant – no milk for these little guys!",
+      "Baby hedgehogs are called 'hoglets'.",
+      "Hedgehogs have been around for 15 million years!",
+      "Hedgehogs hibernate in winter to save energy.",
+      "A hedgehog's heart beats up to 300 times per minute when active!",
+      "Hedgehogs use their spines to protect themselves from predators.",
+      "They have poor eyesight but a great sense of smell and hearing.",
+      "Hedgehogs are nocturnal – they’re active at night.",
+      "Hedgehogs can swim surprisingly well!",
+      "In the wild, hedgehogs eat insects, worms, and even small frogs.",
+      "Hedgehogs can live up to 7 years in the wild (longer in captivity).",
+      "Some cultures see hedgehogs as symbols of good luck and protection."
     ];
 
     const factButton = document.getElementById('factButton');
     const factElement = document.getElementById('fact');
     const hedgehog = document.getElementById('hedgehog');
     const copyButton = document.getElementById('copyButton');
+    const toggleButton = document.getElementById('toggleButton');
 
     function showFact() {
       factElement.classList.remove('empty');
@@ -151,7 +177,7 @@
       if (fact && !factElement.classList.contains('empty')) {
         try {
           navigator.clipboard.writeText(fact).then(() => {
-            alert('prickly fact copied! Go ahead, spread the spiky word.');
+            alert('Your hedgehog fact is ready to share!');
           }).catch(() => {
             alert('Clipboard feature not supported in this browser.');
           });
@@ -161,6 +187,10 @@
       } else {
         alert('No fact to copy yet! Click "Get Fact" first.');
       }
+    });
+
+    toggleButton.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
     });
   </script>
 </body>
