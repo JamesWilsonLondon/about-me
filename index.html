@@ -5,7 +5,7 @@
   <title>hedgehog facts spinner</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 72 72'><text y='52' font-size='50'>🦔</text></svg>">
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --primary: #f59e0b;
@@ -95,15 +95,19 @@
     }
 
     h1 {
-      font-size: 2em;
+      font-size: 3em;
+      font-weight: 700;
+      line-height: 1.2;
       margin-bottom: 10px;
-      font-weight: 600;
       text-transform: none;
+    }
+
+    .highlight {
+      color: var(--primary);
     }
 
     p {
       margin: 10px 0;
-      text-transform: none;
     }
 
     #hedgehog {
@@ -123,7 +127,7 @@
       margin: 10px 10px 0 0;
       cursor: pointer;
       box-shadow: 0 2px 0 var(--button-border);
-      transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.3s, color 0.3s, border-color 0.3s;
+      transition: transform 0.1s ease, box-shadow 0.1s ease;
       text-transform: none;
     }
 
@@ -155,8 +159,7 @@
       background: #fff;
       padding: 10px;
       border-radius: 5px;
-      transition: background-color 0.3s, color 0.3s, opacity 0.3s;
-      opacity: 0;
+      transition: background-color 0.3s, color 0.3s;
     }
 
     body.dark #fact {
@@ -164,14 +167,9 @@
       color: #f9fafb;
     }
 
-    #fact.show {
-      opacity: 1;
-    }
-
     #fact.empty {
       color: #999;
       font-style: italic;
-      opacity: 1;
     }
 
     #loading {
@@ -201,7 +199,9 @@
     </label>
   </div>
 
-  <h1>hedgehog facts spinner</h1>
+  <h1>
+    hedgehog facts <span class="highlight">spinner</span>
+  </h1>
 
   <p id="hedgehog">🦔</p>
 
@@ -214,7 +214,7 @@
   <p id="creator">this project was created by james wilson. inspired by posthog vibes.</p>
 
   <script>
-    const facts = [
+    var facts = [
       "Hedgehogs can run up to 6 miles in a single night!",
       "Hedgehogs have about 5,000 spines on their back.",
       "A group of hedgehogs is called a 'prickle'.",
@@ -232,61 +232,58 @@
       "Some cultures see hedgehogs as symbols of good luck and protection."
     ];
 
-    const factButton = document.getElementById('factButton');
-    const factElement = document.getElementById('fact');
-    const hedgehog = document.getElementById('hedgehog');
-    const copyButton = document.getElementById('copyButton');
-    const toggleSwitch = document.getElementById('toggleSwitch');
-    const loading = document.getElementById('loading');
+    var factButton = document.getElementById('factButton');
+    var factElement = document.getElementById('fact');
+    var hedgehog = document.getElementById('hedgehog');
+    var copyButton = document.getElementById('copyButton');
+    var toggleSwitch = document.getElementById('toggleSwitch');
+    var loading = document.getElementById('loading');
 
-    let hedgehogClicks = 0;
+    var hedgehogClicks = 0;
 
     function showFact() {
-      factElement.classList.remove('empty', 'show');
+      factElement.classList.remove('empty');
       loading.style.display = 'inline';
-      setTimeout(() => {
-        const randomIndex = Math.floor(Math.random() * facts.length);
+      setTimeout(function() {
+        var randomIndex = Math.floor(Math.random() * facts.length);
         factElement.textContent = facts[randomIndex];
-        factElement.classList.add('show');
         loading.style.display = 'none';
         hedgehog.style.transform = 'rotate(20deg)';
-        setTimeout(() => hedgehog.style.transform = 'rotate(-20deg)', 150);
-        setTimeout(() => hedgehog.style.transform = 'rotate(0deg)', 300);
+        setTimeout(function() { hedgehog.style.transform = 'rotate(-20deg)'; }, 150);
+        setTimeout(function() { hedgehog.style.transform = 'rotate(0deg)'; }, 300);
       }, 500);
     }
 
     factButton.addEventListener('click', showFact);
 
-    copyButton.addEventListener('click', () => {
-      const fact = factElement.textContent;
+    copyButton.addEventListener('click', function() {
+      var fact = factElement.textContent;
       if (fact && !factElement.classList.contains('empty')) {
-        try {
-          navigator.clipboard.writeText(fact).then(() => {
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(fact).then(function() {
             alert('your hedgehog fact is ready to share!');
-          }).catch(() => {
-            alert('clipboard feature not supported in this browser.');
+          }).catch(function() {
+            alert('clipboard not supported');
           });
-        } catch (err) {
-          alert('clipboard feature not supported.');
+        } else {
+          alert('clipboard not supported');
         }
       } else {
-        alert('no fact to copy yet! click "get fact" first.');
+        alert('no fact to copy yet!');
       }
     });
 
-    toggleSwitch.addEventListener('change', () => {
+    toggleSwitch.addEventListener('change', function() {
       document.body.classList.toggle('dark', toggleSwitch.checked);
       localStorage.setItem('darkMode', toggleSwitch.checked);
     });
 
-    // Load dark mode preference
     if (localStorage.getItem('darkMode') === 'true') {
       document.body.classList.add('dark');
       toggleSwitch.checked = true;
     }
 
-    // Easter egg
-    hedgehog.addEventListener('click', () => {
+    hedgehog.addEventListener('click', function() {
       hedgehogClicks++;
       if (hedgehogClicks === 10) {
         alert('you found the easter egg! 🥚');
