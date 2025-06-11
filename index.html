@@ -5,7 +5,7 @@
   <title>hedgehog facts spinner</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 72 72'><text y='52' font-size='50'>🦔</text></svg>">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600&display=swap" rel="stylesheet">
   <style>
     :root {
       --primary: #f59e0b;
@@ -26,7 +26,7 @@
     }
 
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Manrope', sans-serif;
       text-align: left;
       color: var(--text);
       background-color: var(--bg);
@@ -112,6 +112,7 @@
       margin: 15px 0;
       transition: transform 0.3s;
       text-align: center;
+      cursor: pointer;
     }
 
     button {
@@ -126,15 +127,15 @@
       text-transform: none;
     }
 
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
     #factButton {
       background-color: var(--button-bg);
       color: var(--button-text);
       border: 1px solid var(--button-border);
-    }
-
-    #factButton:hover {
-      transform: translateY(1px);
-      box-shadow: 0 1px 0 var(--button-border);
     }
 
     #copyButton {
@@ -148,18 +149,14 @@
       color: #f9fafb;
     }
 
-    #copyButton:hover {
-      transform: translateY(1px);
-      box-shadow: 0 1px 0 var(--button-border);
-    }
-
     #fact {
       font-size: 1.1em;
       margin-top: 20px;
       background: #fff;
       padding: 10px;
       border-radius: 5px;
-      transition: background-color 0.3s, color 0.3s;
+      transition: background-color 0.3s, color 0.3s, opacity 0.3s;
+      opacity: 0;
     }
 
     body.dark #fact {
@@ -167,14 +164,26 @@
       color: #f9fafb;
     }
 
+    #fact.show {
+      opacity: 1;
+    }
+
     #fact.empty {
       color: #999;
       font-style: italic;
+      opacity: 1;
+    }
+
+    #loading {
+      font-size: 0.9em;
+      color: #999;
+      display: none;
+      margin-left: 10px;
     }
 
     #creator {
       margin-top: 30px;
-      font-size: 0.85em;
+      font-size: 0.75em;
       color: #555;
     }
 
@@ -197,11 +206,12 @@
   <p id="hedgehog">🦔</p>
 
   <button id="factButton">get fact</button>
+  <span id="loading">loading…</span>
   <button id="copyButton">copy fact</button>
 
   <p id="fact" class="empty">click the orange button to unleash a spiky surprise!</p>
 
-  <p id="creator">this project was created by james wilson</p>
+  <p id="creator">this project was created by james wilson. inspired by posthog vibes.</p>
 
   <script>
     const facts = [
@@ -227,14 +237,22 @@
     const hedgehog = document.getElementById('hedgehog');
     const copyButton = document.getElementById('copyButton');
     const toggleSwitch = document.getElementById('toggleSwitch');
+    const loading = document.getElementById('loading');
+
+    let hedgehogClicks = 0;
 
     function showFact() {
-      factElement.classList.remove('empty');
-      const randomIndex = Math.floor(Math.random() * facts.length);
-      factElement.textContent = facts[randomIndex];
-      hedgehog.style.transform = 'rotate(20deg)';
-      setTimeout(() => hedgehog.style.transform = 'rotate(-20deg)', 150);
-      setTimeout(() => hedgehog.style.transform = 'rotate(0deg)', 300);
+      factElement.classList.remove('empty', 'show');
+      loading.style.display = 'inline';
+      setTimeout(() => {
+        const randomIndex = Math.floor(Math.random() * facts.length);
+        factElement.textContent = facts[randomIndex];
+        factElement.classList.add('show');
+        loading.style.display = 'none';
+        hedgehog.style.transform = 'rotate(20deg)';
+        setTimeout(() => hedgehog.style.transform = 'rotate(-20deg)', 150);
+        setTimeout(() => hedgehog.style.transform = 'rotate(0deg)', 300);
+      }, 500);
     }
 
     factButton.addEventListener('click', showFact);
@@ -258,6 +276,22 @@
 
     toggleSwitch.addEventListener('change', () => {
       document.body.classList.toggle('dark', toggleSwitch.checked);
+      localStorage.setItem('darkMode', toggleSwitch.checked);
+    });
+
+    // Load dark mode preference
+    if (localStorage.getItem('darkMode') === 'true') {
+      document.body.classList.add('dark');
+      toggleSwitch.checked = true;
+    }
+
+    // Easter egg
+    hedgehog.addEventListener('click', () => {
+      hedgehogClicks++;
+      if (hedgehogClicks === 10) {
+        alert('you found the easter egg! 🥚');
+        hedgehogClicks = 0;
+      }
     });
   </script>
 </body>
