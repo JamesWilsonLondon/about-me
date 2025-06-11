@@ -5,7 +5,7 @@
   <title>hedgehog facts spinner</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 72 72'><text y='52' font-size='50'>🦔</text></svg>">
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --primary: #f59e0b;
@@ -35,6 +35,12 @@
       padding: 20px;
       line-height: 1.5;
       transition: background-color 0.3s, color 0.3s;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    body.loaded {
+      opacity: 1;
     }
 
     .toggle-container {
@@ -95,10 +101,14 @@
     }
 
     h1 {
-      font-size: 2em;
+      font-size: 2.5em;
+      font-weight: 700;
       margin-bottom: 10px;
-      font-weight: 600;
       text-transform: none;
+    }
+
+    .highlight {
+      color: var(--primary);
     }
 
     p {
@@ -182,117 +192,4 @@
     }
 
     #creator {
-      margin-top: 30px;
-      font-size: 0.75em;
-      color: #555;
-    }
-
-    body.dark #creator {
-      color: #ccc;
-    }
-  </style>
-</head>
-<body>
-  <div class="toggle-container">
-    <span class="toggle-label">dark mode</span>
-    <label class="toggle-switch">
-      <input type="checkbox" id="toggleSwitch">
-      <span class="slider"></span>
-    </label>
-  </div>
-
-  <h1>hedgehog facts spinner</h1>
-
-  <p id="hedgehog">🦔</p>
-
-  <button id="factButton">get fact</button>
-  <span id="loading">loading…</span>
-  <button id="copyButton">copy fact</button>
-
-  <p id="fact" class="empty">click the orange button to unleash a spiky surprise!</p>
-
-  <p id="creator">this project was created by james wilson. inspired by posthog vibes.</p>
-
-  <script>
-    const facts = [
-      "Hedgehogs can run up to 6 miles in a single night!",
-      "Hedgehogs have about 5,000 spines on their back.",
-      "A group of hedgehogs is called a 'prickle'.",
-      "Hedgehogs are lactose intolerant – no milk for these little guys!",
-      "Baby hedgehogs are called 'hoglets'.",
-      "Hedgehogs have been around for 15 million years!",
-      "Hedgehogs hibernate in winter to save energy.",
-      "A hedgehog's heart beats up to 300 times per minute when active!",
-      "Hedgehogs use their spines to protect themselves from predators.",
-      "They have poor eyesight but a great sense of smell and hearing.",
-      "Hedgehogs are nocturnal – they’re active at night.",
-      "Hedgehogs can swim surprisingly well!",
-      "In the wild, hedgehogs eat insects, worms, and even small frogs.",
-      "Hedgehogs can live up to 7 years in the wild (longer in captivity).",
-      "Some cultures see hedgehogs as symbols of good luck and protection."
-    ];
-
-    const factButton = document.getElementById('factButton');
-    const factElement = document.getElementById('fact');
-    const hedgehog = document.getElementById('hedgehog');
-    const copyButton = document.getElementById('copyButton');
-    const toggleSwitch = document.getElementById('toggleSwitch');
-    const loading = document.getElementById('loading');
-
-    let hedgehogClicks = 0;
-
-    function showFact() {
-      factElement.classList.remove('empty', 'show');
-      loading.style.display = 'inline';
-      setTimeout(() => {
-        const randomIndex = Math.floor(Math.random() * facts.length);
-        factElement.textContent = facts[randomIndex];
-        factElement.classList.add('show');
-        loading.style.display = 'none';
-        hedgehog.style.transform = 'rotate(20deg)';
-        setTimeout(() => hedgehog.style.transform = 'rotate(-20deg)', 150);
-        setTimeout(() => hedgehog.style.transform = 'rotate(0deg)', 300);
-      }, 500);
-    }
-
-    factButton.addEventListener('click', showFact);
-
-    copyButton.addEventListener('click', () => {
-      const fact = factElement.textContent;
-      if (fact && !factElement.classList.contains('empty')) {
-        try {
-          navigator.clipboard.writeText(fact).then(() => {
-            alert('your hedgehog fact is ready to share!');
-          }).catch(() => {
-            alert('clipboard feature not supported in this browser.');
-          });
-        } catch (err) {
-          alert('clipboard feature not supported.');
-        }
-      } else {
-        alert('no fact to copy yet! click "get fact" first.');
-      }
-    });
-
-    toggleSwitch.addEventListener('change', () => {
-      document.body.classList.toggle('dark', toggleSwitch.checked);
-      localStorage.setItem('darkMode', toggleSwitch.checked);
-    });
-
-    // Load dark mode preference
-    if (localStorage.getItem('darkMode') === 'true') {
-      document.body.classList.add('dark');
-      toggleSwitch.checked = true;
-    }
-
-    // Easter egg
-    hedgehog.addEventListener('click', () => {
-      hedgehogClicks++;
-      if (hedgehogClicks === 10) {
-        alert('you found the easter egg! 🥚');
-        hedgehogClicks = 0;
-      }
-    });
-  </script>
-</body>
-</html>
+      margin-top:
