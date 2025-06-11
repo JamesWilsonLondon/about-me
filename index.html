@@ -5,7 +5,7 @@
   <title>hedgehog facts spinner</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 72 72'><text y='52' font-size='50'>🦔</text></svg>">
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600&display=swap" rel="stylesheet">
   <style>
     :root {
       --primary: #f59e0b;
@@ -95,17 +95,15 @@
     }
 
     h1 {
-      font-size: 2.5em;
-      font-weight: 700;
+      font-size: 2em;
       margin-bottom: 10px;
-    }
-
-    .highlight {
-      color: var(--primary);
+      font-weight: 600;
+      text-transform: none;
     }
 
     p {
       margin: 10px 0;
+      text-transform: none;
     }
 
     #hedgehog {
@@ -118,4 +116,183 @@
     }
 
     button {
-      font-w
+      font-weight: 600;
+      font-size: 1em;
+      border-radius: 8px;
+      padding: 10px 20px;
+      margin: 10px 10px 0 0;
+      cursor: pointer;
+      box-shadow: 0 2px 0 var(--button-border);
+      transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.3s, color 0.3s, border-color 0.3s;
+      text-transform: none;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    #factButton {
+      background-color: var(--button-bg);
+      color: var(--button-text);
+      border: 1px solid var(--button-border);
+    }
+
+    #copyButton {
+      background-color: #fff;
+      color: #111;
+      border: 1px solid var(--button-border);
+    }
+
+    body.dark #copyButton {
+      background-color: #374151;
+      color: #f9fafb;
+    }
+
+    #fact {
+      font-size: 1.1em;
+      margin-top: 20px;
+      background: #fff;
+      padding: 10px;
+      border-radius: 5px;
+      transition: background-color 0.3s, color 0.3s, opacity 0.3s;
+      opacity: 0;
+    }
+
+    body.dark #fact {
+      background: #374151;
+      color: #f9fafb;
+    }
+
+    #fact.show {
+      opacity: 1;
+    }
+
+    #fact.empty {
+      color: #999;
+      font-style: italic;
+      opacity: 1;
+    }
+
+    #loading {
+      font-size: 0.9em;
+      color: #999;
+      display: none;
+      margin-left: 10px;
+    }
+
+    #creator {
+      margin-top: 30px;
+      font-size: 0.75em;
+      color: #555;
+    }
+
+    body.dark #creator {
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <div class="toggle-container">
+    <span class="toggle-label">dark mode</span>
+    <label class="toggle-switch">
+      <input type="checkbox" id="toggleSwitch">
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <h1>hedgehog facts spinner</h1>
+
+  <p id="hedgehog">🦔</p>
+
+  <button id="factButton">get fact</button>
+  <span id="loading">loading…</span>
+  <button id="copyButton">copy fact</button>
+
+  <p id="fact" class="empty">click the orange button to unleash a spiky surprise!</p>
+
+  <p id="creator">this project was created by james wilson. inspired by posthog vibes.</p>
+
+  <script>
+    const facts = [
+      "Hedgehogs can run up to 6 miles in a single night!",
+      "Hedgehogs have about 5,000 spines on their back.",
+      "A group of hedgehogs is called a 'prickle'.",
+      "Hedgehogs are lactose intolerant – no milk for these little guys!",
+      "Baby hedgehogs are called 'hoglets'.",
+      "Hedgehogs have been around for 15 million years!",
+      "Hedgehogs hibernate in winter to save energy.",
+      "A hedgehog's heart beats up to 300 times per minute when active!",
+      "Hedgehogs use their spines to protect themselves from predators.",
+      "They have poor eyesight but a great sense of smell and hearing.",
+      "Hedgehogs are nocturnal – they’re active at night.",
+      "Hedgehogs can swim surprisingly well!",
+      "In the wild, hedgehogs eat insects, worms, and even small frogs.",
+      "Hedgehogs can live up to 7 years in the wild (longer in captivity).",
+      "Some cultures see hedgehogs as symbols of good luck and protection."
+    ];
+
+    const factButton = document.getElementById('factButton');
+    const factElement = document.getElementById('fact');
+    const hedgehog = document.getElementById('hedgehog');
+    const copyButton = document.getElementById('copyButton');
+    const toggleSwitch = document.getElementById('toggleSwitch');
+    const loading = document.getElementById('loading');
+
+    let hedgehogClicks = 0;
+
+    function showFact() {
+      factElement.classList.remove('empty', 'show');
+      loading.style.display = 'inline';
+      setTimeout(() => {
+        const randomIndex = Math.floor(Math.random() * facts.length);
+        factElement.textContent = facts[randomIndex];
+        factElement.classList.add('show');
+        loading.style.display = 'none';
+        hedgehog.style.transform = 'rotate(20deg)';
+        setTimeout(() => hedgehog.style.transform = 'rotate(-20deg)', 150);
+        setTimeout(() => hedgehog.style.transform = 'rotate(0deg)', 300);
+      }, 500);
+    }
+
+    factButton.addEventListener('click', showFact);
+
+    copyButton.addEventListener('click', () => {
+      const fact = factElement.textContent;
+      if (fact && !factElement.classList.contains('empty')) {
+        try {
+          navigator.clipboard.writeText(fact).then(() => {
+            alert('your hedgehog fact is ready to share!');
+          }).catch(() => {
+            alert('clipboard feature not supported in this browser.');
+          });
+        } catch (err) {
+          alert('clipboard feature not supported.');
+        }
+      } else {
+        alert('no fact to copy yet! click "get fact" first.');
+      }
+    });
+
+    toggleSwitch.addEventListener('change', () => {
+      document.body.classList.toggle('dark', toggleSwitch.checked);
+      localStorage.setItem('darkMode', toggleSwitch.checked);
+    });
+
+    // Load dark mode preference
+    if (localStorage.getItem('darkMode') === 'true') {
+      document.body.classList.add('dark');
+      toggleSwitch.checked = true;
+    }
+
+    // Easter egg
+    hedgehog.addEventListener('click', () => {
+      hedgehogClicks++;
+      if (hedgehogClicks === 10) {
+        alert('you found the easter egg! 🥚');
+        hedgehogClicks = 0;
+      }
+    });
+  </script>
+</body>
+</html>
