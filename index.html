@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Hedgehog Facts Spinner</title>
+  <title>hedgehog facts spinner</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 72 72'><text y='52' font-size='50'>🦔</text></svg>">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
@@ -37,14 +37,73 @@
       transition: background-color 0.3s, color 0.3s;
     }
 
+    .toggle-container {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 10px;
+    }
+
+    .toggle-label {
+      font-size: 0.9em;
+      margin-right: 8px;
+      color: #666;
+    }
+
+    .toggle-switch {
+      position: relative;
+      width: 40px;
+      height: 20px;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      border-radius: 20px;
+      transition: 0.4s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 14px;
+      width: 14px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      border-radius: 50%;
+      transition: 0.4s;
+    }
+
+    input:checked + .slider {
+      background-color: var(--primary-dark);
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(20px);
+    }
+
     h1 {
       font-size: 2em;
       margin-bottom: 10px;
       font-weight: 600;
+      text-transform: none;
     }
 
     p {
       margin: 10px 0;
+      text-transform: none;
     }
 
     #hedgehog {
@@ -64,15 +123,16 @@
       cursor: pointer;
       box-shadow: 0 2px 0 var(--button-border);
       transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.3s, color 0.3s, border-color 0.3s;
+      text-transform: none;
     }
 
-    #factButton, #toggleButton {
+    #factButton {
       background-color: var(--button-bg);
       color: var(--button-text);
       border: 1px solid var(--button-border);
     }
 
-    #factButton:hover, #toggleButton:hover {
+    #factButton:hover {
       transform: translateY(1px);
       box-shadow: 0 1px 0 var(--button-border);
     }
@@ -124,17 +184,24 @@
   </style>
 </head>
 <body>
-  <h1>Hedgehog Facts Spinner</h1>
+  <div class="toggle-container">
+    <span class="toggle-label">dark mode</span>
+    <label class="toggle-switch">
+      <input type="checkbox" id="toggleSwitch">
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <h1>hedgehog facts spinner</h1>
 
   <p id="hedgehog">🦔</p>
 
-  <button id="factButton">Get Fact</button>
-  <button id="copyButton">Copy Fact</button>
-  <button id="toggleButton">Toggle Dark Mode</button>
+  <button id="factButton">get fact</button>
+  <button id="copyButton">copy fact</button>
 
-  <p id="fact" class="empty">Click the orange button to unleash a spiky surprise!</p>
+  <p id="fact" class="empty">click the orange button to unleash a spiky surprise!</p>
 
-  <p id="creator">This project was created by James Wilson</p>
+  <p id="creator">this project was created by james wilson</p>
 
   <script>
     const facts = [
@@ -159,7 +226,7 @@
     const factElement = document.getElementById('fact');
     const hedgehog = document.getElementById('hedgehog');
     const copyButton = document.getElementById('copyButton');
-    const toggleButton = document.getElementById('toggleButton');
+    const toggleSwitch = document.getElementById('toggleSwitch');
 
     function showFact() {
       factElement.classList.remove('empty');
@@ -177,20 +244,20 @@
       if (fact && !factElement.classList.contains('empty')) {
         try {
           navigator.clipboard.writeText(fact).then(() => {
-            alert('Your hedgehog fact is ready to share!');
+            alert('your hedgehog fact is ready to share!');
           }).catch(() => {
-            alert('Clipboard feature not supported in this browser.');
+            alert('clipboard feature not supported in this browser.');
           });
         } catch (err) {
-          alert('Clipboard feature not supported.');
+          alert('clipboard feature not supported.');
         }
       } else {
-        alert('No fact to copy yet! Click "Get Fact" first.');
+        alert('no fact to copy yet! click "get fact" first.');
       }
     });
 
-    toggleButton.addEventListener('click', () => {
-      document.body.classList.toggle('dark');
+    toggleSwitch.addEventListener('change', () => {
+      document.body.classList.toggle('dark', toggleSwitch.checked);
     });
   </script>
 </body>
