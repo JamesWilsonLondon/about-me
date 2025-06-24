@@ -4,23 +4,22 @@
   <meta charset="UTF-8">
   <title>Nonsense or Startup?</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 72 72'><text y='50' font-size='50'>🦊</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 72 72'><text y='50' font-size='50'>🦊</text></svg>'">
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Manrope', sans-serif;
-      background: radial-gradient(circle at top left, #fff6e8, #fefefe);
-      color: #1b1b1b;
+      background-color: #fff;
+      color: #000;
       text-align: center;
       padding: 3em 1em;
       max-width: 700px;
       margin: auto;
-      transition: background-color 0.5s ease;
     }
 
     h1 {
       font-size: 2.7em;
-      color: #3c1a1e;
+      color: #000;
       font-weight: 700;
     }
 
@@ -28,10 +27,10 @@
       font-size: 1.5em;
       font-style: italic;
       margin: 2em 0;
-      background: #fff8f0;
+      background: #fff;
       padding: 1.5em;
-      border-radius: 20px;
-      border: 3px dashed #ffccbc;
+      border: 2px solid #000;
+      border-radius: 0;
       opacity: 0;
       animation: fadeIn 0.5s forwards;
     }
@@ -46,31 +45,40 @@
       margin: 0.7em;
       padding: 1em 2em;
       font-weight: bold;
-      border: none;
-      border-radius: 14px;
-      cursor: pointer;
-      background: linear-gradient(to bottom, #ffe0cc, #ffb199);
-      color: #2b2b2b;
+      border: 2px solid #000;
+      border-radius: 0;
+      background: #fff;
+      color: #000;
       font-size: 1.1em;
-      box-shadow: 0 6px #c7755f;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      transition: background 0.2s, color 0.2s;
+      cursor: pointer;
     }
 
     button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px #c7755f;
-    }
-
-    button:active {
-      transform: translateY(1px);
-      box-shadow: 0 2px #c7755f;
+      background: #000;
+      color: #fff;
     }
 
     .result {
       margin-top: 2em;
       font-size: 1.3em;
       font-weight: 600;
-      color: #6b2f3a;
+      color: #000;
+    }
+
+    .share-buttons {
+      margin-top: 2em;
+    }
+
+    .share-buttons a {
+      margin: 0 0.5em;
+      text-decoration: none;
+      color: #000;
+      font-weight: 600;
+    }
+
+    .share-buttons a:hover {
+      text-decoration: underline;
     }
 
     @media (max-width: 600px) {
@@ -99,6 +107,13 @@
     <button onclick="getRandomIdea()">Next Idea</button>
   </div>
   <div id="result" class="result"></div>
+  <div class="share-buttons">
+    <span>Share:</span>
+    <a href="#" id="shareTwitter" target="_blank">Twitter</a>
+    <a href="#" id="shareLinkedIn" target="_blank">LinkedIn</a>
+    <a href="#" id="shareFacebook" target="_blank">Facebook</a>
+  </div>
+
   <script>
     const ideas = [
       // Real startup ideas
@@ -173,8 +188,9 @@
       setTimeout(() => {
         ideaDiv.textContent = currentIdea.text;
         ideaDiv.classList.remove("fadeIn");
-        void ideaDiv.offsetWidth; // trigger reflow
+        void ideaDiv.offsetWidth;
         ideaDiv.classList.add("fadeIn");
+        updateShareLinks(currentIdea.text);
       }, 100);
       document.getElementById("result").textContent = "";
     }
@@ -182,6 +198,14 @@
     function checkAnswer(guess) {
       const isCorrect = guess === currentIdea.real;
       document.getElementById("result").textContent = isCorrect ? "✅ Correct!" : "❌ Nope. Try again.";
+    }
+
+    function updateShareLinks(text) {
+      const url = encodeURIComponent(window.location.href);
+      const idea = encodeURIComponent(text);
+      document.getElementById("shareTwitter").href = `https://twitter.com/intent/tweet?text=${idea}%20%7C%20Play%20now%3A%20${url}`;
+      document.getElementById("shareLinkedIn").href = `https://www.linkedin.com/shareArticle?mini=true&url=${url}&title=Nonsense%20or%20Startup&summary=${idea}`;
+      document.getElementById("shareFacebook").href = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
     }
 
     getRandomIdea();
