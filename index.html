@@ -68,9 +68,8 @@
   <div id="result" class="result"></div>
   <script>
     const ideas = [
-      // Real startup ideas
       ...Array.from({ length: 45 }, (_, i) => ({
-        text: `Real Startup Idea #${i + 1}: ` + [
+        text: [
           "An app that delivers ice cream via drone",
           "A subscription for socks with personality quizzes",
           "A wearable that buzzes when you slouch",
@@ -116,11 +115,11 @@
           "A B2B service to gamify team meetings",
           "Browser extension that replaces ads with startup pitch decks",
           "Corporate team-building through online escape rooms"
-        ][i % 45], real: true })),
-
-      // Nonsense startup ideas
+        ][i],
+        real: true
+      })),
       ...Array.from({ length: 45 }, (_, i) => ({
-        text: `Nonsense Idea #${i + 1}: ` + [
+        text: [
           "An AI that translates meows into Shakespearean English",
           "A fitness tracker for plants to monitor leaf movement",
           "Subscription box for rocks that look like presidents",
@@ -166,7 +165,9 @@
           "LinkedIn bot that endorses random skills",
           "Portable fog machine for dramatic exits",
           "Startup that rents out vintage VHS tapes for nostalgia"
-        ][i % 45], real: false }))
+        ][i],
+        real: false
+      }))
     ];
 
     let currentIdea;
