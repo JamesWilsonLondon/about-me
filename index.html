@@ -23,6 +23,13 @@
       font-weight: 700;
     }
 
+    #scoreStatus {
+      margin-top: 1em;
+      font-size: 1.1em;
+      font-weight: 500;
+      color: #333;
+    }
+
     .idea {
       font-size: 1.5em;
       font-style: italic;
@@ -66,13 +73,6 @@
       color: #000;
     }
 
-    #scoreStatus {
-      margin-top: 1.5em;
-      font-size: 1.1em;
-      font-weight: 500;
-      color: #333;
-    }
-
     .share-buttons {
       margin-top: 2em;
     }
@@ -107,6 +107,7 @@
 </head>
 <body>
   <h1>Startup or Nonsense?</h1>
+  <div id="scoreStatus"></div>
   <div id="idea" class="idea">Loading idea...</div>
   <div>
     <button onclick="checkAnswer(true)">Startup</button>
@@ -114,92 +115,5 @@
     <button onclick="getRandomIdea()">Next Idea</button>
   </div>
   <div id="result" class="result"></div>
-  <div id="scoreStatus"></div>
   <div class="share-buttons">
     <span>Share:</span>
-    <a href="#" id="shareTwitter" target="_blank">Twitter</a>
-    <a href="#" id="shareLinkedIn" target="_blank">LinkedIn</a>
-    <a href="#" id="shareFacebook" target="_blank">Facebook</a>
-  </div>
-
-  <script>
-    const ideas = [
-      { text: "A smart litter box that analyzes your cat’s poop for early disease detection.", real: true },
-      { text: "An app that helps you break up with someone by generating custom breakup messages with AI.", real: true },
-      { text: "A subscription for monthly boxes of pre-chopped onions.", real: true },
-      { text: "Digital wardrobe app that picks your outfit each day using weather and mood input.", real: true },
-      { text: "Pet telehealth platform offering on-demand video calls with vets.", real: true },
-      { text: "VR therapy sessions with AI-powered avatars.", real: true },
-      { text: "A connected bird feeder that takes photos of birds and identifies species.", real: true },
-      { text: "AI-generated bedtime stories customized with your child’s name and favorite things.", real: true },
-      { text: "On-demand private chef marketplace for home events.", real: true },
-      { text: "Marketplace for renting designer handbags hourly.", real: true },
-      { text: "A blockchain-powered fridge that refuses to open unless your hydration levels are adequate.", real: false },
-      { text: "An app that sends you a motivational quote every time you sneeze.", real: false },
-      { text: "A dating app where users are matched solely by the last thing they ate.", real: false },
-      { text: "A coffee cup that plays lo-fi beats based on your sip speed.", real: false },
-      { text: "Socks that stream your footstep rhythm as NFTs.", real: false },
-      { text: "A chair that live-tweets your posture habits.", real: false },
-      { text: "A food delivery service that only serves food you can eat while rollerblading.", real: false },
-      { text: "An AI that generates daily horoscopes based on your Wi-Fi signal strength.", real: false },
-      { text: "Smart pillows that whisper startup pitches as you fall asleep.", real: false },
-      { text: "An app that lets plants rate your mood and suggest jazz playlists.", real: false }
-    ];
-
-    let currentIdea;
-    let usedIndexes = [];
-    let score = 0;
-    let total = 0;
-
-    function getRandomIdea() {
-      if (usedIndexes.length === ideas.length) usedIndexes = [];
-      let idx;
-      do {
-        idx = Math.floor(Math.random() * ideas.length);
-      } while (usedIndexes.includes(idx));
-      usedIndexes.push(idx);
-      currentIdea = ideas[idx];
-      const ideaDiv = document.getElementById("idea");
-      ideaDiv.style.opacity = 0;
-      setTimeout(() => {
-        ideaDiv.textContent = currentIdea.text;
-        ideaDiv.classList.remove("fadeIn");
-        void ideaDiv.offsetWidth;
-        ideaDiv.classList.add("fadeIn");
-        updateShareLinks(currentIdea.text);
-      }, 100);
-      document.getElementById("result").textContent = "";
-    }
-
-    function checkAnswer(guess) {
-      const isCorrect = guess === currentIdea.real;
-      total++;
-      if (isCorrect) score++;
-      document.getElementById("result").textContent = isCorrect ? "✅ Correct!" : "❌ Nope. Try again.";
-      updateScore();
-    }
-
-    function updateScore() {
-      const ratio = total ? score / total : 0;
-      let level = "🪤 Wannabe VC";
-      if (ratio > 0.85) level = "🧠 Sequoia Scout";
-      else if (ratio > 0.7) level = "💰 Angel with Taste";
-      else if (ratio > 0.55) level = "📈 LinkedIn Influencer";
-      else if (ratio > 0.4) level = "📉 Family Office Nephew";
-      else if (ratio > 0.25) level = "🎢 Reddit Theorist";
-
-      document.getElementById("scoreStatus").textContent = `Score: ${score}/${total} | Rank: ${level}`;
-    }
-
-    function updateShareLinks(text) {
-      const url = encodeURIComponent(window.location.href);
-      const idea = encodeURIComponent(text);
-      document.getElementById("shareTwitter").href = `https://twitter.com/intent/tweet?text=${idea}%20%7C%20Play%20now%3A%20${url}`;
-      document.getElementById("shareLinkedIn").href = `https://www.linkedin.com/shareArticle?mini=true&url=${url}&title=Startup%20or%20Nonsense&summary=${idea}`;
-      document.getElementById("shareFacebook").href = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
-    }
-
-    getRandomIdea();
-  </script>
-</body>
-</html>
