@@ -20,7 +20,7 @@ You’ll get instant feedback, then move on to the next idea.
 
 - 🧠 45 real startup ideas (yes, they're actual companies)
 - 🤡 45 completely made-up ideas
-- 🧁 Bright pastel theme inspired by [PostHog](https://posthog.com/) but quirkier
+- 🧁 Bright pastel theme 
 - 💅 Vanilla HTML + JS (no build tools, no frameworks)
 
 ---
@@ -51,5 +51,5 @@ Inspired by a love of absurdity, pitch decks, and PostHog vibes.
 ## 📬 Suggestions?
 
 Got an outrageous idea to add to the game?  
-Open a pull request or [drop me a message](mailto:your@email.com)!
+Open a pull request or [drop me a message](mailto:jameswilson11@gmail.com!
 
