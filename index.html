@@ -2,294 +2,109 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>hedgehog facts spinner</title>
+  <title>Nonsense or Startup?</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 72 72'><text y='52' font-size='50'>🦔</text></svg>">
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --primary: #f59e0b;
-      --primary-dark: #d97706;
-      --bg: #f5f5f5;
-      --text: #000;
-      --button-text: #111;
-      --button-bg: #f59e0b;
-      --button-border: #d97706;
-    }
-
-    body.dark {
-      --bg: #1f2937;
-      --text: #f9fafb;
-      --button-text: #f9fafb;
-      --button-bg: #d97706;
-      --button-border: #f59e0b;
-    }
-
     body {
       font-family: 'Manrope', sans-serif;
-      text-align: left;
-      color: var(--text);
-      background-color: var(--bg);
+      background-color: #fefcf3;
+      color: #1e1e1e;
+      text-align: center;
+      padding: 2em;
       max-width: 600px;
-      margin: 40px auto;
-      padding: 20px;
-      line-height: 1.5;
-      transition: background-color 0.3s, color 0.3s;
-    }
-
-    .toggle-container {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      margin-bottom: 10px;
-    }
-
-    .toggle-label {
-      font-size: 0.9em;
-      margin-right: 8px;
-      color: #666;
-    }
-
-    .toggle-switch {
-      position: relative;
-      width: 40px;
-      height: 20px;
-    }
-
-    .toggle-switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: #ccc;
-      border-radius: 20px;
-      transition: 0.4s;
-    }
-
-    .slider:before {
-      position: absolute;
-      content: "";
-      height: 14px;
-      width: 14px;
-      left: 3px;
-      bottom: 3px;
-      background-color: white;
-      border-radius: 50%;
-      transition: 0.4s;
-    }
-
-    input:checked + .slider {
-      background-color: var(--primary-dark);
-    }
-
-    input:checked + .slider:before {
-      transform: translateX(20px);
+      margin: auto;
     }
 
     h1 {
-      font-size: 3em;
-      font-weight: 700;
-      line-height: 1.2;
-      margin-bottom: 10px;
-      text-transform: none;
-    }
-
-    .highlight {
-      color: var(--primary);
-    }
-
-    p {
-      margin: 10px 0;
-    }
-
-    #hedgehog {
       font-size: 2.5em;
-      display: block;
-      margin: 15px 0;
-      transition: transform 0.3s;
-      text-align: center;
-      cursor: pointer;
+      color: #8e44ad;
+    }
+
+    .idea {
+      font-size: 1.3em;
+      font-style: italic;
+      margin: 2em 0;
+      background: #fff7e6;
+      padding: 1.2em;
+      border-radius: 12px;
+      border: 2px dashed #f39c12;
     }
 
     button {
-      font-weight: 600;
-      font-size: 1em;
+      margin: 0.5em;
+      padding: 0.75em 1.5em;
+      font-weight: bold;
+      border: none;
       border-radius: 8px;
-      padding: 10px 20px;
-      margin: 10px 10px 0 0;
       cursor: pointer;
-      box-shadow: 0 2px 0 var(--button-border);
-      transition: transform 0.1s ease, box-shadow 0.1s ease;
-      text-transform: none;
+      background-color: #f39c12;
+      color: white;
+      font-size: 1em;
+      transition: background-color 0.3s ease;
     }
 
     button:hover {
-      transform: scale(1.05);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      background-color: #d35400;
     }
 
-    #factButton {
-      background-color: var(--button-bg);
-      color: var(--button-text);
-      border: 1px solid var(--button-border);
-    }
-
-    #copyButton {
-      background-color: #fff;
-      color: #111;
-      border: 1px solid var(--button-border);
-    }
-
-    body.dark #copyButton {
-      background-color: #374151;
-      color: #f9fafb;
-    }
-
-    #fact {
-      font-size: 1.1em;
-      margin-top: 20px;
-      background: #fff;
-      padding: 10px;
-      border-radius: 5px;
-      transition: background-color 0.3s, color 0.3s;
-    }
-
-    body.dark #fact {
-      background: #374151;
-      color: #f9fafb;
-    }
-
-    #fact.empty {
-      color: #999;
-      font-style: italic;
-    }
-
-    #loading {
-      font-size: 0.9em;
-      color: #999;
-      display: none;
-      margin-left: 10px;
-    }
-
-    #creator {
-      margin-top: 30px;
-      font-size: 0.75em;
-      color: #555;
-    }
-
-    body.dark #creator {
-      color: #ccc;
+    .result {
+      margin-top: 1.5em;
+      font-size: 1.2em;
+      font-weight: 600;
     }
   </style>
 </head>
 <body>
-  <div class="toggle-container">
-    <span class="toggle-label">dark mode</span>
-    <label class="toggle-switch">
-      <input type="checkbox" id="toggleSwitch">
-      <span class="slider"></span>
-    </label>
+  <h1>Nonsense or Startup?</h1>
+  <div id="idea" class="idea">Loading...</div>
+  <div>
+    <button onclick="checkAnswer(true)">Startup</button>
+    <button onclick="checkAnswer(false)">Nonsense</button>
   </div>
-
-  <h1>
-    hedgehog facts <span class="highlight">spinner</span>
-  </h1>
-
-  <p id="hedgehog">🦔</p>
-
-  <button id="factButton">get fact</button>
-  <span id="loading">loading…</span>
-  <button id="copyButton">copy fact</button>
-
-  <p id="fact" class="empty">click the orange button to unleash a spiky surprise!</p>
-
-  <p id="creator">this project was created by james wilson. inspired by posthog vibes.</p>
-
+  <div id="result" class="result"></div>
   <script>
-    var facts = [
-      "Hedgehogs can run up to 6 miles in a single night!",
-      "Hedgehogs have about 5,000 spines on their back.",
-      "A group of hedgehogs is called a 'prickle'.",
-      "Hedgehogs are lactose intolerant – no milk for these little guys!",
-      "Baby hedgehogs are called 'hoglets'.",
-      "Hedgehogs have been around for 15 million years!",
-      "Hedgehogs hibernate in winter to save energy.",
-      "A hedgehog's heart beats up to 300 times per minute when active!",
-      "Hedgehogs use their spines to protect themselves from predators.",
-      "They have poor eyesight but a great sense of smell and hearing.",
-      "Hedgehogs are nocturnal – they’re active at night.",
-      "Hedgehogs can swim surprisingly well!",
-      "In the wild, hedgehogs eat insects, worms, and even small frogs.",
-      "Hedgehogs can live up to 7 years in the wild (longer in captivity).",
-      "Some cultures see hedgehogs as symbols of good luck and protection."
+    const ideas = [
+      // Real (true)
+      { text: "A robot lawyer that helps you fight parking tickets", real: true },
+      { text: "A subscription box for worms for your compost bin", real: true },
+      { text: "An AI that writes jokes for Twitter accounts", real: true },
+      { text: "An app to rent chickens for your backyard", real: true },
+      { text: "Smart forks that buzz when you eat too fast", real: true },
+      // ... add 45 more real startup ideas here
+
+      // Fake (false)
+      { text: "An app that translates your dreams into stock picks", real: false },
+      { text: "Toothbrushes that sing you sea shanties", real: false },
+      { text: "A dating app for ghosts who died in the 1800s", real: false },
+      { text: "Smart cheese that alerts you before it molds", real: false },
+      { text: "A VR experience to become a piece of toast", real: false },
+      // ... add 45 more nonsense ideas here
     ];
 
-    var factButton = document.getElementById('factButton');
-    var factElement = document.getElementById('fact');
-    var hedgehog = document.getElementById('hedgehog');
-    var copyButton = document.getElementById('copyButton');
-    var toggleSwitch = document.getElementById('toggleSwitch');
-    var loading = document.getElementById('loading');
+    let currentIdea;
+    let usedIndexes = [];
 
-    var hedgehogClicks = 0;
-
-    function showFact() {
-      factElement.classList.remove('empty');
-      loading.style.display = 'inline';
-      setTimeout(function() {
-        var randomIndex = Math.floor(Math.random() * facts.length);
-        factElement.textContent = facts[randomIndex];
-        loading.style.display = 'none';
-        hedgehog.style.transform = 'rotate(20deg)';
-        setTimeout(function() { hedgehog.style.transform = 'rotate(-20deg)'; }, 150);
-        setTimeout(function() { hedgehog.style.transform = 'rotate(0deg)'; }, 300);
-      }, 500);
+    function getRandomIdea() {
+      if (usedIndexes.length === ideas.length) usedIndexes = [];
+      let idx;
+      do {
+        idx = Math.floor(Math.random() * ideas.length);
+      } while (usedIndexes.includes(idx));
+      usedIndexes.push(idx);
+      currentIdea = ideas[idx];
+      document.getElementById("idea").textContent = currentIdea.text;
+      document.getElementById("result").textContent = "";
     }
 
-    factButton.addEventListener('click', showFact);
-
-    copyButton.addEventListener('click', function() {
-      var fact = factElement.textContent;
-      if (fact && !factElement.classList.contains('empty')) {
-        if (navigator.clipboard) {
-          navigator.clipboard.writeText(fact).then(function() {
-            alert('your hedgehog fact is ready to share!');
-          }).catch(function() {
-            alert('clipboard not supported');
-          });
-        } else {
-          alert('clipboard not supported');
-        }
-      } else {
-        alert('no fact to copy yet!');
-      }
-    });
-
-    toggleSwitch.addEventListener('change', function() {
-      document.body.classList.toggle('dark', toggleSwitch.checked);
-      localStorage.setItem('darkMode', toggleSwitch.checked);
-    });
-
-    if (localStorage.getItem('darkMode') === 'true') {
-      document.body.classList.add('dark');
-      toggleSwitch.checked = true;
+    function checkAnswer(guess) {
+      const isCorrect = guess === currentIdea.real;
+      document.getElementById("result").textContent = isCorrect ? "✅ Correct!" : "❌ Nope. Try again.";
+      setTimeout(getRandomIdea, 2000);
     }
 
-    hedgehog.addEventListener('click', function() {
-      hedgehogClicks++;
-      if (hedgehogClicks === 10) {
-        alert('you found the easter egg! 🥚');
-        hedgehogClicks = 0;
-      }
-    });
+    // Load first idea
+    getRandomIdea();
   </script>
 </body>
 </html>
