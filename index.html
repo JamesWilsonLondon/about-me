@@ -8,56 +8,59 @@
   <style>
     body {
       font-family: 'Manrope', sans-serif;
-      background-color: #fefcf3;
-      color: #1e1e1e;
+      background-color: #fff5f0;
+      color: #1f1f1f;
       text-align: center;
-      padding: 2em;
-      max-width: 600px;
+      padding: 3em 1em;
+      max-width: 700px;
       margin: auto;
     }
 
     h1 {
-      font-size: 2.5em;
-      color: #8e44ad;
+      font-size: 2.7em;
+      color: #ff6f61;
+      font-weight: 700;
     }
 
     .idea {
-      font-size: 1.3em;
+      font-size: 1.5em;
       font-style: italic;
       margin: 2em 0;
-      background: #fff7e6;
-      padding: 1.2em;
-      border-radius: 12px;
-      border: 2px dashed #f39c12;
+      background: #fef3c7;
+      padding: 1.5em;
+      border-radius: 16px;
+      border: 3px dotted #facc15;
     }
 
     button {
-      margin: 0.5em;
-      padding: 0.75em 1.5em;
+      margin: 0.7em;
+      padding: 1em 2em;
       font-weight: bold;
       border: none;
-      border-radius: 8px;
+      border-radius: 12px;
       cursor: pointer;
-      background-color: #f39c12;
-      color: white;
-      font-size: 1em;
-      transition: background-color 0.3s ease;
+      background-color: #6ee7b7;
+      color: #1f2937;
+      font-size: 1.1em;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease;
     }
 
     button:hover {
-      background-color: #d35400;
+      transform: scale(1.05);
+      background-color: #34d399;
     }
 
     .result {
-      margin-top: 1.5em;
-      font-size: 1.2em;
+      margin-top: 2em;
+      font-size: 1.3em;
       font-weight: 600;
     }
   </style>
 </head>
 <body>
   <h1>Nonsense or Startup?</h1>
-  <div id="idea" class="idea">Loading...</div>
+  <div id="idea" class="idea">Loading idea...</div>
   <div>
     <button onclick="checkAnswer(true)">Startup</button>
     <button onclick="checkAnswer(false)">Nonsense</button>
@@ -65,21 +68,105 @@
   <div id="result" class="result"></div>
   <script>
     const ideas = [
-      // Real (true)
-      { text: "A robot lawyer that helps you fight parking tickets", real: true },
-      { text: "A subscription box for worms for your compost bin", real: true },
-      { text: "An AI that writes jokes for Twitter accounts", real: true },
-      { text: "An app to rent chickens for your backyard", real: true },
-      { text: "Smart forks that buzz when you eat too fast", real: true },
-      // ... add 45 more real startup ideas here
+      // Real startup ideas
+      ...Array.from({ length: 45 }, (_, i) => ({
+        text: `Real Startup Idea #${i + 1}: ` + [
+          "An app that delivers ice cream via drone",
+          "A subscription for socks with personality quizzes",
+          "A wearable that buzzes when you slouch",
+          "Reusable notebooks that digitize notes automatically",
+          "A marketplace for renting out driveways",
+          "Pet DNA ancestry testing kits",
+          "AI that writes bedtime stories for kids",
+          "Virtual interior design powered by AR",
+          "A toothbrush that coaches you with audio feedback",
+          "Smart compost bins that gamify recycling",
+          "A social app for finding gym buddies nearby",
+          "Rental service for high-end sneakers",
+          "A chatbot that breaks up with people for you",
+          "SaaS for managing your houseplants’ schedules",
+          "Noise-canceling pillows for light sleepers",
+          "AI for suggesting perfect coffee blends",
+          "A Slack bot that writes limericks about your team",
+          "Electric scooters for dogs",
+          "Zoom backgrounds with real-time weather syncing",
+          "Dog treadmills with fitness tracking",
+          "Personal stylists trained on your closet photos",
+          "Calendar assistant that only suggests fun meetings",
+          "Freelancer marketplace for Dungeons & Dragons GMs",
+          "Automated voice note summarizers",
+          "A mail subscription that sends you vintage coins",
+          "Digital wardrobe inventory with laundry sync",
+          "Startup retreat Airbnb-style exchange",
+          "No-code resume builder with meme templates",
+          "Startup that installs nap pods in corporate lobbies",
+          "Personal CRM for remembering birthdays and wine preferences",
+          "Sleep masks with AI dream analysis",
+          "Mindfulness prompts embedded in Spotify ads",
+          "A delivery service for forgotten charging cables",
+          "On-demand lullabies by AI-generated celebrities",
+          "Remote coworking ambiance streamers",
+          "An app that warns you if your tweets might get you fired",
+          "A journal app that asks you weird questions daily",
+          "Scent-based push notifications (via hardware tag)",
+          "A service to send passive-aggressive gifts",
+          "Uber but for backyard goats",
+          "Digital vending machines for poems",
+          "A TikTok-native job board",
+          "A B2B service to gamify team meetings",
+          "Browser extension that replaces ads with startup pitch decks",
+          "Corporate team-building through online escape rooms"
+        ][i % 45], real: true })),
 
-      // Fake (false)
-      { text: "An app that translates your dreams into stock picks", real: false },
-      { text: "Toothbrushes that sing you sea shanties", real: false },
-      { text: "A dating app for ghosts who died in the 1800s", real: false },
-      { text: "Smart cheese that alerts you before it molds", real: false },
-      { text: "A VR experience to become a piece of toast", real: false },
-      // ... add 45 more nonsense ideas here
+      // Nonsense startup ideas
+      ...Array.from({ length: 45 }, (_, i) => ({
+        text: `Nonsense Idea #${i + 1}: ` + [
+          "An AI that translates meows into Shakespearean English",
+          "A fitness tracker for plants to monitor leaf movement",
+          "Subscription box for rocks that look like presidents",
+          "A blockchain-powered shoelace tracking system",
+          "Smart wallpaper that changes mood based on your sneeze",
+          "Crowdsourced app for naming your houseplants",
+          "AI that detects ghosts in your home WiFi",
+          "A karaoke app exclusively for whale sounds",
+          "Metaverse real estate for imaginary pets",
+          "Marketplace for renting emotional baggage",
+          "SaaS for competitive banana peeling",
+          "Digital museum of fridge magnets",
+          "Tinder but for people who want to swap curtains",
+          "Crypto-backed cheese futures trading",
+          "Smart scissors with tweet integration",
+          "A startup that makes invisible board games",
+          "AI-powered sandwich layering algorithms",
+          "Quantum computing for horoscope personalization",
+          "NFTs of misheard lyrics",
+          "Subscription service for surprise hats",
+          "To-do list manager for your inner child",
+          "AI that matches you with compatible leftovers",
+          "Dating app for long-distance pigeons",
+          "Zoom filter that makes you look slightly more mysterious",
+          "Dog yoga mats that respond to barking",
+          "Virtual cactus pets with emotions",
+          "App that creates startup names by combining vegetables",
+          "A drone that reads you bedtime poetry",
+          "Analytics dashboard for sock loss tracking",
+          "An alarm clock that only shuts off after solving a pun",
+          "Emoji-based tax filing assistant",
+          "A service that auto-replies to group chats with memes",
+          "AI assistant that screams when you open Instagram",
+          "Ecosystem simulator for imaginary planets",
+          "Smart fridge magnets that vote on meals",
+          "Calendar app that only works during full moons",
+          "Headphones that whisper startup slogans",
+          "Voice clone that reads your spam emails with drama",
+          "Productivity timer that screams motivational quotes",
+          "Platform for crowdsourced dad jokes",
+          "AI for designing cryptic crossword tattoos",
+          "Smart pillows that report your secrets",
+          "LinkedIn bot that endorses random skills",
+          "Portable fog machine for dramatic exits",
+          "Startup that rents out vintage VHS tapes for nostalgia"
+        ][i % 45], real: false }))
     ];
 
     let currentIdea;
@@ -100,10 +187,9 @@
     function checkAnswer(guess) {
       const isCorrect = guess === currentIdea.real;
       document.getElementById("result").textContent = isCorrect ? "✅ Correct!" : "❌ Nope. Try again.";
-      setTimeout(getRandomIdea, 2000);
+      setTimeout(getRandomIdea, 1800);
     }
 
-    // Load first idea
     getRandomIdea();
   </script>
 </body>
