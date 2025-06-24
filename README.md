@@ -29,7 +29,6 @@ You’ll get instant feedback, then move on to the next idea.
 
 [🔗 Click here to play](https://yourusername.github.io/your-repo-name/nonsense.html)
 
-> Replace the URL above with your actual GitHub Pages link
 
 ---
 
@@ -44,12 +43,12 @@ Just open `nonsense.html` in your browser or upload to GitHub Pages.
 ## 🤓 Credits
 
 Built by [James Wilson](https://github.com/jameswilsonlondon)  
-Inspired by a love of absurdity, pitch decks, and PostHog vibes.
+Inspired by a love of absurdity and pitch decks.
 
 ---
 
 ## 📬 Suggestions?
 
 Got an outrageous idea to add to the game?  
-Open a pull request or [drop me a message](mailto:jameswilson11@gmail.com!
+Open a pull request or [drop me a message](mailto:jameswilson11@gmail.com)!
 
