@@ -15,6 +15,7 @@
       padding: 3em 1em;
       max-width: 700px;
       margin: auto;
+      transition: background-color 0.5s ease;
     }
 
     h1 {
@@ -31,6 +32,14 @@
       padding: 1.5em;
       border-radius: 20px;
       border: 3px dashed #ffccbc;
+      opacity: 0;
+      animation: fadeIn 0.5s forwards;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
     }
 
     button {
@@ -63,6 +72,22 @@
       font-weight: 600;
       color: #6b2f3a;
     }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2em;
+      }
+
+      .idea {
+        font-size: 1.2em;
+        padding: 1em;
+      }
+
+      button {
+        font-size: 1em;
+        padding: 0.8em 1.5em;
+      }
+    }
   </style>
 </head>
 <body>
@@ -77,102 +102,60 @@
   <script>
     const ideas = [
       // Real startup ideas
-      "An app that delivers ice cream via drone",
-      "A subscription for socks with personality quizzes",
-      "A wearable that buzzes when you slouch",
-      "Reusable notebooks that digitize notes automatically",
-      "A marketplace for renting out driveways",
-      "Pet DNA ancestry testing kits",
-      "AI that writes bedtime stories for kids",
-      "Virtual interior design powered by AR",
-      "A toothbrush that coaches you with audio feedback",
-      "Smart compost bins that gamify recycling",
-      "A social app for finding gym buddies nearby",
-      "Rental service for high-end sneakers",
-      "A chatbot that breaks up with people for you",
-      "SaaS for managing your houseplants’ schedules",
-      "Noise-canceling pillows for light sleepers",
-      "AI for suggesting perfect coffee blends",
-      "A Slack bot that writes limericks about your team",
-      "Electric scooters for dogs",
-      "Zoom backgrounds with real-time weather syncing",
-      "Dog treadmills with fitness tracking",
-      "Personal stylists trained on your closet photos",
-      "Calendar assistant that only suggests fun meetings",
-      "Freelancer marketplace for Dungeons & Dragons GMs",
-      "Automated voice note summarizers",
-      "A mail subscription that sends you vintage coins",
-      "Digital wardrobe inventory with laundry sync",
-      "Startup retreat Airbnb-style exchange",
-      "No-code resume builder with meme templates",
-      "Startup that installs nap pods in corporate lobbies",
-      "Personal CRM for remembering birthdays and wine preferences",
-      "Sleep masks with AI dream analysis",
-      "Mindfulness prompts embedded in Spotify ads",
-      "A delivery service for forgotten charging cables",
-      "On-demand lullabies by AI-generated celebrities",
-      "Remote coworking ambiance streamers",
-      "An app that warns you if your tweets might get you fired",
-      "A journal app that asks you weird questions daily",
-      "Scent-based push notifications (via hardware tag)",
-      "A service to send passive-aggressive gifts",
-      "Uber but for backyard goats",
-      "Digital vending machines for poems",
-      "A TikTok-native job board",
-      "A B2B service to gamify team meetings",
-      "Browser extension that replaces ads with startup pitch decks",
-      "Corporate team-building through online escape rooms",
-
-      // Nonsense ideas
-      "An AI that translates meows into Shakespearean English",
-      "A fitness tracker for plants to monitor leaf movement",
-      "Subscription box for rocks that look like presidents",
-      "A blockchain-powered shoelace tracking system",
-      "Smart wallpaper that changes mood based on your sneeze",
-      "Crowdsourced app for naming your houseplants",
-      "AI that detects ghosts in your home WiFi",
-      "A karaoke app exclusively for whale sounds",
-      "Metaverse real estate for imaginary pets",
-      "Marketplace for renting emotional baggage",
-      "SaaS for competitive banana peeling",
-      "Digital museum of fridge magnets",
-      "Tinder but for people who want to swap curtains",
-      "Crypto-backed cheese futures trading",
-      "Smart scissors with tweet integration",
-      "A startup that makes invisible board games",
-      "AI-powered sandwich layering algorithms",
-      "Quantum computing for horoscope personalization",
-      "NFTs of misheard lyrics",
-      "Subscription service for surprise hats",
-      "To-do list manager for your inner child",
-      "AI that matches you with compatible leftovers",
-      "Dating app for long-distance pigeons",
-      "Zoom filter that makes you look slightly more mysterious",
-      "Dog yoga mats that respond to barking",
-      "Virtual cactus pets with emotions",
-      "App that creates startup names by combining vegetables",
-      "A drone that reads you bedtime poetry",
-      "Analytics dashboard for sock loss tracking",
-      "An alarm clock that only shuts off after solving a pun",
-      "Emoji-based tax filing assistant",
-      "A service that auto-replies to group chats with memes",
-      "AI assistant that screams when you open Instagram",
-      "Ecosystem simulator for imaginary planets",
-      "Smart fridge magnets that vote on meals",
-      "Calendar app that only works during full moons",
-      "Headphones that whisper startup slogans",
-      "Voice clone that reads your spam emails with drama",
-      "Productivity timer that screams motivational quotes",
-      "Platform for crowdsourced dad jokes",
-      "AI for designing cryptic crossword tattoos",
-      "Smart pillows that report your secrets",
-      "LinkedIn bot that endorses random skills",
-      "Portable fog machine for dramatic exits",
-      "Startup that rents out vintage VHS tapes for nostalgia"
-    ].map((text, index) => ({
-      text,
-      real: index < 45
-    }));
+      { text: "AI-generated legal contracts for crypto startups", real: true },
+      { text: "Robot lawnmowers as a subscription service", real: true },
+      { text: "Virtual pets that evolve based on your sleep data", real: true },
+      { text: "Voice AI for fast-food drive-thrus", real: true },
+      { text: "Augmented reality glasses for remote workers", real: true },
+      { text: "No-code tool for creating online escape rooms", real: true },
+      { text: "Real-time dashboards for goat farm analytics", real: true },
+      { text: "A Slack bot that manages your company memes", real: true },
+      { text: "Subscription boxes for biodegradable cleaning products", real: true },
+      { text: "An app that helps you quit apps", real: true },
+      { text: "On-demand parking spot rentals", real: true },
+      { text: "NFT-based fantasy football", real: true },
+      { text: "Pet DNA testing with breed-specific health plans", real: true },
+      { text: "A mirror that compliments you while tracking your posture", real: true },
+      { text: "Decentralized dating app with reputation tokens", real: true },
+      { text: "Fridge magnet that orders your groceries", real: true },
+      { text: "AI assistant that creates custom bedtime stories for kids", real: true },
+      { text: "Smart toilet that tracks hydration levels", real: true },
+      { text: "Crowdsourced map of safe walking paths at night", real: true },
+      { text: "Smart mugs that detect mood from your sip", real: true },
+      { text: "An app for sharing leftover food with neighbors", real: true },
+      { text: "AI-generated baby names based on personality quizzes", real: true },
+      { text: "AI that helps you argue with your landlord", real: true },
+      { text: "A platform for trading unused SaaS credits", real: true },
+      { text: "Robot therapist that adapts to your tone in real-time", real: true },
+      { text: "Slack integration that celebrates employee hydration milestones", real: true },
+      // Nonsense startup ideas
+      { text: "Smart socks that tweet your foot pressure", real: false },
+      { text: "VR yoga with underwater raccoons", real: false },
+      { text: "An app that matches you with compatible ghosts", real: false },
+      { text: "Predictive analytics for sandwich cravings", real: false },
+      { text: "Metaverse therapy for confused pigeons", real: false },
+      { text: "NFTs of your grandma's lasagna recipe", real: false },
+      { text: "AI-powered hat recommendations based on your aura", real: false },
+      { text: "Robot janitors that only clean when no one is looking", real: false },
+      { text: "Blockchain-based paperclip exchange", real: false },
+      { text: "Smart shoes that rate the ground softness", real: false },
+      { text: "Social network for AI pets", real: false },
+      { text: "App that translates baby cries into emojis", real: false },
+      { text: "Crowdfunded space funerals for fictional characters", real: false },
+      { text: "IoT toothbrush that live-tweets your brushing technique", real: false },
+      { text: "Decentralized soup reviews on the blockchain", real: false },
+      { text: "AI therapist for haunted houses", real: false },
+      { text: "Digital twin of your soul for metaverse continuity", real: false },
+      { text: "Tinder for indoor plants", real: false },
+      { text: "AI-generated perfumes based on your tweets", real: false },
+      { text: "Subscription box for ethically-sourced air", real: false },
+      { text: "Virtual assistant that only speaks in haiku", real: false },
+      { text: "Marketplace for renting fake friends for parties", real: false },
+      { text: "Algorithmic matching of lost socks across laundromats", real: false },
+      { text: "Platform to rate how smart your pet looks in photos", real: false },
+      { text: "Mindfulness app for fish", real: false },
+      { text: "Smart doorbells that tell jokes before opening", real: false }
+    ];
 
     let currentIdea;
     let usedIndexes = [];
@@ -185,7 +168,14 @@
       } while (usedIndexes.includes(idx));
       usedIndexes.push(idx);
       currentIdea = ideas[idx];
-      document.getElementById("idea").textContent = currentIdea.text;
+      const ideaDiv = document.getElementById("idea");
+      ideaDiv.style.opacity = 0;
+      setTimeout(() => {
+        ideaDiv.textContent = currentIdea.text;
+        ideaDiv.classList.remove("fadeIn");
+        void ideaDiv.offsetWidth; // trigger reflow
+        ideaDiv.classList.add("fadeIn");
+      }, 100);
       document.getElementById("result").textContent = "";
     }
 
