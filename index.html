@@ -2,139 +2,214 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>James.exe</title>
+  <title>James XP</title>
+  <link href="https://fonts.googleapis.com/css2?family=Segoe+UI&display=swap" rel="stylesheet">
   <style>
     body {
-      background-color: #b0c4de; /* XP blue-gray wallpaper vibe */
       margin: 0;
-      padding: 50px;
+      background-color: #3a6ea5;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      color: #000;
+      color: black;
     }
 
-    .window {
-      background-color: #f0f0f0;
-      width: 720px;
-      margin: auto;
-      border: 2px solid #666;
-      border-radius: 6px;
-      box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.3);
+    .desktop {
+      height: 100vh;
+      background: url('https://wallpapercave.com/wp/wp2543627.jpg') no-repeat center center fixed;
+      background-size: cover;
+      position: relative;
       overflow: hidden;
     }
 
-    .title-bar {
+    .icon {
+      width: 64px;
+      text-align: center;
+      color: white;
+      font-size: 12px;
+      margin: 10px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .icon img {
+      width: 48px;
+      height: 48px;
+    }
+
+    .icons {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .taskbar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 40px;
+      background-color: #c0c0c0;
+      border-top: 2px solid #999;
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      z-index: 999;
+    }
+
+    .start-button {
+      background-color: #0c5caa;
+      color: white;
+      padding: 4px 12px;
+      margin-right: 10px;
+      border: 2px outset #fff;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .taskbar-apps {
+      display: flex;
+      gap: 10px;
+    }
+
+    .window {
+      position: absolute;
+      top: 100px;
+      left: 100px;
+      width: 400px;
+      background-color: #f0f0f0;
+      border: 2px solid #666;
+      box-shadow: 4px 4px rgba(0, 0, 0, 0.3);
+      display: none;
+      z-index: 998;
+    }
+
+    .window-header {
       background: linear-gradient(to bottom, #3a6ea5, #2b5c9e);
       color: white;
-      padding: 10px 15px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      padding: 8px;
       font-weight: bold;
+      cursor: move;
+    }
+
+    .window-content {
+      padding: 10px;
       font-size: 14px;
     }
 
-    .title-bar-buttons {
+    #boot {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background-color: black;
+      color: lime;
+      font-family: monospace;
       display: flex;
-      gap: 6px;
-    }
-
-    .button {
-      width: 16px;
-      height: 16px;
-      background-color: #f0f0f0;
-      border: 1px solid #444;
-      border-radius: 2px;
-    }
-
-    .content {
-      padding: 20px 25px;
-      font-size: 15px;
-      line-height: 1.6;
-    }
-
-    ul {
-      padding-left: 20px;
-    }
-
-    a {
-      color: #1a4e9b;
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
-    .blinking-cursor {
-      display: inline-block;
-      font-weight: bold;
-      animation: blink 1s steps(2, start) infinite;
-    }
-
-    @keyframes blink {
-      to {
-        visibility: hidden;
-      }
+      justify-content: center;
+      align-items: center;
+      font-size: 20px;
+      z-index: 1000;
     }
   </style>
 </head>
 <body>
-  <div class="window">
-    <div class="title-bar">
-      <div>James.exe - Terminal</div>
-      <div class="title-bar-buttons">
-        <div class="button"></div>
-        <div class="button"></div>
-        <div class="button"></div>
+  <div id="boot">Booting JamesXP...</div>
+  <div class="desktop" id="desktop">
+    <div class="icons">
+      <div class="icon" onclick="openWindow('beats')">
+        <img src="https://cdn-icons-png.flaticon.com/512/888/888879.png" alt="beats">
+        <div>Jamez Sick Beats</div>
+      </div>
+      <div class="icon" onclick="openWindow('limewire')">
+        <img src="https://cdn-icons-png.flaticon.com/512/888/888879.png" alt="limewire">
+        <div>Limewire Downloads</div>
+      </div>
+      <div class="icon" onclick="openWindow('uni')">
+        <img src="https://cdn-icons-png.flaticon.com/512/888/888879.png" alt="uni">
+        <div>Uni Stuff</div>
+      </div>
+      <div class="icon" onclick="openWindow('winamp')">
+        <img src="https://upload.wikimedia.org/wikipedia/en/2/24/Winamp_Icon.png" alt="winamp">
+        <div>Winamp</div>
+      </div>
+      <div class="icon" onclick="openWindow('solitaire')">
+        <img src="https://upload.wikimedia.org/wikipedia/en/b/b0/Windows_XP_Solitaire_Icon.png" alt="solitaire">
+        <div>Solitaire</div>
+      </div>
+      <div class="icon" onclick="openWindow('aboutme')">
+        <img src="https://cdn-icons-png.flaticon.com/512/888/888879.png" alt="aboutme">
+        <div>About Me</div>
       </div>
     </div>
-    <div class="content">
-      <p><strong>> Hi, I'm James 👋</strong></p>
-      <p>(Aussie by origin, recruiter by trade, rowing enthusiast / hobby DJ by questionable life choices.)</p>
 
-      <p>
-        Born and raised in Geelong, I once pursued a career as a "professional" rower —  
-        professional in the sense that I trained like hell and got paid like… well, let’s not talk about it.
-      </p>
+    <div class="taskbar">
+      <div class="start-button">Start</div>
+      <div class="taskbar-apps">
+        <div>James.exe</div>
+      </div>
+    </div>
 
-      <p>
-        After realising life existed beyond early mornings on the water, I joined a 50-person rowing boat company where my job title was roughly:<br>
-        "Sales / Marketing / Deliveries / Also Possibly some assembly."<br>
-        The apple didn’t fall far from the boat, but it did start drifting toward tech.
-      </p>
+    <div class="window" id="beats">
+      <div class="window-header">Jamez Sick Beats</div>
+      <div class="window-content">Coming soon: certified dancefloor damage 💽</div>
+    </div>
 
-      <p>
-        Somewhere between boat deliveries and boat slinging, I also dabbled as a DJ.<br>
-        Not Ibiza-residency level… more wedding DJ with a fog machine I borrowed from my housemate vibes.<br>
-        Still counts. People danced.
-      </p>
+    <div class="window" id="limewire">
+      <div class="window-header">Limewire Downloads</div>
+      <div class="window-content">Virus.exe<br>TotallyLegalSong.mp3<br>Movie_CAM_quality.avi</div>
+    </div>
 
-      <p>
-        Eventually, I leaned into my tech obsession (with a side of dusty university code) and jumped into recruitment — specifically product engineers for early-stage startups. That stuck.
-      </p>
+    <div class="window" id="uni">
+      <div class="window-header">Uni Stuff</div>
+      <div class="window-content">LectureNotes.pdf<br>Assignment_Final_FINAL2.doc</div>
+    </div>
 
-      <p>
-        Now based in Vigo, Spain with my wife and two boys, I get to:
-        <ul>
-          <li>🚀 Work with ambitious startups</li>
-          <li>🧠 Match smart engineers with problems worth solving</li>
-          <li>🎙️ Ask clever questions on <a href="https://www.youtube.com/@WhatNextDev" target="_blank">What Next Dev</a>, our podcast where Matthew Sinclair gives actual good advice, and I mostly nod</li>
-        </ul>
-      </p>
+    <div class="window" id="winamp">
+      <div class="window-header">Winamp</div>
+      <div class="window-content">Now playing: Sandstorm - Darude</div>
+    </div>
 
-      <p>
-        I've been in Spain for over 2 years.  
-        My Spanish is progressing slowly but steadily — like a snail on a scenic route.
-      </p>
+    <div class="window" id="solitaire">
+      <div class="window-header">Solitaire</div>
+      <div class="window-content">[Placeholder for procrastination]</div>
+    </div>
 
-      <p>
+    <div class="window" id="aboutme">
+      <div class="window-header">About Me</div>
+      <div class="window-content">
+        Hi, I'm James 👋<br>
+        (Aussie by origin, recruiter by trade, rowing enthusiast / hobby DJ by questionable life choices.)<br><br>
+        Born and raised in Geelong, I once pursued a career as a "professional" rower — professional in the sense that I trained like hell and got paid like… well, let’s not talk about it.<br><br>
+        After realising life existed beyond early mornings on the water, I joined a 50-person rowing boat company where my job title was roughly: "Sales / Marketing / Deliveries / Also Possibly some assembly." The apple didn’t fall far from the boat, but it did start drifting toward tech.<br><br>
+        Somewhere between boat deliveries and boat slinging, I also dabbled as a DJ. Not Ibiza-residency level… more wedding DJ with a fog machine I borrowed from my housemate vibes. Still counts. People danced.<br><br>
+        Eventually, I leaned into my tech obsession (with a side of dusty university code) and jumped into recruitment — specifically product engineers for early-stage startups. That stuck.<br><br>
+        Now based in Vigo, Spain with my wife and two boys, I get to:<br>
+        🚀 Work with ambitious startups<br>
+        🧠 Match smart engineers with problems worth solving<br>
+        🎙️ Ask clever questions on <a href="https://www.youtube.com/@WhatNextDev" target="_blank">What Next Dev</a>, our podcast where Matthew Sinclair gives actual good advice, and I mostly nod.<br><br>
+        I've been in Spain for over 2 years. My Spanish is progressing slowly but steadily — like a snail on a scenic route.<br><br>
         💌 Don’t be afraid to say hi — or give me feedback on my horrible code. I can take it (mostly).<br>
-        🎧 All DJ residency enquiries can go directly to my manager (aka me): 
-        <a href="mailto:jameswilson11@gmail.com">jameswilson11@gmail.com</a>
-      </p>
-
-      <p><span class="blinking-cursor">█</span></p>
+        🎧 All DJ residency enquiries can go directly to my manager (aka me): <a href="mailto:jameswilson11@gmail.com">jameswilson11@gmail.com</a>
+      </div>
     </div>
   </div>
+
+  <script>
+    window.onload = function () {
+      setTimeout(() => {
+        document.getElementById('boot').style.display = 'none';
+        document.getElementById('desktop').style.display = 'block';
+      }, 2000);
+    }
+
+    function openWindow(id) {
+      const win = document.getElementById(id);
+      win.style.display = 'block';
+      win.style.zIndex = Date.now();
+    }
+  </script>
 </body>
 </html>
