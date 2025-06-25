@@ -2,220 +2,91 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Startup or Nonsense?</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='black' /></svg>"> 
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+  <title>James | About Me</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    html, body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Manrope', sans-serif;
-      background-color: #fff;
-      color: #000;
-      text-align: center;
-      width: 100%;
-      height: 100%;
-    }
-
     body {
-      padding: 3em 1em;
-      max-width: 700px;
+      background-color: #fefefe;
+      color: #222;
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      max-width: 800px;
       margin: auto;
+      line-height: 1.6;
     }
 
     h1 {
-      font-size: 2.7em;
-      font-weight: 700;
-      margin-bottom: 0.5em;
+      font-size: 28px;
     }
 
-    #scoreStatus {
-      margin: 1em 0;
-      font-size: 1.1em;
-      font-weight: 500;
+    p {
+      margin-bottom: 1.2em;
     }
 
-    .idea {
-      font-size: 1.5em;
-      font-style: italic;
-      margin: 1.5em 0;
-      background: #fff;
-      padding: 1.5em;
-      border: 2px solid #000;
-      border-radius: 0;
-      opacity: 0;
-      animation: fadeIn 0.5s forwards;
+    .emoji {
+      font-size: 20px;
+      margin-right: 6px;
     }
 
-    @keyframes fadeIn {
-      to {
-        opacity: 1;
-      }
-    }
-
-    button {
-      display: inline-block;
-      margin: 0.5em 0.5em;
-      padding: 1em 1.5em;
-      font-weight: bold;
-      border: 2px solid #000;
-      border-radius: 0;
-      background: #fff;
-      color: #000;
-      font-size: 1.1em;
-      transition: background 0.2s, color 0.2s;
-      cursor: pointer;
-      width: calc(100% - 2em);
-      max-width: 280px;
-    }
-
-    button:hover {
-      background: #000;
-      color: #fff;
-    }
-
-    .result {
-      margin-top: 1.5em;
-      font-size: 1.3em;
-      font-weight: 600;
-    }
-
-    .share-buttons {
-      margin-top: 2em;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 1em;
-    }
-
-    .share-buttons a {
+    a {
+      color: #007acc;
       text-decoration: none;
-      color: #000;
-      font-weight: 600;
     }
 
-    .share-buttons a:hover {
+    a:hover {
       text-decoration: underline;
     }
 
-    @media (max-width: 480px) {
-      h1 {
-        font-size: 2em;
-      }
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
 
-      .idea {
-        font-size: 1.2em;
-        padding: 1em;
-      }
-
-      button {
-        font-size: 1em;
-        padding: 0.8em;
-        width: 100%;
-      }
+    ul li {
+      margin: 0.5em 0;
     }
   </style>
 </head>
 <body>
-  <h1>Startup or Nonsense?</h1>
-  <div id="scoreStatus"></div>
-  <div id="idea" class="idea">Loading idea...</div>
-  <div>
-    <button onclick="checkAnswer(true)">Startup</button>
-    <button onclick="checkAnswer(false)">Nonsense</button>
-    <button onclick="getRandomIdea()">Next Idea</button>
-  </div>
-  <div id="result" class="result"></div>
-  <div class="share-buttons">
-    <span>Share:</span>
-    <a href="#" id="shareTwitter" target="_blank">Twitter</a>
-    <a href="#" id="shareLinkedIn" target="_blank">LinkedIn</a>
-    <a href="#" id="shareFacebook" target="_blank">Facebook</a>
-  </div>
+  <h1>Hi, I'm James 👋</h1>
+  <p>(Aussie by origin, recruiter by trade, rowing enthusiast / hobby DJ by questionable life choices.)</p>
 
-  <script>
-    const ideas = [
-      { text: "A smart litter box that analyzes your cat’s poop for early disease detection.", real: true },
-      { text: "An app that helps you break up with someone by generating custom breakup messages with AI.", real: true },
-      { text: "A subscription for monthly boxes of pre-chopped onions.", real: true },
-      { text: "Digital wardrobe app that picks your outfit each day using weather and mood input.", real: true },
-      { text: "Pet telehealth platform offering on-demand video calls with vets.", real: true },
-      { text: "VR therapy sessions with AI-powered avatars.", real: true },
-      { text: "A connected bird feeder that takes photos of birds and identifies species.", real: true },
-      { text: "AI-generated bedtime stories customized with your child’s name and favorite things.", real: true },
-      { text: "On-demand private chef marketplace for home events.", real: true },
-      { text: "Marketplace for renting designer handbags hourly.", real: true },
-      { text: "A blockchain-powered fridge that refuses to open unless your hydration levels are adequate.", real: false },
-      { text: "An app that sends you a motivational quote every time you sneeze.", real: false },
-      { text: "A dating app where users are matched solely by the last thing they ate.", real: false },
-      { text: "A coffee cup that plays lo-fi beats based on your sip speed.", real: false },
-      { text: "Socks that stream your footstep rhythm as NFTs.", real: false },
-      { text: "A chair that live-tweets your posture habits.", real: false },
-      { text: "A food delivery service that only serves food you can eat while rollerblading.", real: false },
-      { text: "An AI that generates daily horoscopes based on your Wi-Fi signal strength.", real: false },
-      { text: "Smart pillows that whisper startup pitches as you fall asleep.", real: false },
-      { text: "An app that lets plants rate your mood and suggest jazz playlists.", real: false }
-    ];
+  <p>
+    Born and raised in Geelong, I once pursued a career as a "professional" rower—
+    <br>
+    professional in the sense that I trained like hell and got paid like… well, let’s not talk about it.
+  </p>
 
-    let currentIdea;
-    let usedIndexes = [];
-    let score = 0;
-    let total = 0;
+  <p>
+    After realising life existed beyond early mornings on the water, I joined a 50-person rowing boat company where my job title was roughly:<br>
+    "Sales / Marketing / Deliveries / Also Possibly some assembly."<br>
+    The apple didn’t fall far from the boat, but it did start drifting toward tech.
+  </p>
 
-    function getRandomIdea() {
-      if (usedIndexes.length === ideas.length) usedIndexes = [];
-      let idx;
-      do {
-        idx = Math.floor(Math.random() * ideas.length);
-      } while (usedIndexes.includes(idx));
-      usedIndexes.push(idx);
-      currentIdea = ideas[idx];
-      const ideaDiv = document.getElementById("idea");
-      ideaDiv.style.opacity = 0;
-      setTimeout(() => {
-        ideaDiv.textContent = currentIdea.text;
-        ideaDiv.classList.remove("fadeIn");
-        void ideaDiv.offsetWidth;
-        ideaDiv.classList.add("fadeIn");
-        updateShareLinks(currentIdea.text);
-      }, 100);
-      document.getElementById("result").textContent = "";
-    }
+  <p>
+    Somewhere between boat deliveries and boat slinging, I also dabbled as a DJ.<br>
+    Not Ibiza-residency level… more wedding DJ with a fog machine I borrowed from my housemate vibes.<br>
+    Still counts. People danced.
+  </p>
 
-    function checkAnswer(guess) {
-      const isCorrect = guess === currentIdea.real;
-      total++;
-      if (isCorrect) score++;
-      document.getElementById("result").textContent = isCorrect ? "✅ Correct!" : "❌ Nope. Try again.";
-      updateScore();
-    }
+  <p>
+    Eventually, I leaned into my tech obsession (with a side of dusty university code) and jumped into recruitment—specifically product engineers for early-stage startups. That stuck.
+  </p>
 
-    function updateScore() {
-      const ratio = total ? score / total : 0;
-      let level = "🪤 Wannabe VC";
-      if (ratio > 0.85) level = "🧠 Sequoia Scout";
-      else if (ratio > 0.7) level = "💰 Angel with Taste";
-      else if (ratio > 0.55) level = "📈 LinkedIn Influencer";
-      else if (ratio > 0.4) level = "🤷‍♂️ Random Seed Investor";
-      else if (ratio > 0.25) level = "🎢 Reddit Theorist";
+  <p>
+    Now based in Vigo, Spain with my wife and two boys, I get to:
+  </p>
 
-      document.getElementById("scoreStatus").textContent = `Score: ${score}/${total} | Rank: ${level}`;
-    }
+  <ul>
+    <li>🚀 Work with ambitious startups</li>
+    <li>🧠 Match smart engineers with problems worth solving</li>
+    <li>🎙️ Ask clever questions on <strong>What Next Dev</strong>, our podcast where Matthew Sinclair gives actual good advice, and I mostly nod</li>
+  </ul>
 
-    function updateShareLinks(text) {
-      const url = encodeURIComponent(window.location.href);
-      const idea = encodeURIComponent(text);
-      document.getElementById("shareTwitter").href = `https://twitter.com/intent/tweet?text=${idea}%20%7C%20Play%20now%3A%20${url}`;
-      document.getElementById("shareLinkedIn").href = `https://www.linkedin.com/shareArticle?mini=true&url=${url}&title=Startup%20or%20Nonsense&summary=${idea}`;
-      document.getElementById("shareFacebook").href = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
-    }
+  <p>I’ve been in Spain for over 2 years. My Spanish is progressing slowly but steadily, like a snail on a scenic route.</p>
 
-    getRandomIdea();
-  </script>
+  <p>
+    💌 Don’t be afraid to say hi — or give me feedback on my horrible code. I can take it (mostly).<br>
+    🎧 All DJ residency enquiries can go directly to my manager (aka me): <a href="mailto:jameswilson11@gmail.com">jameswilson11@gmail.com</a>
+  </p>
 </body>
 </html>
