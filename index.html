@@ -2,33 +2,56 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>James | About Me</title>
+  <title>James.exe</title>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
   <style>
     body {
-      background-color: #fefefe;
-      color: #222;
-      font-family: Arial, sans-serif;
-      padding: 40px;
-      max-width: 800px;
+      background-color: #008080;
+      margin: 0;
+      padding: 50px;
+      font-family: 'VT323', monospace;
+      font-size: 18px;
+      color: black;
+    }
+
+    .window {
+      background-color: #c0c0c0;
+      width: 700px;
       margin: auto;
-      line-height: 1.6;
+      box-shadow: 5px 5px 0px #404040;
+      border: 2px solid #000;
     }
 
-    h1 {
-      font-size: 28px;
+    .title-bar {
+      background-color: navy;
+      color: white;
+      padding: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: bold;
     }
 
-    p {
-      margin-bottom: 1.2em;
+    .title-bar-buttons {
+      display: flex;
+      gap: 4px;
     }
 
-    .emoji {
-      font-size: 20px;
-      margin-right: 6px;
+    .button {
+      width: 14px;
+      height: 14px;
+      background-color: #c0c0c0;
+      border: 2px outset #fff;
+    }
+
+    .content {
+      background-color: white;
+      padding: 20px;
+      border-top: 2px solid #000;
     }
 
     a {
-      color: #007acc;
+      color: navy;
       text-decoration: none;
     }
 
@@ -36,57 +59,72 @@
       text-decoration: underline;
     }
 
-    ul {
-      list-style: none;
-      padding-left: 0;
+    .blinking-cursor {
+      animation: blink 1s step-start infinite;
     }
 
-    ul li {
-      margin: 0.5em 0;
+    @keyframes blink {
+      50% { opacity: 0; }
     }
   </style>
 </head>
 <body>
-  <h1>Hi, I'm James 👋</h1>
-  <p>(Aussie by origin, recruiter by trade, rowing enthusiast / hobby DJ by questionable life choices.)</p>
+  <div class="window">
+    <div class="title-bar">
+      <div>James.exe - Command Prompt</div>
+      <div class="title-bar-buttons">
+        <div class="button"></div>
+        <div class="button"></div>
+        <div class="button"></div>
+      </div>
+    </div>
+    <div class="content">
+      <p>> Hi, I'm James 👋</p>
+      <p>(Aussie by origin, recruiter by trade, rowing enthusiast / hobby DJ by questionable life choices.)</p>
 
-  <p>
-    Born and raised in Geelong, I once pursued a career as a "professional" rower—
-    <br>
-    professional in the sense that I trained like hell and got paid like… well, let’s not talk about it.
-  </p>
+      <p>
+        Born and raised in Geelong, I once pursued a career as a "professional" rower —  
+        professional in the sense that I trained like hell and got paid like… well, let’s not talk about it.
+      </p>
 
-  <p>
-    After realising life existed beyond early mornings on the water, I joined a 50-person rowing boat company where my job title was roughly:<br>
-    "Sales / Marketing / Deliveries / Also Possibly some assembly."<br>
-    The apple didn’t fall far from the boat, but it did start drifting toward tech.
-  </p>
+      <p>
+        After realising life existed beyond early mornings on the water, I joined a 50-person rowing boat company where my job title was roughly:<br>
+        "Sales / Marketing / Deliveries / Also Possibly some assembly."<br>
+        The apple didn’t fall far from the boat, but it did start drifting toward tech.
+      </p>
 
-  <p>
-    Somewhere between boat deliveries and boat slinging, I also dabbled as a DJ.<br>
-    Not Ibiza-residency level… more wedding DJ with a fog machine I borrowed from my housemate vibes.<br>
-    Still counts. People danced.
-  </p>
+      <p>
+        Somewhere between boat deliveries and boat slinging, I also dabbled as a DJ.<br>
+        Not Ibiza-residency level… more wedding DJ with a fog machine I borrowed from my housemate vibes.<br>
+        Still counts. People danced.
+      </p>
 
-  <p>
-    Eventually, I leaned into my tech obsession (with a side of dusty university code) and jumped into recruitment—specifically product engineers for early-stage startups. That stuck.
-  </p>
+      <p>
+        Eventually, I leaned into my tech obsession (with a side of dusty university code) and jumped into recruitment — specifically product engineers for early-stage startups. That stuck.
+      </p>
 
-  <p>
-    Now based in Vigo, Spain with my wife and two boys, I get to:
-  </p>
+      <p>
+        Now based in Vigo, Spain with my wife and two boys, I get to:
+        <ul>
+          <li>🚀 Work with ambitious startups</li>
+          <li>🧠 Match smart engineers with problems worth solving</li>
+          <li>🎙️ Ask clever questions on <a href="https://www.youtube.com/@WhatNextDev" target="_blank">What Next Dev</a>, our podcast where Matthew Sinclair gives actual good advice, and I mostly nod</li>
+        </ul>
+      </p>
 
-  <ul>
-    <li>🚀 Work with ambitious startups</li>
-    <li>🧠 Match smart engineers with problems worth solving</li>
-    <li>🎙️ Ask clever questions on <strong>What Next Dev</strong>, our podcast where Matthew Sinclair gives actual good advice, and I mostly nod</li>
-  </ul>
+      <p>
+        I've been in Spain for over 2 years.  
+        My Spanish is progressing slowly but steadily — like a snail on a scenic route.
+      </p>
 
-  <p>I’ve been in Spain for over 2 years. My Spanish is progressing slowly but steadily, like a snail on a scenic route.</p>
+      <p>
+        💌 Don’t be afraid to say hi — or give me feedback on my horrible code. I can take it (mostly).<br>
+        🎧 All DJ residency enquiries can go directly to my manager (aka me): 
+        <a href="mailto:jameswilson11@gmail.com">jameswilson11@gmail.com</a>
+      </p>
 
-  <p>
-    💌 Don’t be afraid to say hi — or give me feedback on my horrible code. I can take it (mostly).<br>
-    🎧 All DJ residency enquiries can go directly to my manager (aka me): <a href="mailto:jameswilson11@gmail.com">jameswilson11@gmail.com</a>
-  </p>
+      <p><span class="blinking-cursor">█</span></p>
+    </div>
+  </div>
 </body>
 </html>
