@@ -25,4 +25,4 @@ My Spanish is progressing slowly but steadily — like a snail on a scenic route
 💌 **Don’t be afraid to say hi** — or give me feedback on my horrible code. I can take it (mostly).  
 🎧 **All DJ residency**
 
-[Check out my webiste] (https://jameswilsonlondon.github.io/about-me/)
+[Check out my webiste](https://jameswilsonlondon.github.io/about-me/)
