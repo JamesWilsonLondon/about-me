@@ -2,19 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>James XP</title>
+  <title>James XP | Not a Virus</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Arial&display=swap" rel="stylesheet">
+  <link rel="icon" href="https://win98icons.alexmeub.com/icons/png/windows-0.png">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       background-color: #3a6ea5;
-      font-family: 'Arial', sans-serif;
+      font-family: 'Press Start 2P', monospace;
       color: black;
     }
 
     .desktop {
-      display: none;
       min-height: 100vh;
       background: url('https://wallpapercave.com/wp/wp2543627.jpg') no-repeat center center fixed;
       background-size: cover;
@@ -36,6 +36,12 @@
       height: 48px;
     }
 
+    .icon:hover {
+      filter: brightness(1.2);
+      border: 1px solid white;
+      cursor: pointer;
+    }
+
     .icons {
       position: absolute;
       top: 20px;
@@ -55,6 +61,7 @@
       border-top: 2px solid #999;
       display: flex;
       align-items: center;
+      justify-content: space-between;
       padding: 0 10px;
       z-index: 999;
       color: black;
@@ -66,15 +73,13 @@
       background-size: 20px 20px;
       color: black;
       padding: 4px 12px 4px 28px;
-      margin-right: 10px;
       border: 2px outset #fff;
       font-weight: bold;
       cursor: pointer;
     }
 
-    .taskbar-apps {
-      display: flex;
-      gap: 10px;
+    #clock {
+      font-size: 12px;
     }
 
     .notepad {
@@ -84,29 +89,15 @@
       background-color: white;
       border: 2px solid #666;
       box-shadow: 4px 4px rgba(0, 0, 0, 0.3);
-      font-family: 'Arial', sans-serif;
       padding: 12px;
-      font-size: 14px;
+      font-size: 10px;
       line-height: 1.4;
       z-index: 900;
       white-space: pre-wrap;
     }
 
-    .notepad p {
-      margin: 10px 0;
-    }
-
-    .notepad ul {
-      margin: 10px 0 10px 20px;
-      padding-left: 15px;
-    }
-
-    @media screen and (max-width: 768px) {
-      .notepad {
-        margin: 30px 10px;
-        padding: 10px;
-        font-size: 13px;
-      }
+    .notepad h3 {
+      margin-top: 0;
     }
 
     #boot {
@@ -123,66 +114,74 @@
       align-items: center;
       z-index: 1000;
     }
+
+    .error-popup {
+      position: absolute;
+      top: 100px;
+      left: 100px;
+      width: 300px;
+      background: #fff;
+      border: 2px solid #000;
+      box-shadow: 3px 3px #333;
+      padding: 15px;
+      z-index: 2000;
+      display: none;
+    }
   </style>
 </head>
 <body>
   <div id="boot"></div>
   <div class="desktop" id="desktop">
     <div class="icons">
-      <div class="icon">
-        <img src="https://icons.iconarchive.com/icons/dtafalonso/yosemite-flat/512/Folder-icon.png" alt="beats">
+      <div class="icon" onclick="showError('beats')">
+        <img src="https://icons.iconarchive.com/icons/dtafalonso/yosemite-flat/512/Folder-icon.png">
         <div>Jamez Sick Beats</div>
       </div>
-      <div class="icon">
-        <img src="https://icons.iconarchive.com/icons/dtafalonso/yosemite-flat/512/Folder-icon.png" alt="limewire">
+      <div class="icon" onclick="showError('limewire')">
+        <img src="https://icons.iconarchive.com/icons/dtafalonso/yosemite-flat/512/Folder-icon.png">
         <div>Limewire Downloads</div>
       </div>
-      <div class="icon">
-        <img src="https://icons.iconarchive.com/icons/dtafalonso/yosemite-flat/512/Folder-icon.png" alt="uni">
+      <div class="icon" onclick="showError('uni')">
+        <img src="https://icons.iconarchive.com/icons/dtafalonso/yosemite-flat/512/Folder-icon.png">
         <div>Uni Stuff</div>
       </div>
-      <div class="icon">
-        <img src="https://upload.wikimedia.org/wikipedia/en/2/24/Winamp_Icon.png" alt="winamp">
-        <div>Winamp</div>
-      </div>
-      <div class="icon">
-        <img src="https://upload.wikimedia.org/wikipedia/en/b/b0/Windows_XP_Solitaire_Icon.png" alt="solitaire">
+      <div class="icon" onclick="showError('solitaire')">
+        <img src="https://upload.wikimedia.org/wikipedia/en/b/b0/Windows_XP_Solitaire_Icon.png">
         <div>Solitaire</div>
       </div>
-      <div class="icon">
-        <img src="https://icons.iconarchive.com/icons/tatice/cristal-intense/128/Notepad-icon.png" alt="aboutme">
+      <div class="icon" onclick="document.querySelector('.notepad').scrollIntoView({ behavior: 'smooth' });">
+        <img src="https://icons.iconarchive.com/icons/tatice/cristal-intense/128/Notepad-icon.png">
         <div>About Me</div>
       </div>
     </div>
 
     <div class="taskbar">
-      <div class="start-button">Start</div>
-      <div class="taskbar-apps">
-        <div>James.exe</div>
-      </div>
+      <div class="start-button" onclick="alert('Start Menu coming soon!')">Start</div>
+      <div id="clock"></div>
     </div>
 
     <div class="notepad">
-<h3>Hi, I'm James 👋</h3>
-<p><em>(Aussie by origin, recruiter by trade, rowing enthusiast / hobby DJ by questionable life choices.)</em></p>
-<p><strong>Rowing era:</strong><br>
-Born and raised in Geelong, I once pursued a career as a "professional" rower — professional in the sense that I trained like hell and got paid like… well, let’s not talk about it.</p>
-<p><strong>The boat factory days:</strong><br>
-After realising life existed beyond early mornings on the water, I joined a 50-person rowing boat company where my job title was roughly: "Sales / Marketing / Deliveries / Also Possibly some assembly." The apple didn’t fall far from the boat, but it did start drifting toward tech.</p>
-<p><strong>Enter: DJ James:</strong><br>
-Somewhere between boat deliveries and boat slinging, I also dabbled as a DJ. Not Ibiza-residency level… more wedding DJ with a fog machine I borrowed from my housemate vibes. Still counts. People danced.</p>
-<p><strong>Into tech & talent:</strong><br>
-Eventually, I leaned into my tech obsession (with a side of dusty university code) and jumped into recruitment — specifically product engineers for early-stage startups. That stuck.</p>
-<p><strong>These days:</strong><br>
-Now based in Vigo, Spain with my wife and two boys, I get to:</p>
-<ul>
-  <li>🚀 Work with ambitious startups</li>
-  <li>🧠 Match smart engineers with problems worth solving</li>
-  <li>🎙️ Ask clever questions on <strong>What Next Dev</strong>, our podcast where Matthew Sinclair gives actual good advice, and I mostly nod.</li>
-</ul>
-<p>I've been in Spain for over 2 years. My Spanish is progressing slowly but steadily — like a snail on a scenic route.</p>
-<p><strong>💌 Don’t be afraid to say hi</strong> — or give me feedback on my horrible code. I can take it (mostly).<br>
-🎧 All DJ residency enquiries can go directly to my manager (aka me): <a href="mailto:jameswilson11@gmail.com">jameswilson11@gmail.com</a></p>
+      <h3>Hi, I'm James 👋</h3>
+      <p><em>(Aussie by origin, recruiter by trade, rowing enthusiast / hobby DJ by questionable life choices.)</em></p>
+      <p><strong>Rowing era:</strong> Born and raised in Geelong, I once pursued a career as a "professional" rower — professional in the sense that I trained like hell and got paid like… well, let’s not talk about it.</p>
+      <p><strong>The boat factory days:</strong> After realising life existed beyond early mornings on the water, I joined a 50-person rowing boat company where my job title was roughly: "Sales / Marketing / Deliveries / Also Possibly some assembly." The apple didn’t fall far from the boat, but it did start drifting toward tech.</p>
+      <p><strong>Enter: DJ James:</strong> Somewhere between boat deliveries and boat slinging, I also dabbled as a DJ. Not Ibiza-residency level… more wedding DJ with a fog machine I borrowed from my housemate vibes. Still counts. People danced.</p>
+      <p><strong>Into tech & talent:</strong> Eventually, I leaned into my tech obsession (with a side of dusty university code) and jumped into recruitment — specifically product engineers for early-stage startups. That stuck.</p>
+      <p><strong>These days:</strong> Now based in Vigo, Spain with my wife and two boys, I get to:</p>
+      <ul>
+        <li>🚀 Work with ambitious startups</li>
+        <li>🧠 Match smart engineers with problems worth solving</li>
+        <li>🎧 Ask clever questions on <strong>What Next Dev</strong>, our podcast where Matthew Sinclair gives actual good advice, and I mostly nod.</li>
+      </ul>
+      <p>I've been in Spain for over 2 years. My Spanish is progressing slowly but steadily — like a snail on a scenic route.</p>
+      <p><strong>💌 Don’t be afraid to say hi</strong> — or give me feedback on my horrible code. I can take it (mostly).<br>
+      🎧 DJ enquiries: <a href="mailto:jameswilson11@gmail.com">jameswilson11@gmail.com</a></p>
+    </div>
+
+    <div class="error-popup" id="errorBox">
+      <h4>Fatal Error</h4>
+      <p id="errorText">Unexpected fog machine error.</p>
+      <button onclick="document.getElementById('errorBox').style.display='none'">OK</button>
     </div>
   </div>
 
@@ -192,6 +191,25 @@ Now based in Vigo, Spain with my wife and two boys, I get to:</p>
         document.getElementById('boot').style.display = 'none';
         document.getElementById('desktop').style.display = 'block';
       }, 2000);
+    }
+
+    function updateClock() {
+      const now = new Date();
+      const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      document.getElementById('clock').textContent = time;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    function showError(source) {
+      const messages = {
+        beats: "Winamp crashed trying to load Jamez Sick Beats. Please try again later.",
+        limewire: "Limewire failed to connect. All .mp3s may be viruses.",
+        uni: "Uni Stuff folder is empty. Much like my academic motivation.",
+        solitaire: "Solitaire.exe is already running in background memory."
+      };
+      document.getElementById('errorText').textContent = messages[source] || "Unknown error occurred.";
+      document.getElementById('errorBox').style.display = 'block';
     }
   </script>
 </body>
