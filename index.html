@@ -18,20 +18,23 @@
     }
 
     .desktop {
+      position: relative;
+      width: 100vw;
       height: 100vh;
-      background: url('https://wallpapercave.com/wp/wp2543627.jpg') no-repeat center center fixed;
+      background: url('https://wallpapercave.com/wp/wp2543627.jpg') no-repeat center center;
       background-size: cover;
       display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      overflow: hidden;
+      justify-content: center;
+      align-items: center;
     }
 
     .icons {
+      position: absolute;
+      top: 20px;
+      left: 20px;
       display: flex;
-      flex-direction: row;
-      gap: 30px;
-      padding: 20px;
+      flex-direction: column;
+      gap: 20px;
     }
 
     .icon {
@@ -48,7 +51,34 @@
       height: 48px;
     }
 
+    .notepad {
+      position: relative;
+      width: 600px;
+      height: 380px;
+      background-color: white;
+      border: 2px solid #666;
+      box-shadow: 4px 4px rgba(0, 0, 0, 0.4);
+      padding: 10px 15px;
+      font-size: 11px;
+      line-height: 1.2;
+      overflow: auto;
+    }
+
+    .notepad h3 {
+      margin: 0 0 8px 0;
+      font-size: 13px;
+    }
+
+    .notepad p,
+    .notepad ul {
+      margin: 6px 0;
+    }
+
     .taskbar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
       height: 40px;
       background: #c0c0c0;
       border-top: 2px solid #999;
@@ -56,8 +86,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 10px;
-      z-index: 999;
-      color: black;
+      z-index: 100;
       font-size: 14px;
     }
 
@@ -75,26 +104,29 @@
       font-size: 12px;
     }
 
-    .notepad {
-      margin: 0 auto;
-      max-width: 720px;
-      background-color: white;
-      border: 2px solid #666;
-      box-shadow: 4px 4px rgba(0, 0, 0, 0.3);
-      padding: 15px 20px;
-      font-size: 13px;
-      line-height: 1.4;
-      overflow-y: auto;
-      height: calc(100vh - 130px);
+    .start-menu {
+      display: none;
+      position: absolute;
+      bottom: 40px;
+      left: 0;
+      width: 180px;
+      background: #f0f0f0;
+      border: 2px outset #ccc;
+      box-shadow: 2px 2px rgba(0,0,0,0.2);
+      z-index: 101;
+      padding: 10px;
+      font-size: 12px;
     }
 
-    .notepad h3 {
-      margin: 0 0 10px 0;
+    .start-menu ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
     }
 
-    .notepad p,
-    .notepad ul {
-      margin: 8px 0;
+    .start-menu li {
+      margin: 6px 0;
+      cursor: default;
     }
 
     #boot {
@@ -117,17 +149,17 @@
   <div id="boot"></div>
   <div class="desktop" id="desktop">
     <div class="icons">
-      <div class="icon" onclick="alert('Winamp is loading the nostalgia...')">
+      <div class="icon">
+        <img src="https://win98icons.alexmeub.com/icons/png/notepad-2.png">
+        <div>About Me</div>
+      </div>
+      <div class="icon">
         <img src="https://win98icons.alexmeub.com/icons/png/winamp-2.png">
         <div>Winamp</div>
       </div>
-      <div class="icon" onclick="alert('Launching Solitaire...')">
+      <div class="icon">
         <img src="https://win98icons.alexmeub.com/icons/png/solitaire-5.png">
         <div>Solitaire</div>
-      </div>
-      <div class="icon" onclick="document.querySelector('.notepad').scrollIntoView({ behavior: 'smooth' });">
-        <img src="https://win98icons.alexmeub.com/icons/png/notepad-2.png">
-        <div>About Me</div>
       </div>
     </div>
 
@@ -150,8 +182,20 @@
     </div>
 
     <div class="taskbar">
-      <div class="start-button" onclick="alert('Start Menu coming soon!')">Start</div>
+      <div class="start-button" onclick="toggleStartMenu()">Start</div>
       <div id="clock"></div>
+    </div>
+
+    <div class="start-menu" id="startMenu">
+      <ul>
+        <li>&#9658; Programs</li>
+        <li>&#9658; Documents</li>
+        <li>&#9658; Settings</li>
+        <li>&#9658; Find</li>
+        <li>&#9658; Help</li>
+        <li>&#9658; Run...</li>
+        <li>&#9658; Shut Down</li>
+      </ul>
     </div>
   </div>
 
@@ -170,6 +214,11 @@
     }
     setInterval(updateClock, 1000);
     updateClock();
+
+    function toggleStartMenu() {
+      const menu = document.getElementById('startMenu');
+      menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    }
   </script>
 </body>
 </html>
