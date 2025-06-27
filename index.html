@@ -5,21 +5,30 @@
   <title>James XP | Not a Virus</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="https://win98icons.alexmeub.com/icons/png/windows-0.png">
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       background-color: #3a6ea5;
-      font-family: 'Press Start 2P', monospace;
+      font-family: 'Inter', sans-serif;
       color: black;
     }
 
     .desktop {
-      min-height: 100vh;
+      height: 100vh;
       background: url('https://wallpapercave.com/wp/wp2543627.jpg') no-repeat center center fixed;
       background-size: cover;
       position: relative;
-      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .icons {
+      display: flex;
+      flex-direction: row;
+      gap: 30px;
+      padding: 20px;
     }
 
     .icon {
@@ -27,8 +36,8 @@
       text-align: center;
       color: white;
       font-size: 12px;
-      margin: 10px;
       user-select: none;
+      cursor: pointer;
     }
 
     .icon img {
@@ -36,26 +45,7 @@
       height: 48px;
     }
 
-    .icon:hover {
-      filter: brightness(1.2);
-      border: 1px solid white;
-      cursor: pointer;
-    }
-
-    .icons {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
     .taskbar {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
       height: 40px;
       background: #c0c0c0;
       border-top: 2px solid #999;
@@ -83,16 +73,14 @@
     }
 
     .notepad {
-      position: relative;
-      margin: 40px auto;
-      max-width: 700px;
+      margin: 0 auto;
+      max-width: 720px;
       background-color: white;
       border: 2px solid #666;
       box-shadow: 4px 4px rgba(0, 0, 0, 0.3);
-      padding: 12px;
-      font-size: 10px;
-      line-height: 1.4;
-      z-index: 900;
+      padding: 20px 30px;
+      font-size: 14px;
+      line-height: 1.6;
       white-space: pre-wrap;
     }
 
@@ -114,50 +102,24 @@
       align-items: center;
       z-index: 1000;
     }
-
-    .error-popup {
-      position: absolute;
-      top: 100px;
-      left: 100px;
-      width: 300px;
-      background: #fff;
-      border: 2px solid #000;
-      box-shadow: 3px 3px #333;
-      padding: 15px;
-      z-index: 2000;
-      display: none;
-    }
   </style>
 </head>
 <body>
   <div id="boot"></div>
   <div class="desktop" id="desktop">
     <div class="icons">
-      <div class="icon" onclick="showError('beats')">
-        <img src="https://icons.iconarchive.com/icons/dtafalonso/yosemite-flat/512/Folder-icon.png">
-        <div>Jamez Sick Beats</div>
+      <div class="icon" onclick="alert('Winamp is loading the nostalgia...')">
+        <img src="https://win98icons.alexmeub.com/icons/png/winamp-2.png">
+        <div>Winamp</div>
       </div>
-      <div class="icon" onclick="showError('limewire')">
-        <img src="https://icons.iconarchive.com/icons/dtafalonso/yosemite-flat/512/Folder-icon.png">
-        <div>Limewire Downloads</div>
-      </div>
-      <div class="icon" onclick="showError('uni')">
-        <img src="https://icons.iconarchive.com/icons/dtafalonso/yosemite-flat/512/Folder-icon.png">
-        <div>Uni Stuff</div>
-      </div>
-      <div class="icon" onclick="showError('solitaire')">
-        <img src="https://upload.wikimedia.org/wikipedia/en/b/b0/Windows_XP_Solitaire_Icon.png">
+      <div class="icon" onclick="alert('Launching Solitaire...')">
+        <img src="https://win98icons.alexmeub.com/icons/png/solitaire-5.png">
         <div>Solitaire</div>
       </div>
       <div class="icon" onclick="document.querySelector('.notepad').scrollIntoView({ behavior: 'smooth' });">
-        <img src="https://icons.iconarchive.com/icons/tatice/cristal-intense/128/Notepad-icon.png">
+        <img src="https://win98icons.alexmeub.com/icons/png/notepad-2.png">
         <div>About Me</div>
       </div>
-    </div>
-
-    <div class="taskbar">
-      <div class="start-button" onclick="alert('Start Menu coming soon!')">Start</div>
-      <div id="clock"></div>
     </div>
 
     <div class="notepad">
@@ -178,10 +140,9 @@
       🎧 DJ enquiries: <a href="mailto:jameswilson11@gmail.com">jameswilson11@gmail.com</a></p>
     </div>
 
-    <div class="error-popup" id="errorBox">
-      <h4>Fatal Error</h4>
-      <p id="errorText">Unexpected fog machine error.</p>
-      <button onclick="document.getElementById('errorBox').style.display='none'">OK</button>
+    <div class="taskbar">
+      <div class="start-button" onclick="alert('Start Menu coming soon!')">Start</div>
+      <div id="clock"></div>
     </div>
   </div>
 
@@ -189,7 +150,7 @@
     window.onload = function () {
       setTimeout(() => {
         document.getElementById('boot').style.display = 'none';
-        document.getElementById('desktop').style.display = 'block';
+        document.getElementById('desktop').style.display = 'flex';
       }, 2000);
     }
 
@@ -200,17 +161,6 @@
     }
     setInterval(updateClock, 1000);
     updateClock();
-
-    function showError(source) {
-      const messages = {
-        beats: "Winamp crashed trying to load Jamez Sick Beats. Please try again later.",
-        limewire: "Limewire failed to connect. All .mp3s may be viruses.",
-        uni: "Uni Stuff folder is empty. Much like my academic motivation.",
-        solitaire: "Solitaire.exe is already running in background memory."
-      };
-      document.getElementById('errorText').textContent = messages[source] || "Unknown error occurred.";
-      document.getElementById('errorBox').style.display = 'block';
-    }
   </script>
 </body>
 </html>
