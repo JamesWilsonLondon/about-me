@@ -7,10 +7,13 @@
   <link rel="icon" href="https://win98icons.alexmeub.com/icons/png/windows-0.png">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    body {
+    html, body {
       margin: 0;
-      background-color: #3a6ea5;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
       font-family: 'Inter', sans-serif;
+      background-color: #3a6ea5;
       color: black;
     }
 
@@ -18,10 +21,10 @@
       height: 100vh;
       background: url('https://wallpapercave.com/wp/wp2543627.jpg') no-repeat center center fixed;
       background-size: cover;
-      position: relative;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      overflow: hidden;
     }
 
     .icons {
@@ -78,14 +81,20 @@
       background-color: white;
       border: 2px solid #666;
       box-shadow: 4px 4px rgba(0, 0, 0, 0.3);
-      padding: 20px 30px;
-      font-size: 14px;
-      line-height: 1.6;
-      white-space: pre-wrap;
+      padding: 15px 20px;
+      font-size: 13px;
+      line-height: 1.4;
+      overflow-y: auto;
+      height: calc(100vh - 130px);
     }
 
     .notepad h3 {
-      margin-top: 0;
+      margin: 0 0 10px 0;
+    }
+
+    .notepad p,
+    .notepad ul {
+      margin: 8px 0;
     }
 
     #boot {
