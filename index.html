@@ -84,7 +84,7 @@
       left: 0;
       right: 0;
       height: 36px;
-      background: linear-gradient(to top, #3a6ea5, #5c9edc);
+      background: linear-gradient(to top, #205d9c, #4ea3f1);
       border-top: 2px solid #fff;
       display: flex;
       align-items: center;
@@ -94,13 +94,16 @@
       z-index: 100;
     }
     .start-button {
-      background: url('https://win98icons.alexmeub.com/icons/png/windows-0.png') no-repeat left center;
-      background-size: 16px 16px;
+      background: url('https://win98icons.alexmeub.com/icons/png/windows-0.png') no-repeat 5px center;
+      background-size: 20px;
       color: white;
-      padding: 3px 10px 3px 22px;
-      border: 2px outset #fff;
+      padding: 5px 15px 5px 30px;
+      border: none;
       font-weight: bold;
-      font-size: 11px;
+      font-size: 13px;
+      border-radius: 5px;
+      background-color: #1c6eea;
+      box-shadow: inset -1px -1px #0b4f9c, inset 1px 1px #60aaff;
       cursor: pointer;
     }
     #clock {
@@ -117,22 +120,29 @@
       position: absolute;
       bottom: 36px;
       left: 0;
-      width: 160px;
-      background: #f0f0f0;
+      width: 300px;
+      background: linear-gradient(to right, #d6e9ff, #f0f0f0);
       border: 2px outset #ccc;
       box-shadow: 1px 1px rgba(0,0,0,0.2);
       z-index: 101;
-      padding: 8px;
+      padding: 0;
       font-size: 11px;
     }
     .start-menu ul {
       list-style: none;
-      padding: 0;
+      padding: 8px;
       margin: 0;
     }
     .start-menu li {
-      margin: 5px 0;
+      margin: 6px 0;
       cursor: default;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .start-menu li img {
+      width: 16px;
+      height: 16px;
     }
     .window img.screenshot {
       width: 100%;
@@ -150,14 +160,6 @@
       <div class="icon" ondblclick="toggleWindow('winamp')">
         <img src="https://64.media.tumblr.com/e291ffe974d57ab582319df55514a40f/4e719840ac466b22-2b/s1280x1920/cba714b4195ec5cf66a630ea1af18e631a08382e.png">
         <div>Winamp</div>
-      </div>
-      <div class="icon" ondblclick="toggleWindow('solitaire')">
-        <img src="https://64.media.tumblr.com/9f573634a3b7f1bc82c2a2160a42e1f5/4f77d7dc29b9a59f-df/s2048x3072/2db1f247b2c29519f23a2198b88de2bc4c5b91c7.png">
-        <div>Solitaire</div>
-      </div>
-      <div class="icon" onclick="window.open('https://whatnext.dev', '_blank')">
-        <img src="https://win98icons.alexmeub.com/icons/png/directory_closed_cool-2.png">
-        <div>WhatNext.Dev</div>
       </div>
     </div>
 
@@ -193,14 +195,6 @@
       <img class="screenshot" src="https://skins.webamp.org/skin/5e4f10275dcb1fb211d4a8b4f1bda236/base-2.91.wsz/">
     </div>
 
-    <div class="window" id="solitaire">
-      <div class="title-bar">
-        <span>Solitaire</span>
-        <button onclick="toggleWindow('solitaire')">X</button>
-      </div>
-      <img class="screenshot" src="https://www.angelfire.com/games3/classicgames/cheats/winsol/winsol.jpg">
-    </div>
-
     <div class="taskbar">
       <div class="start-button" onclick="toggleStartMenu()">Start</div>
       <div id="clock">
@@ -211,13 +205,16 @@
 
     <div class="start-menu" id="startMenu">
       <ul>
-        <li>&#9658; Programs</li>
-        <li>&#9658; Documents</li>
-        <li>&#9658; Settings</li>
-        <li>&#9658; Find</li>
-        <li>&#9658; Help</li>
-        <li>&#9658; Run...</li>
-        <li>&#9658; Shut Down</li>
+        <li><img src="https://win98icons.alexmeub.com/icons/png/msie2-2.png"> Internet Explorer</li>
+        <li><img src="https://win98icons.alexmeub.com/icons/png/outlook_express-0.png"> Outlook Express</li>
+        <li><img src="https://win98icons.alexmeub.com/icons/png/msn-2.png"> MSN</li>
+        <li><img src="https://win98icons.alexmeub.com/icons/png/winmediaplayer-0.png"> Media Player</li>
+        <li><img src="https://win98icons.alexmeub.com/icons/png/messenger-1.png"> Messenger</li>
+        <li><img src="https://win98icons.alexmeub.com/icons/png/folder_open-3.png"> My Documents</li>
+        <li><img src="https://win98icons.alexmeub.com/icons/png/my_computer-4.png"> My Computer</li>
+        <li><img src="https://win98icons.alexmeub.com/icons/png/printers_folder-4.png"> Printers</li>
+        <li><img src="https://win98icons.alexmeub.com/icons/png/help_book-4.png"> Help</li>
+        <li><img src="https://win98icons.alexmeub.com/icons/png/search_file-0.png"> Search</li>
       </ul>
     </div>
   </div>
