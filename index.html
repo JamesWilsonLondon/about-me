@@ -17,7 +17,8 @@
       position: relative;
       width: 100vw;
       height: 100vh;
-      background-color: #008080;
+      background: url('https://upload.wikimedia.org/wikipedia/en/2/24/Bliss_%28Windows_XP%29.png') no-repeat center center;
+      background-size: cover;
       overflow: hidden;
     }
     .icons {
@@ -54,7 +55,7 @@
       z-index: 200;
     }
     .title-bar {
-      background: linear-gradient(to right, #000080, #0000CD);
+      background: linear-gradient(to right, #3a6ea5, #295197);
       color: white;
       padding: 4px 6px;
       font-size: 12px;
@@ -83,8 +84,8 @@
       left: 0;
       right: 0;
       height: 36px;
-      background: #C0C0C0;
-      border-top: 2px solid #999;
+      background: linear-gradient(to top, #3a6ea5, #5c9edc);
+      border-top: 2px solid #fff;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -95,7 +96,7 @@
     .start-button {
       background: url('https://win98icons.alexmeub.com/icons/png/windows-0.png') no-repeat left center;
       background-size: 16px 16px;
-      color: black;
+      color: white;
       padding: 3px 10px 3px 22px;
       border: 2px outset #fff;
       font-weight: bold;
@@ -140,107 +141,107 @@
   </style>
 </head>
 <body>
-<div class="desktop" id="desktop">
-  <div class="icons">
-    <div class="icon" ondblclick="toggleWindow('notepad')">
-      <img src="https://win98icons.alexmeub.com/icons/png/notepad-2.png">
-      <div>About Me</div>
+  <div class="desktop" id="desktop">
+    <div class="icons">
+      <div class="icon" ondblclick="toggleWindow('notepad')">
+        <img src="https://win98icons.alexmeub.com/icons/png/notepad-2.png">
+        <div>About Me</div>
+      </div>
+      <div class="icon" ondblclick="toggleWindow('winamp')">
+        <img src="https://64.media.tumblr.com/e291ffe974d57ab582319df55514a40f/4e719840ac466b22-2b/s1280x1920/cba714b4195ec5cf66a630ea1af18e631a08382e.png">
+        <div>Winamp</div>
+      </div>
+      <div class="icon" ondblclick="toggleWindow('solitaire')">
+        <img src="https://64.media.tumblr.com/9f573634a3b7f1bc82c2a2160a42e1f5/4f77d7dc29b9a59f-df/s2048x3072/2db1f247b2c29519f23a2198b88de2bc4c5b91c7.png">
+        <div>Solitaire</div>
+      </div>
+      <div class="icon" onclick="window.open('https://whatnext.dev', '_blank')">
+        <img src="https://win98icons.alexmeub.com/icons/png/directory_closed_cool-2.png">
+        <div>WhatNext.Dev</div>
+      </div>
     </div>
-    <div class="icon" ondblclick="toggleWindow('winamp')">
-      <img src="https://64.media.tumblr.com/e291ffe974d57ab582319df55514a40f/4e719840ac466b22-2b/s1280x1920/cba714b4195ec5cf66a630ea1af18e631a08382e.png">
-      <div>Winamp</div>
-    </div>
-    <div class="icon" ondblclick="toggleWindow('solitaire')">
-      <img src="https://64.media.tumblr.com/9f573634a3b7f1bc82c2a2160a42e1f5/4f77d7dc29b9a59f-df/s2048x3072/2db1f247b2c29519f23a2198b88de2bc4c5b91c7.png">
-      <div>Solitaire</div>
-    </div>
-    <div class="icon" onclick="window.open('https://whatnext.dev', '_blank')">
-      <img src="https://win98icons.alexmeub.com/icons/png/directory_closed_cool-2.png">
-      <div>WhatNext.Dev</div>
-    </div>
-  </div>
 
-  <div class="window" id="notepad">
-    <div class="title-bar">
-      <span>About Me - Notepad</span>
-      <button onclick="toggleWindow('notepad')">X</button>
+    <div class="window" id="notepad">
+      <div class="title-bar">
+        <span>About Me - Notepad</span>
+        <button onclick="toggleWindow('notepad')">X</button>
+      </div>
+      <div class="content">
+        <h3>Hi, I'm James 👋</h3>
+        <p><em>(Aussie by origin, recruiter by trade, rowing enthusiast / hobby DJ by questionable life choices.)</em></p>
+        <p><strong>Rowing era:</strong> Born and raised in Geelong, I once pursued a career as a "professional" rower — professional in the sense that I trained like hell and got paid like… well, let’s not talk about it.</p>
+        <p><strong>The boat factory days:</strong> After realising life existed beyond early mornings on the water, I joined a 50-person rowing boat company where my job title was roughly: "Sales / Marketing / Deliveries / Also Possibly some assembly." The apple didn’t fall far from the boat, but it did start drifting toward tech.</p>
+        <p><strong>Enter: DJ James:</strong> Somewhere between boat deliveries and boat slinging, I also dabbled as a DJ. Not Ibiza-residency level… more wedding DJ with a fog machine I borrowed from my housemate vibes. Still counts. People danced.</p>
+        <p><strong>Into tech & talent:</strong> Eventually, I leaned into my tech obsession (with a side of dusty university code) and jumped into recruitment — specifically product engineers for early-stage startups. That stuck.</p>
+        <p><strong>These days:</strong> Now based in Vigo, Spain with my wife and two boys, I get to:</p>
+        <ul>
+          <li>🚀 Work with ambitious startups</li>
+          <li>🧠 Match smart engineers with problems worth solving</li>
+          <li>🎧 Ask clever questions on <strong>What Next Dev</strong>, our podcast where Matthew Sinclair gives actual good advice, and I mostly nod.</li>
+        </ul>
+        <p>I've been in Spain for over 2 years. My Spanish is progressing slowly but steadily — like a snail on a scenic route.</p>
+        <p><strong>💌 Don’t be afraid to say hi</strong> — or give me feedback on my horrible code. I can take it (mostly).<br>
+        🎧 DJ enquiries: <a href="mailto:jameswilson11@gmail.com">jameswilson11@gmail.com</a></p>
+      </div>
     </div>
-    <div class="content">
-      <h3>Hi, I'm James 👋</h3>
-      <p><em>(Aussie by origin, recruiter by trade, rowing enthusiast / hobby DJ by questionable life choices.)</em></p>
-      <p><strong>Rowing era:</strong> Born and raised in Geelong, I once pursued a career as a "professional" rower — professional in the sense that I trained like hell and got paid like… well, let’s not talk about it.</p>
-      <p><strong>The boat factory days:</strong> After realising life existed beyond early mornings on the water, I joined a 50-person rowing boat company where my job title was roughly: "Sales / Marketing / Deliveries / Also Possibly some assembly."</p>
-      <p><strong>Enter: DJ James:</strong> Somewhere between boat deliveries and boat slinging, I also dabbled as a DJ. Not Ibiza-residency level… more wedding DJ with a fog machine I borrowed from my housemate vibes.</p>
-      <p><strong>Into tech & talent:</strong> Eventually, I leaned into my tech obsession and jumped into recruitment — specifically product engineers for early-stage startups. That stuck.</p>
-      <p><strong>These days:</strong> Now based in Vigo, Spain with my wife and two boys, I get to:</p>
+
+    <div class="window" id="winamp">
+      <div class="title-bar">
+        <span>Winamp</span>
+        <button onclick="toggleWindow('winamp')">X</button>
+      </div>
+      <img class="screenshot" src="https://skins.webamp.org/skin/5e4f10275dcb1fb211d4a8b4f1bda236/base-2.91.wsz/">
+    </div>
+
+    <div class="window" id="solitaire">
+      <div class="title-bar">
+        <span>Solitaire</span>
+        <button onclick="toggleWindow('solitaire')">X</button>
+      </div>
+      <img class="screenshot" src="https://www.angelfire.com/games3/classicgames/cheats/winsol/winsol.jpg">
+    </div>
+
+    <div class="taskbar">
+      <div class="start-button" onclick="toggleStartMenu()">Start</div>
+      <div id="clock">
+        <img src="https://win98icons.alexmeub.com/icons/png/speaker-1.png" width="14" height="14">
+        <span id="time"></span>
+      </div>
+    </div>
+
+    <div class="start-menu" id="startMenu">
       <ul>
-        <li>🚀 Work with ambitious startups</li>
-        <li>🧠 Match smart engineers with problems worth solving</li>
-        <li>🎧 Ask clever questions on <strong>What Next Dev</strong></li>
+        <li>&#9658; Programs</li>
+        <li>&#9658; Documents</li>
+        <li>&#9658; Settings</li>
+        <li>&#9658; Find</li>
+        <li>&#9658; Help</li>
+        <li>&#9658; Run...</li>
+        <li>&#9658; Shut Down</li>
       </ul>
-      <p><strong>💌 Don’t be afraid to say hi</strong> — or give me feedback on my horrible code.<br>
-      🎧 DJ enquiries: <a href="mailto:jameswilson11@gmail.com">jameswilson11@gmail.com</a></p>
     </div>
   </div>
-
-  <div class="window" id="winamp">
-    <div class="title-bar">
-      <span>Winamp</span>
-      <button onclick="toggleWindow('winamp')">X</button>
-    </div>
-    <img class="screenshot" src="https://skins.webamp.org/skin/5e4f10275dcb1fb211d4a8b4f1bda236/base-2.91.wsz/">
-  </div>
-
-  <div class="window" id="solitaire">
-    <div class="title-bar">
-      <span>Solitaire</span>
-      <button onclick="toggleWindow('solitaire')">X</button>
-    </div>
-    <img class="screenshot" src="https://www.angelfire.com/games3/classicgames/cheats/winsol/winsol.jpg">
-  </div>
-
-  <div class="taskbar">
-    <div class="start-button" onclick="toggleStartMenu()">Start</div>
-    <div id="clock">
-      <img src="https://win98icons.alexmeub.com/icons/png/speaker-1.png" width="14" height="14">
-      <span id="time"></span>
-    </div>
-  </div>
-
-  <div class="start-menu" id="startMenu">
-    <ul>
-      <li>&#9658; Programs</li>
-      <li>&#9658; Documents</li>
-      <li>&#9658; Settings</li>
-      <li>&#9658; Find</li>
-      <li>&#9658; Help</li>
-      <li>&#9658; Run...</li>
-      <li>&#9658; Shut Down</li>
-    </ul>
-  </div>
-</div>
-
-<script>
-  window.onload = function () {
-    setTimeout(() => {
-      document.getElementById('desktop').style.display = 'block';
-    }, 500);
-  };
-  function updateClock() {
-    const now = new Date();
-    const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    document.getElementById('time').textContent = time;
-  }
-  setInterval(updateClock, 1000);
-  updateClock();
-  function toggleStartMenu() {
-    const menu = document.getElementById('startMenu');
-    menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
-  }
-  function toggleWindow(id) {
-    const el = document.getElementById(id);
-    el.style.display = el.style.display === 'flex' || el.style.display === 'block' ? 'none' : 'flex';
-  }
-</script>
+  <script>
+    window.onload = function () {
+      setTimeout(() => {
+        document.getElementById('desktop').style.display = 'block';
+      }, 500);
+    }
+    function updateClock() {
+      const now = new Date();
+      const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      document.getElementById('time').textContent = time;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+    function toggleStartMenu() {
+      const menu = document.getElementById('startMenu');
+      menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    }
+    function toggleWindow(id) {
+      const el = document.getElementById(id);
+      el.style.display = el.style.display === 'flex' || el.style.display === 'block' ? 'none' : 'flex';
+    }
+  </script>
 </body>
 </html>
