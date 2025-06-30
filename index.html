@@ -13,7 +13,7 @@
       height: 100%;
       overflow: hidden;
       font-family: 'Inter', sans-serif;
-      background-color: #3a6ea5;
+      background-color: #008080;
       color: black;
     }
 
@@ -23,9 +23,6 @@
       height: 100vh;
       background: url('https://wallpapercave.com/wp/wp2543627.jpg') no-repeat center center;
       background-size: cover;
-      display: flex;
-      justify-content: center;
-      align-items: center;
     }
 
     .icons {
@@ -56,44 +53,37 @@
       top: 100px;
       left: 100px;
       width: 600px;
-      height: 380px;
+      height: 400px;
       background-color: white;
-      border: 2px solid #666;
-      box-shadow: 4px 4px rgba(0, 0, 0, 0.4);
-      font-size: 11px;
-      line-height: 1.2;
+      border: 2px solid #000;
       display: none;
       flex-direction: column;
+      box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.5);
     }
 
-    .notepad .title-bar {
+    .title-bar {
       background: #000080;
       color: white;
-      padding: 5px;
+      padding: 4px;
+      font-size: 14px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-weight: bold;
-      cursor: move;
     }
 
-    .notepad .window-controls {
-      display: flex;
-      gap: 5px;
-    }
-
-    .notepad .window-controls button {
-      width: 16px;
-      height: 16px;
-      border: none;
-      background-color: #c0c0c0;
+    .title-bar button {
+      background: #c0c0c0;
+      border: 1px solid #808080;
+      width: 20px;
+      height: 20px;
+      font-size: 12px;
       cursor: pointer;
     }
 
-    .notepad .content {
-      padding: 10px 15px;
-      overflow: auto;
-      height: 100%;
+    .content {
+      padding: 10px;
+      font-size: 12px;
+      overflow-y: auto;
     }
 
     .taskbar {
@@ -108,7 +98,6 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 10px;
-      z-index: 100;
       font-size: 14px;
     }
 
@@ -182,24 +171,36 @@
         <div>About Me</div>
       </div>
       <div class="icon">
-        <img src="https://win98icons.alexmeub.com/icons/png/winamp-2.png">
+        <img src="https://win98icons.alexmeub.com/icons/png/winamp-1.png">
         <div>Winamp</div>
       </div>
       <div class="icon">
-        <img src="https://win98icons.alexmeub.com/icons/png/solitaire-5.png">
+        <img src="https://win98icons.alexmeub.com/icons/png/cards-0.png">
         <div>Solitaire</div>
       </div>
     </div>
 
     <div class="notepad" id="notepad">
       <div class="title-bar">
-        About Me
-        <div class="window-controls">
-          <button onclick="toggleNotepad()">X</button>
-        </div>
+        <span>About Me - Notepad</span>
+        <button onclick="toggleNotepad()">X</button>
       </div>
       <div class="content">
-        <!-- content stays unchanged -->
+        <h3>Hi, I'm James 👋</h3>
+        <p><em>(Aussie by origin, recruiter by trade, rowing enthusiast / hobby DJ by questionable life choices.)</em></p>
+        <p><strong>Rowing era:</strong> Born and raised in Geelong, I once pursued a career as a "professional" rower — professional in the sense that I trained like hell and got paid like… well, let’s not talk about it.</p>
+        <p><strong>The boat factory days:</strong> After realising life existed beyond early mornings on the water, I joined a 50-person rowing boat company where my job title was roughly: "Sales / Marketing / Deliveries / Also Possibly some assembly." The apple didn’t fall far from the boat, but it did start drifting toward tech.</p>
+        <p><strong>Enter: DJ James:</strong> Somewhere between boat deliveries and boat slinging, I also dabbled as a DJ. Not Ibiza-residency level… more wedding DJ with a fog machine I borrowed from my housemate vibes. Still counts. People danced.</p>
+        <p><strong>Into tech & talent:</strong> Eventually, I leaned into my tech obsession (with a side of dusty university code) and jumped into recruitment — specifically product engineers for early-stage startups. That stuck.</p>
+        <p><strong>These days:</strong> Now based in Vigo, Spain with my wife and two boys, I get to:</p>
+        <ul>
+          <li>🚀 Work with ambitious startups</li>
+          <li>🧠 Match smart engineers with problems worth solving</li>
+          <li>🎧 Ask clever questions on <strong>What Next Dev</strong>, our podcast where Matthew Sinclair gives actual good advice, and I mostly nod.</li>
+        </ul>
+        <p>I've been in Spain for over 2 years. My Spanish is progressing slowly but steadily — like a snail on a scenic route.</p>
+        <p><strong>💌 Don’t be afraid to say hi</strong> — or give me feedback on my horrible code. I can take it (mostly).<br>
+        🎧 DJ enquiries: <a href="mailto:jameswilson11@gmail.com">jameswilson11@gmail.com</a></p>
       </div>
     </div>
 
@@ -228,7 +229,7 @@
     window.onload = function () {
       setTimeout(() => {
         document.getElementById('boot').style.display = 'none';
-        document.getElementById('desktop').style.display = 'flex';
+        document.getElementById('desktop').style.display = 'block';
       }, 2000);
     }
 
