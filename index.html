@@ -14,15 +14,12 @@
       font-family: Tahoma, sans-serif;
       background-color: #008080;
     }
-
     .desktop {
       position: relative;
       width: 100vw;
       height: 100vh;
-      background: url('https://wallpapercave.com/wp/wp2543627.jpg') no-repeat center center;
-      background-size: cover;
+      background-color: #008080;
     }
-
     .icons {
       position: absolute;
       top: 20px;
@@ -31,7 +28,6 @@
       flex-direction: column;
       gap: 20px;
     }
-
     .icon {
       width: 64px;
       text-align: center;
@@ -40,18 +36,16 @@
       user-select: none;
       cursor: pointer;
     }
-
     .icon img {
       width: 48px;
       height: 48px;
     }
-
     .window {
       position: absolute;
       top: 100px;
       left: 100px;
       width: 600px;
-      height: 400px;
+      height: auto;
       background-color: white;
       border: 2px solid #000;
       display: none;
@@ -59,7 +53,6 @@
       box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.5);
       z-index: 200;
     }
-
     .title-bar {
       background: linear-gradient(to right, #000080, #0000CD);
       color: white;
@@ -70,7 +63,6 @@
       align-items: center;
       font-weight: bold;
     }
-
     .title-bar button {
       background: #c0c0c0;
       border: 1px solid #808080;
@@ -79,14 +71,12 @@
       font-size: 12px;
       cursor: pointer;
     }
-
     .content {
       padding: 10px;
       font-size: 12px;
       overflow-y: auto;
       flex-grow: 1;
     }
-
     .taskbar {
       position: absolute;
       bottom: 0;
@@ -102,7 +92,6 @@
       font-size: 14px;
       z-index: 100;
     }
-
     .start-button {
       background: url('https://win98icons.alexmeub.com/icons/png/windows-0.png') no-repeat left center;
       background-size: 20px 20px;
@@ -112,7 +101,6 @@
       font-weight: bold;
       cursor: pointer;
     }
-
     #clock {
       display: flex;
       align-items: center;
@@ -122,7 +110,6 @@
       background-color: white;
       font-size: 12px;
     }
-
     .start-menu {
       display: none;
       position: absolute;
@@ -136,33 +123,15 @@
       padding: 10px;
       font-size: 12px;
     }
-
     .start-menu ul {
       list-style: none;
       padding: 0;
       margin: 0;
     }
-
     .start-menu li {
       margin: 6px 0;
       cursor: default;
     }
-
-    #boot {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100vh;
-      background: url('https://upload.wikimedia.org/wikipedia/en/1/18/Windows_98_Logo.png') no-repeat center center;
-      background-size: contain;
-      background-color: #b0c4de;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-    }
-
     .window img.screenshot {
       width: 100%;
       height: auto;
@@ -178,15 +147,14 @@
       <div>About Me</div>
     </div>
     <div class="icon" ondblclick="toggleWindow('winamp')">
-      <img src="https://win98icons.alexmeub.com/icons/png/winamp3-0.png">
+      <img src="https://upload.wikimedia.org/wikipedia/en/1/1b/Winamp-logo.png">
       <div>Winamp</div>
     </div>
     <div class="icon" ondblclick="toggleWindow('solitaire')">
-      <img src="https://win98icons.alexmeub.com/icons/png/cards-1.png">
+      <img src="https://oldwindowsicons.tumblr.com/image/679648074438787072">
       <div>Solitaire</div>
     </div>
   </div>
-
   <div class="window" id="notepad">
     <div class="title-bar">
       <span>About Me - Notepad</span>
@@ -210,23 +178,20 @@
         🎧 DJ enquiries: <a href="mailto:jameswilson11@gmail.com">jameswilson11@gmail.com</a></p>
     </div>
   </div>
-
   <div class="window" id="winamp">
     <div class="title-bar">
       <span>Winamp</span>
       <button onclick="toggleWindow('winamp')">X</button>
     </div>
-    <img class="screenshot" src="https://upload.wikimedia.org/wikipedia/en/6/6b/Winamp5.png" alt="Winamp Screenshot">
+    <img class="screenshot" src="/mnt/data/15099608-12e7-4b98-8a7e-fc2f475fd6f9.png" alt="Winamp Screenshot">
   </div>
-
   <div class="window" id="solitaire">
     <div class="title-bar">
       <span>Solitaire</span>
       <button onclick="toggleWindow('solitaire')">X</button>
     </div>
-    <img class="screenshot" src="https://upload.wikimedia.org/wikipedia/en/4/4e/Windows_7_Solitaire.png" alt="Solitaire Screenshot">
+    <img class="screenshot" src="https://i.imgur.com/FVvob0A.png" alt="Solitaire Screenshot">
   </div>
-
   <div class="taskbar">
     <div class="start-button" onclick="toggleStartMenu()">Start</div>
     <div id="clock">
@@ -234,7 +199,6 @@
       <span id="time"></span>
     </div>
   </div>
-
   <div class="start-menu" id="startMenu">
     <ul>
       <li>&#9658; Programs</li>
@@ -247,7 +211,6 @@
     </ul>
   </div>
 </div>
-
 <script>
   window.onload = function () {
     setTimeout(() => {
@@ -255,7 +218,6 @@
       document.getElementById('desktop').style.display = 'block';
     }, 2000);
   }
-
   function updateClock() {
     const now = new Date();
     const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -263,12 +225,10 @@
   }
   setInterval(updateClock, 1000);
   updateClock();
-
   function toggleStartMenu() {
     const menu = document.getElementById('startMenu');
     menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
   }
-
   function toggleWindow(id) {
     const el = document.getElementById(id);
     el.style.display = el.style.display === 'flex' || el.style.display === 'block' ? 'none' : 'flex';
