@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>James · iPod About Me</title>
+  <title>JamesPod · About James Wilson</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     * {
@@ -10,109 +10,164 @@
     }
 
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
-        "Helvetica Neue", Arial, sans-serif;
-      background: #f3f4f6;
+      font-family: "Lucida Grande", "Tahoma", "Verdana",
+        system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #dfe4ea;
       min-height: 100vh;
       margin: 0;
-      padding: 20px;
+      padding: 24px 16px 40px;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
+      gap: 18px;
     }
 
     .ipod {
       width: 280px;
-      height: 480px;
+      height: 460px;
       background: #ffffff;
-      border-radius: 32px;
-      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.18);
-      padding: 24px 20px;
+      border-radius: 26px;
+      border: 1px solid #d1d5db;
+      padding: 22px 18px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
     }
 
+    /* Screen */
+
     .screen {
-      background: #111827;
-      color: #e5e7eb;
-      border-radius: 18px;
-      padding: 10px 12px;
-      font-size: 12px;
-      line-height: 1.4;
+      background: linear-gradient(to bottom, #b8cfee, #e4ecfb);
+      border-radius: 10px;
+      border: 1px solid #7b8fb1;
+      padding: 6px 6px 8px;
       height: 170px;
-      box-sizing: border-box;
-      overflow: hidden;
+      color: #000000;
+      font-size: 11px;
       display: flex;
       flex-direction: column;
+      overflow: hidden;
     }
 
-    .screen-title {
+    .screen-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 10px;
+      margin-bottom: 4px;
+    }
+
+    .screen-top-left {
       font-weight: 600;
-      margin-bottom: 6px;
-      font-size: 12px;
+    }
+
+    .screen-top-right {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .screen-battery {
+      width: 16px;
+      height: 9px;
+      border-radius: 2px;
+      border: 1px solid #000;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .screen-battery::after {
+      content: "";
+      position: absolute;
+      right: -3px;
+      top: 2px;
+      width: 2px;
+      height: 4px;
+      border-radius: 1px;
+      background: #000;
+    }
+
+    .screen-battery-level {
+      width: 70%;
+      height: 100%;
+      background: #000;
+    }
+
+    .screen-title-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      letter-spacing: 0.02em;
+      font-weight: 600;
+      padding: 2px 3px 3px;
+      margin-bottom: 2px;
+      background: rgba(0, 0, 80, 0.22);
+      border-radius: 4px;
     }
 
-    .screen-title span:last-child {
+    .screen-title-row span:last-child {
       font-size: 10px;
-      opacity: 0.7;
+      font-weight: 400;
     }
 
     .screen-body {
       font-size: 11px;
-      line-height: 1.45;
-      color: #e5e7eb;
+      line-height: 1.35;
+      padding: 2px 3px 0;
     }
 
     .screen-footer {
       margin-top: auto;
-      padding-top: 6px;
-      font-size: 9px;
-      opacity: 0.7;
+      padding-top: 4px;
       display: flex;
+      align-items: center;
       justify-content: flex-end;
       gap: 4px;
-      align-items: center;
+      font-size: 9px;
+      color: #111827;
+      opacity: 0.8;
     }
 
     .screen-index-dot {
       width: 4px;
       height: 4px;
       border-radius: 999px;
-      background: #e5e7eb;
-      opacity: 0.4;
+      background: #9ca3af;
     }
 
     .screen-index-dot.active {
-      opacity: 1;
-      background: #22c55e;
+      background: #111827;
     }
+
+    a.screen-link {
+      color: #111827;
+      text-decoration: underline;
+    }
+
+    a.screen-link:hover {
+      text-decoration: none;
+    }
+
+    /* Wheel */
 
     .wheel {
       width: 200px;
       height: 200px;
       margin: 0 auto;
       border-radius: 50%;
+      background: #f3f4f6;
       border: 2px solid #e5e7eb;
-      background: radial-gradient(circle at top, #f9fafb, #e5e7eb);
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
-      box-shadow:
-        inset 0 10px 18px rgba(255, 255, 255, 0.9),
-        inset 0 -6px 10px rgba(148, 163, 184, 0.5);
     }
 
     .wheel-button {
       position: absolute;
       font-size: 10px;
       text-transform: uppercase;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.16em;
       color: #6b7280;
       cursor: pointer;
       user-select: none;
@@ -130,8 +185,8 @@
     }
 
     .wheel-center {
-      width: 80px;
-      height: 80px;
+      width: 82px;
+      height: 82px;
       border-radius: 50%;
       background: #e5e7eb;
       display: flex;
@@ -141,54 +196,38 @@
       color: #4b5563;
       cursor: pointer;
       user-select: none;
-      box-shadow:
-        0 3px 6px rgba(15, 23, 42, 0.18),
-        inset 0 0 0 1px rgba(148, 163, 184, 0.8);
       -webkit-tap-highlight-color: transparent;
     }
 
     .wheel-center:active,
     .wheel-button:active {
-      transform: translateY(1px);
+      transform: scale(0.97);
     }
 
-    .wheel-button.left:active {
-      transform: translateY(-50%) translateX(1px);
-    }
+    /* Footer note */
 
-    .wheel-button.right:active {
-      transform: translateY(-50%) translateX(-1px);
-    }
-
-    .wheel-button.top:active,
-    .wheel-button.bottom:active {
-      transform: translateX(-50%) translateY(1px);
-    }
-
-    a.screen-link {
-      color: #a5b4fc;
-      text-decoration: none;
-    }
-
-    a.screen-link:hover {
-      text-decoration: underline;
+    .footer-note {
+      max-width: 320px;
+      font-size: 11px;
+      text-align: center;
+      color: #4b5563;
     }
 
     @media (max-width: 400px) {
       .ipod {
         width: 260px;
-        height: 440px;
+        height: 430px;
         padding: 20px 16px;
       }
 
       .wheel {
-        width: 180px;
-        height: 180px;
+        width: 185px;
+        height: 185px;
       }
 
       .wheel-center {
-        width: 74px;
-        height: 74px;
+        width: 76px;
+        height: 76px;
       }
     }
   </style>
@@ -196,13 +235,25 @@
 <body>
   <div class="ipod">
     <div class="screen">
-      <div class="screen-title">
-        <span id="screen-title"></span>
-        <span id="screen-count"></span>
+      <div class="screen-top">
+        <div class="screen-top-left">iPod</div>
+        <div class="screen-top-right">
+          <span id="screen-count">1/1</span>
+          <div class="screen-battery">
+            <div class="screen-battery-level"></div>
+          </div>
+        </div>
       </div>
+
+      <div class="screen-title-row">
+        <span id="screen-title"></span>
+        <span>&gt;</span>
+      </div>
+
       <div class="screen-body" id="screen-body"></div>
+
       <div class="screen-footer" id="screen-footer">
-        <!-- index dots injected here -->
+        <!-- dots injected by JS -->
       </div>
     </div>
 
@@ -221,11 +272,16 @@
     </div>
   </div>
 
+  <p class="footer-note">
+    Created by James Wilson in the ongoing pursuit of understanding what software
+    engineers are building – one tiny retro web experiment at a time.
+  </p>
+
   <script>
-    // Update these links with your real details
-    const LINKEDIN_URL = "https://www.linkedin.com/in/james-wilson-92170656/";
-    const EMAIL_ADDRESS = "jameswilson11@gmail.com";
-    const GITHUB_URL = "https://github.com/JamesWilsonLondon";
+    // Put your real details here
+    const LINKEDIN_URL = "https://www.linkedin.com/in/your-handle";
+    const EMAIL_ADDRESS = "you@example.com";
+    const GITHUB_URL = "https://github.com/your-handle";
 
     const screens = [
       {
@@ -256,7 +312,7 @@
         title: "Get in touch",
         body:
           'Best way to reach me is online.<br><br>' +
-          'LinkedIn: <a class="screen-link" href="' + LINKEDIN_URL + '" target="_blank" rel="noreferrer">connect here</a><br>' +
+          'LinkedIn: <a class="screen-link" href="' + LINKEDIN_URL + '" target="_blank" rel="noreferrer">connect</a><br>' +
           'Email: <a class="screen-link" href="mailto:' + EMAIL_ADDRESS + '">' + EMAIL_ADDRESS + '</a><br>' +
           'GitHub: <a class="screen-link" href="' + GITHUB_URL + '" target="_blank" rel="noreferrer">profile</a>'
       }
@@ -307,8 +363,8 @@
     document.getElementById("btn-center").addEventListener("click", nextScreen);
 
     document.getElementById("btn-play").addEventListener("click", () => {
-      // You could swap this later for a hidden easter egg screen
-      alert("Click wheel sound not included.");
+      // Space for a future easter egg
+      alert("Imagine that classic iPod click sound here.");
     });
 
     // Initial render
@@ -316,5 +372,3 @@
   </script>
 </body>
 </html>
-
-
