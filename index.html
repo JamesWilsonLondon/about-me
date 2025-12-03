@@ -64,6 +64,12 @@
       gap: 6px;
     }
 
+    .play-indicator {
+      width: 10px;
+      text-align: right;
+      font-size: 10px;
+    }
+
     .screen-battery {
       width: 16px;
       height: 9px;
@@ -340,6 +346,7 @@
         <div class="screen-top-left">iPod</div>
         <div class="screen-top-right">
           <span id="screen-count">1/1</span>
+          <span class="play-indicator" id="play-indicator"></span>
           <div class="screen-battery">
             <div class="screen-battery-level"></div>
           </div>
@@ -367,7 +374,7 @@
         <span class="wheel-button-icon">▶▶</span>
       </div>
       <div class="wheel-button bottom" id="btn-play">
-        <span class="wheel-button-icon">▶║║</span>
+        <span class="wheel-button-icon" id="btn-play-icon">▶║║</span>
       </div>
       <div class="wheel-center" id="btn-center">Select</div>
     </div>
@@ -387,9 +394,9 @@
   <script src="https://www.youtube.com/iframe_api"></script>
 
   <script>
-    // Put your real details here
+    // Replace with your real links
     const LINKEDIN_URL = "https://www.linkedin.com/in/james-wilson-92170656/";
-    const EMAIL_ADDRESS = "jameswilson11@gmail.com";
+    const EMAIL_ADDRESS = "jameswilson11@gmail.com;
     const GITHUB_URL = "https://github.com/JamesWilsonLondon";
 
     // YouTube config
@@ -494,6 +501,8 @@
     const bodyEl = document.getElementById("screen-body");
     const countEl = document.getElementById("screen-count");
     const footerEl = document.getElementById("screen-footer");
+    const playIndicatorEl = document.getElementById("play-indicator");
+    const playBtnIconEl = document.getElementById("btn-play-icon");
 
     function renderDots(activeIndex) {
       footerEl.innerHTML = "";
@@ -511,7 +520,6 @@
       countEl.textContent = (index + 1) + "/" + screens.length;
       renderDots(index);
 
-      // When now playing screen loads, sync UI
       if (index === 0) {
         const volEl = document.getElementById("np-volume-val");
         if (volEl) volEl.textContent = volume;
@@ -555,12 +563,39 @@
       }
     }
 
+    function updatePlayUI() {
+      if (isPlaying) {
+        document.body.classList.add("playing");
+        playIndicatorEl.textContent = "▶";
+        if (playBtnIconEl) playBtnIconEl.textContent = "║║";
+        startProgress();
+      } else {
+        document.body.classList.remove("playing");
+        playIndicatorEl.textContent = "";
+        if (playBtnIconEl) playBtnIconEl.textContent = "▶║║";
+        stopProgress();
+      }
+    }
+
+    function togglePlayPause() {
+      if (!ytPlayer || !ytPlayer.playVideo) return;
+
+      if (isPlaying) {
+        ytPlayer.pauseVideo();
+        isPlaying = false;
+      } else {
+        ytPlayer.playVideo();
+        ytPlayer.setVolume(volume);
+        isPlaying = true;
+      }
+      updatePlayUI();
+    }
+
     // Button wiring
 
     document.getElementById("btn-next").addEventListener("click", () => {
       if (currentIndex === 0) {
-        // Now playing: adjust volume up
-        changeVolume(5);
+        changeVolume(5); // volume up on Now Playing
       } else {
         nextScreen();
       }
@@ -568,39 +603,23 @@
 
     document.getElementById("btn-prev").addEventListener("click", () => {
       if (currentIndex === 0) {
-        // Now playing: adjust volume down
-        changeVolume(-5);
+        changeVolume(-5); // volume down on Now Playing
       } else {
         prevScreen();
       }
     });
 
-    // Menu goes to Playlist
+    // Menu jumps to Playlist
     document.getElementById("btn-menu").addEventListener("click", () => {
       currentIndex = 1;
       renderScreen(currentIndex);
     });
 
-    // Centre cycles screens
+    // Centre cycles through screens
     document.getElementById("btn-center").addEventListener("click", nextScreen);
 
-    // Play / pause toggles YouTube
-    document.getElementById("btn-play").addEventListener("click", () => {
-      if (!ytPlayer || !ytPlayer.playVideo) return;
-
-      if (isPlaying) {
-        ytPlayer.pauseVideo();
-        isPlaying = false;
-        document.body.classList.remove("playing");
-        stopProgress();
-      } else {
-        ytPlayer.playVideo();
-        ytPlayer.setVolume(volume);
-        isPlaying = true;
-        document.body.classList.add("playing");
-        startProgress();
-      }
-    });
+    // Play / pause works from ANY screen
+    document.getElementById("btn-play").addEventListener("click", togglePlayPause);
 
     // Initial render
     renderScreen(currentIndex);
