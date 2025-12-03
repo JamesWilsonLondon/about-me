@@ -1,244 +1,318 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>James XP | Not a Virus</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <link rel="icon" href="https://win98icons.alexmeub.com/icons/png/windows-0.png">
+  <meta charset="UTF-8" />
+  <title>James · iPod About Me</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      font-family: Tahoma, sans-serif;
-      background-color: #008080;
+    * {
+      box-sizing: border-box;
     }
-    .desktop {
-      position: relative;
-      width: 100vw;
-      height: 100vh;
-      background: url('https://upload.wikimedia.org/wikipedia/en/2/24/Bliss_%28Windows_XP%29.png') no-repeat center center;
-      background-size: cover;
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Helvetica Neue", Arial, sans-serif;
+      background: #f3f4f6;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ipod {
+      width: 280px;
+      height: 480px;
+      background: #ffffff;
+      border-radius: 32px;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.18);
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .screen {
+      background: #111827;
+      color: #e5e7eb;
+      border-radius: 18px;
+      padding: 10px 12px;
+      font-size: 12px;
+      line-height: 1.4;
+      height: 170px;
+      box-sizing: border-box;
       overflow: hidden;
-    }
-    .icons {
-      position: absolute;
-      top: 10px;
-      left: 10px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
     }
-    .icon {
-      width: 56px;
-      text-align: center;
-      color: white;
-      font-size: 10px;
-      user-select: none;
-      cursor: pointer;
-    }
-    .icon img {
-      width: 42px;
-      height: 42px;
-    }
-    .window {
-      position: absolute;
-      top: 60px;
-      left: 10px;
-      width: 90vw;
-      max-height: 70vh;
-      background-color: white;
-      border: 2px solid #000;
-      display: none;
-      flex-direction: column;
-      box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.4);
-      z-index: 200;
-    }
-    .title-bar {
-      background: linear-gradient(to right, #3a6ea5, #295197);
-      color: white;
-      padding: 4px 6px;
+
+    .screen-title {
+      font-weight: 600;
+      margin-bottom: 6px;
       font-size: 12px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-weight: bold;
+      letter-spacing: 0.02em;
     }
-    .title-bar button {
-      background: #c0c0c0;
-      border: 1px solid #808080;
-      width: 18px;
-      height: 18px;
+
+    .screen-title span:last-child {
       font-size: 10px;
-      cursor: pointer;
+      opacity: 0.7;
     }
-    .content {
-      padding: 8px;
+
+    .screen-body {
       font-size: 11px;
-      overflow-y: auto;
-      flex-grow: 1;
+      line-height: 1.45;
+      color: #e5e7eb;
     }
-    .taskbar {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 36px;
-      background: linear-gradient(to top, #205d9c, #4ea3f1);
-      border-top: 2px solid #fff;
+
+    .screen-footer {
+      margin-top: auto;
+      padding-top: 6px;
+      font-size: 9px;
+      opacity: 0.7;
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 8px;
-      font-size: 12px;
-      z-index: 100;
-    }
-    .start-button {
-      background: url('https://win98icons.alexmeub.com/icons/png/windows-0.png') no-repeat 5px center;
-      background-size: 20px;
-      color: white;
-      padding: 5px 15px 5px 30px;
-      border: none;
-      font-weight: bold;
-      font-size: 13px;
-      border-radius: 5px;
-      background-color: #1c6eea;
-      box-shadow: inset -1px -1px #0b4f9c, inset 1px 1px #60aaff;
-      cursor: pointer;
-    }
-    #clock {
-      display: flex;
-      align-items: center;
+      justify-content: flex-end;
       gap: 4px;
-      padding: 2px 6px;
-      border: 2px inset #999;
-      background-color: white;
-      font-size: 11px;
+      align-items: center;
     }
-    .start-menu {
-      display: none;
-      position: absolute;
-      bottom: 36px;
-      left: 0;
-      width: 300px;
-      background: linear-gradient(to right, #d6e9ff, #f0f0f0);
-      border: 2px outset #ccc;
-      box-shadow: 1px 1px rgba(0,0,0,0.2);
-      z-index: 101;
-      padding: 0;
-      font-size: 11px;
+
+    .screen-index-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      opacity: 0.4;
     }
-    .start-menu ul {
-      list-style: none;
-      padding: 8px;
-      margin: 0;
+
+    .screen-index-dot.active {
+      opacity: 1;
+      background: #22c55e;
     }
-    .start-menu li {
-      margin: 6px 0;
-      cursor: default;
+
+    .wheel {
+      width: 200px;
+      height: 200px;
+      margin: 0 auto;
+      border-radius: 50%;
+      border: 2px solid #e5e7eb;
+      background: radial-gradient(circle at top, #f9fafb, #e5e7eb);
       display: flex;
       align-items: center;
-      gap: 8px;
+      justify-content: center;
+      position: relative;
+      box-shadow:
+        inset 0 10px 18px rgba(255, 255, 255, 0.9),
+        inset 0 -6px 10px rgba(148, 163, 184, 0.5);
     }
-    .start-menu li img {
-      width: 16px;
-      height: 16px;
+
+    .wheel-button {
+      position: absolute;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #6b7280;
+      cursor: pointer;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
     }
-    .window img.screenshot {
-      width: 100%;
-      height: auto;
+
+    .wheel-button.top    { top: 18px;  left: 50%; transform: translateX(-50%); }
+    .wheel-button.bottom { bottom: 18px; left: 50%; transform: translateX(-50%); }
+    .wheel-button.left   { left: 22px;  top: 50%; transform: translateY(-50%); }
+    .wheel-button.right  { right: 22px; top: 50%; transform: translateY(-50%); }
+
+    .wheel-button-icon {
+      font-size: 16px;
+      letter-spacing: 0;
+    }
+
+    .wheel-center {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #4b5563;
+      cursor: pointer;
+      user-select: none;
+      box-shadow:
+        0 3px 6px rgba(15, 23, 42, 0.18),
+        inset 0 0 0 1px rgba(148, 163, 184, 0.8);
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .wheel-center:active,
+    .wheel-button:active {
+      transform: translateY(1px);
+    }
+
+    .wheel-button.left:active {
+      transform: translateY(-50%) translateX(1px);
+    }
+
+    .wheel-button.right:active {
+      transform: translateY(-50%) translateX(-1px);
+    }
+
+    .wheel-button.top:active,
+    .wheel-button.bottom:active {
+      transform: translateX(-50%) translateY(1px);
+    }
+
+    a.screen-link {
+      color: #a5b4fc;
+      text-decoration: none;
+    }
+
+    a.screen-link:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 400px) {
+      .ipod {
+        width: 260px;
+        height: 440px;
+        padding: 20px 16px;
+      }
+
+      .wheel {
+        width: 180px;
+        height: 180px;
+      }
+
+      .wheel-center {
+        width: 74px;
+        height: 74px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="desktop" id="desktop">
-    <div class="icons">
-      <div class="icon" ondblclick="toggleWindow('notepad')">
-        <img src="https://win98icons.alexmeub.com/icons/png/notepad-2.png">
-        <div>About Me</div>
+  <div class="ipod">
+    <div class="screen">
+      <div class="screen-title">
+        <span id="screen-title"></span>
+        <span id="screen-count"></span>
       </div>
-      <div class="icon" ondblclick="toggleWindow('winamp')">
-        <img src="https://64.media.tumblr.com/e291ffe974d57ab582319df55514a40f/4e719840ac466b22-2b/s1280x1920/cba714b4195ec5cf66a630ea1af18e631a08382e.png">
-        <div>Winamp</div>
-      </div>
-    </div>
-
-    <div class="window" id="notepad">
-      <div class="title-bar">
-        <span>About Me - Notepad</span>
-        <button onclick="toggleWindow('notepad')">X</button>
-      </div>
-      <div class="content">
-        <h3>Hi, I'm James 👋</h3>
-        <p><em>(Aussie by origin, recruiter by trade, rowing enthusiast / hobby DJ by questionable life choices.)</em></p>
-        <p><strong>Rowing era:</strong> Born and raised in Geelong, I once pursued a career as a "professional" rower — professional in the sense that I trained like hell and got paid like… well, let’s not talk about it.</p>
-        <p><strong>The boat factory days:</strong> After realising life existed beyond early mornings on the water, I joined a 50-person rowing boat company where my job title was roughly: "Sales / Marketing / Deliveries / Also Possibly some assembly." The apple didn’t fall far from the boat, but it did start drifting toward tech.</p>
-        <p><strong>Enter: DJ James:</strong> Somewhere between boat deliveries and boat slinging, I also dabbled as a DJ. Not Ibiza-residency level… more wedding DJ with a fog machine I borrowed from my housemate vibes. Still counts. People danced.</p>
-        <p><strong>Into tech & talent:</strong> Eventually, I leaned into my tech obsession (with a side of dusty university code) and jumped into recruitment — specifically product engineers for early-stage startups. That stuck.</p>
-        <p><strong>These days:</strong> Now based in Vigo, Spain with my wife and two boys, I get to:</p>
-        <ul>
-          <li>🚀 Work with ambitious startups</li>
-          <li>🧠 Match smart engineers with problems worth solving</li>
-          <li>🎧 Ask clever questions on <strong>What Next Dev</strong>, our podcast where Matthew Sinclair gives actual good advice, and I mostly nod.</li>
-        </ul>
-        <p>I've been in Spain for over 2 years. My Spanish is progressing slowly but steadily — like a snail on a scenic route.</p>
-        <p><strong>💌 Don’t be afraid to say hi</strong> — or give me feedback on my horrible code. I can take it (mostly).<br>
-        🎧 DJ enquiries: <a href="mailto:jameswilson11@gmail.com">jameswilson11@gmail.com</a></p>
+      <div class="screen-body" id="screen-body"></div>
+      <div class="screen-footer" id="screen-footer">
+        <!-- index dots injected here -->
       </div>
     </div>
 
-    <div class="window" id="winamp">
-      <div class="title-bar">
-        <span>Winamp</span>
-        <button onclick="toggleWindow('winamp')">X</button>
+    <div class="wheel">
+      <div class="wheel-button top" id="btn-menu">Menu</div>
+      <div class="wheel-button left" id="btn-prev">
+        <span class="wheel-button-icon">◀◀</span>
       </div>
-      <img class="screenshot" src="https://skins.webamp.org/skin/5e4f10275dcb1fb211d4a8b4f1bda236/base-2.91.wsz/">
-    </div>
-
-    <div class="taskbar">
-      <div class="start-button" onclick="toggleStartMenu()">Start</div>
-      <div id="clock">
-        <img src="https://win98icons.alexmeub.com/icons/png/speaker-1.png" width="14" height="14">
-        <span id="time"></span>
+      <div class="wheel-button right" id="btn-next">
+        <span class="wheel-button-icon">▶▶</span>
       </div>
-    </div>
-
-    <div class="start-menu" id="startMenu">
-      <ul>
-        <li><img src="https://win98icons.alexmeub.com/icons/png/msie2-2.png"> Internet Explorer</li>
-        <li><img src="https://win98icons.alexmeub.com/icons/png/outlook_express-0.png"> Outlook Express</li>
-        <li><img src="https://win98icons.alexmeub.com/icons/png/msn-2.png"> MSN</li>
-        <li><img src="https://win98icons.alexmeub.com/icons/png/winmediaplayer-0.png"> Media Player</li>
-        <li><img src="https://win98icons.alexmeub.com/icons/png/messenger-1.png"> Messenger</li>
-        <li><img src="https://win98icons.alexmeub.com/icons/png/folder_open-3.png"> My Documents</li>
-        <li><img src="https://win98icons.alexmeub.com/icons/png/my_computer-4.png"> My Computer</li>
-        <li><img src="https://win98icons.alexmeub.com/icons/png/printers_folder-4.png"> Printers</li>
-        <li><img src="https://win98icons.alexmeub.com/icons/png/help_book-4.png"> Help</li>
-        <li><img src="https://win98icons.alexmeub.com/icons/png/search_file-0.png"> Search</li>
-      </ul>
+      <div class="wheel-button bottom" id="btn-play">
+        <span class="wheel-button-icon">▶║║</span>
+      </div>
+      <div class="wheel-center" id="btn-center">Select</div>
     </div>
   </div>
+
   <script>
-    window.onload = function () {
-      setTimeout(() => {
-        document.getElementById('desktop').style.display = 'block';
-      }, 500);
+    // Update these links with your real details
+    const LINKEDIN_URL = "https://www.linkedin.com/in/james-wilson-92170656/";
+    const EMAIL_ADDRESS = "jameswilson11@gmail.com";
+    const GITHUB_URL = "https://github.com/JamesWilsonLondon";
+
+    const screens = [
+      {
+        title: "About James",
+        body: "Australian export living in Spain. Works the London startup scene. Recruiter, dad and former rower. Still trying to live like it is 2008."
+      },
+      {
+        title: "Where I am from",
+        body: "Grew up in Geelong. Studied business and marketing at uni in Melbourne. Short but fun London chapter. Now living in Spain."
+      },
+      {
+        title: "What I do",
+        body: "I help startups hire software engineers, mostly product focused roles in London. Quality over quantity. I understand how startups and founders think."
+      },
+      {
+        title: "Past lives",
+        body: "Rowed professionally as a lightweight. Trained, worked and studied all at once. Worked for Sykes, Australia\u2019s biggest rowing boat builder. Also DJ\u2019d. Did not quite make Ibiza."
+      },
+      {
+        title: "Life now",
+        body: "Living in Spain with my wife and two boys. Work remote and recruit globally. Doing my best to minimise the onset of the dad bod. I enjoy running and training when I can fit it in."
+      },
+      {
+        title: "Things I love",
+        body: "Macs, always. Coffee. Leaving Melbourne hurt. Good engineers and startups that push boundaries. And last, but definitely not least, my family."
+      },
+      {
+        title: "Get in touch",
+        body:
+          'Best way to reach me is online.<br><br>' +
+          'LinkedIn: <a class="screen-link" href="' + LINKEDIN_URL + '" target="_blank" rel="noreferrer">connect here</a><br>' +
+          'Email: <a class="screen-link" href="mailto:' + EMAIL_ADDRESS + '">' + EMAIL_ADDRESS + '</a><br>' +
+          'GitHub: <a class="screen-link" href="' + GITHUB_URL + '" target="_blank" rel="noreferrer">profile</a>'
+      }
+    ];
+
+    let currentIndex = 0;
+
+    const titleEl = document.getElementById("screen-title");
+    const bodyEl = document.getElementById("screen-body");
+    const countEl = document.getElementById("screen-count");
+    const footerEl = document.getElementById("screen-footer");
+
+    function renderDots(activeIndex) {
+      footerEl.innerHTML = "";
+      for (let i = 0; i < screens.length; i++) {
+        const dot = document.createElement("div");
+        dot.className = "screen-index-dot" + (i === activeIndex ? " active" : "");
+        footerEl.appendChild(dot);
+      }
     }
-    function updateClock() {
-      const now = new Date();
-      const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      document.getElementById('time').textContent = time;
+
+    function renderScreen(index) {
+      const screen = screens[index];
+      titleEl.textContent = screen.title;
+      bodyEl.innerHTML = screen.body;
+      countEl.textContent = (index + 1) + "/" + screens.length;
+      renderDots(index);
     }
-    setInterval(updateClock, 1000);
-    updateClock();
-    function toggleStartMenu() {
-      const menu = document.getElementById('startMenu');
-      menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+
+    function nextScreen() {
+      currentIndex = (currentIndex + 1) % screens.length;
+      renderScreen(currentIndex);
     }
-    function toggleWindow(id) {
-      const el = document.getElementById(id);
-      el.style.display = el.style.display === 'flex' || el.style.display === 'block' ? 'none' : 'flex';
+
+    function prevScreen() {
+      currentIndex = (currentIndex - 1 + screens.length) % screens.length;
+      renderScreen(currentIndex);
     }
+
+    document.getElementById("btn-next").addEventListener("click", nextScreen);
+    document.getElementById("btn-prev").addEventListener("click", prevScreen);
+
+    document.getElementById("btn-menu").addEventListener("click", () => {
+      currentIndex = 0;
+      renderScreen(currentIndex);
+    });
+
+    document.getElementById("btn-center").addEventListener("click", nextScreen);
+
+    document.getElementById("btn-play").addEventListener("click", () => {
+      // You could swap this later for a hidden easter egg screen
+      alert("Click wheel sound not included.");
+    });
+
+    // Initial render
+    renderScreen(currentIndex);
   </script>
 </body>
 </html>
