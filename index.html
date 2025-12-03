@@ -5,9 +5,7 @@
   <title>JamesPod · About James Wilson</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       font-family: "Lucida Grande", "Tahoma", "Verdana",
@@ -58,9 +56,7 @@
       margin-bottom: 4px;
     }
 
-    .screen-top-left {
-      font-weight: 600;
-    }
+    .screen-top-left { font-weight: 600; }
 
     .screen-top-right {
       display: flex;
@@ -135,17 +131,112 @@
       background: #9ca3af;
     }
 
-    .screen-index-dot.active {
-      background: #111827;
-    }
+    .screen-index-dot.active { background: #111827; }
 
     a.screen-link {
       color: #111827;
       text-decoration: underline;
     }
 
-    a.screen-link:hover {
-      text-decoration: none;
+    a.screen-link:hover { text-decoration: none; }
+
+    /* Now playing / EQ */
+
+    .np-track {
+      margin-bottom: 4px;
+    }
+
+    .np-title-wrapper {
+      overflow: hidden;
+      white-space: nowrap;
+      border-radius: 3px;
+    }
+
+    .np-title {
+      display: inline-block;
+      padding-right: 32px;
+    }
+
+    body.playing .np-title {
+      animation: scroll-title 14s linear infinite;
+    }
+
+    .np-sub {
+      font-size: 10px;
+      opacity: 0.8;
+    }
+
+    .np-bar {
+      margin: 6px 0 4px;
+      width: 100%;
+      height: 4px;
+      border-radius: 999px;
+      background: rgba(0, 0, 60, 0.2);
+      overflow: hidden;
+    }
+
+    .np-bar-fill {
+      width: 20%;
+      height: 100%;
+      border-radius: inherit;
+      background: #000c6a;
+      transform-origin: left;
+      transition: width 0.15s linear;
+    }
+
+    .np-bottom-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 3px;
+    }
+
+    .np-volume {
+      font-size: 10px;
+    }
+
+    .np-eq {
+      display: flex;
+      gap: 2px;
+      align-items: flex-end;
+      height: 12px;
+    }
+
+    .eq-bar {
+      width: 3px;
+      background: #000c6a;
+      opacity: 0.8;
+      transform-origin: bottom;
+      height: 4px;
+    }
+
+    body.playing .eq-bar:nth-child(1) { animation: eq-bounce 0.4s ease-in-out infinite; }
+    body.playing .eq-bar:nth-child(2) { animation: eq-bounce 0.5s ease-in-out infinite; }
+    body.playing .eq-bar:nth-child(3) { animation: eq-bounce 0.35s ease-in-out infinite; }
+    body.playing .eq-bar:nth-child(4) { animation: eq-bounce 0.55s ease-in-out infinite; }
+    body.playing .eq-bar:nth-child(5) { animation: eq-bounce 0.38s ease-in-out infinite; }
+
+    /* Playlist look */
+
+    .menu-list {
+      margin-top: 2px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .menu-item {
+      padding: 1px 2px;
+    }
+
+    .menu-item-active {
+      background: #163463;
+      color: #ffffff;
+    }
+
+    .menu-item-active::after {
+      content: ">";
+      float: right;
+      padding-right: 2px;
     }
 
     /* Wheel */
@@ -204,7 +295,7 @@
       transform: scale(0.97);
     }
 
-    /* Footer note */
+    /* Footer */
 
     .footer-note {
       max-width: 320px;
@@ -219,16 +310,26 @@
         height: 430px;
         padding: 20px 16px;
       }
-
       .wheel {
         width: 185px;
         height: 185px;
       }
-
       .wheel-center {
         width: 76px;
         height: 76px;
       }
+    }
+
+    /* Animations */
+
+    @keyframes scroll-title {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-60%); }
+    }
+
+    @keyframes eq-bounce {
+      0%,100% { transform: scaleY(0.4); }
+      50%     { transform: scaleY(1); }
     }
   </style>
 </head>
@@ -277,36 +378,105 @@
     engineers are building – one tiny retro web experiment at a time.
   </p>
 
+  <!-- Hidden YouTube player -->
+  <div style="display:none;">
+    <div id="ytplayer"></div>
+  </div>
+
+  <!-- YouTube API -->
+  <script src="https://www.youtube.com/iframe_api"></script>
+
   <script>
     // Put your real details here
     const LINKEDIN_URL = "https://www.linkedin.com/in/james-wilson-92170656/";
     const EMAIL_ADDRESS = "jameswilson11@gmail.com";
     const GITHUB_URL = "https://github.com/JamesWilsonLondon";
 
+    // YouTube config
+    const YOUTUBE_VIDEO_ID = "md2fPTglLSI";
+
+    let ytPlayer;
+    let isPlaying = false;
+    let volume = 70; // 0–100
+    let progress = 0;
+    let progressTimer = null;
+
+    // Called by YouTube API when ready
+    function onYouTubeIframeAPIReady() {
+      ytPlayer = new YT.Player("ytplayer", {
+        height: "0",
+        width: "0",
+        videoId: YOUTUBE_VIDEO_ID,
+        playerVars: {
+          autoplay: 0,
+          controls: 0,
+          rel: 0,
+          modestbranding: 1
+        },
+        events: {
+          onReady: function () {
+            ytPlayer.setVolume(volume);
+          }
+        }
+      });
+    }
+
     const screens = [
       {
+        title: "Now Playing",
+        kind: "nowPlaying",
+        body:
+          '<div class="np-track">' +
+            '<div class="np-title-wrapper">' +
+              '<div class="np-title" id="np-title">Focus mix · YouTube stream</div>' +
+            '</div>' +
+            '<div class="np-sub">Press ▶║║ to play / pause</div>' +
+          '</div>' +
+          '<div class="np-bar"><div class="np-bar-fill" id="np-bar-fill"></div></div>' +
+          '<div class="np-bottom-row">' +
+            '<div class="np-volume">Vol <span id="np-volume-val">70</span>%</div>' +
+            '<div class="np-eq">' +
+              '<span class="eq-bar"></span>' +
+              '<span class="eq-bar"></span>' +
+              '<span class="eq-bar"></span>' +
+              '<span class="eq-bar"></span>' +
+              '<span class="eq-bar"></span>' +
+            '</div>' +
+          '</div>'
+      },
+      {
+        title: "Playlist",
+        body:
+          '<ul class="menu-list">' +
+            '<li class="menu-item menu-item-active">Deep focus mix (YouTube)</li>' +
+            '<li class="menu-item">About James</li>' +
+            '<li class="menu-item">Life & work</li>' +
+            '<li class="menu-item">Get in touch</li>' +
+          '</ul>'
+      },
+      {
         title: "About James",
-        body: "Australian export living in Spain. Works the London startup scene. Recruiter, dad and former rower. Still trying to live like it is 2008."
+        body: "Australian export living in Spain.<br>Works the London startup scene.<br>Recruiter, dad and former rower.<br>Still trying to live like it is 2008."
       },
       {
         title: "Where I am from",
-        body: "Grew up in Geelong. Studied business and marketing at uni in Melbourne. Short but fun London chapter. Now living in Spain."
+        body: "Grew up in Geelong.<br>Studied business and marketing at uni in Melbourne.<br>Short but fun London chapter.<br>Now living in Spain."
       },
       {
         title: "What I do",
-        body: "I help startups hire software engineers, mostly product focused roles in London. Quality over quantity. I understand how startups and founders think."
+        body: "I help startups hire software engineers, mostly product focused roles in London.<br><br>Quality over quantity.<br>I understand how startups and founders think."
       },
       {
         title: "Past lives",
-        body: "Rowed professionally as a lightweight. Trained, worked and studied all at once. Worked for Sykes, Australia\u2019s biggest rowing boat builder. Also DJ\u2019d. Did not quite make Ibiza."
+        body: "Rowed professionally as a lightweight.<br>Trained, worked and studied all at once.<br>Worked for Sykes, Australia\u2019s biggest rowing boat builder.<br>Also DJ\u2019d. Did not quite make Ibiza."
       },
       {
         title: "Life now",
-        body: "Living in Spain with my wife and two boys. Work remote and recruit globally. Doing my best to minimise the onset of the dad bod. I enjoy running and training when I can fit it in."
+        body: "Living in Spain with my wife and two boys.<br>Work remote and recruit globally.<br>Doing my best to minimise the onset of the dad bod.<br>I enjoy running and training when I can fit it in."
       },
       {
         title: "Things I love",
-        body: "Macs, always. Coffee. Leaving Melbourne hurt. Good engineers and startups that push boundaries. And last, but definitely not least, my family."
+        body: "Macs, always.<br>Coffee. Leaving Melbourne hurt.<br>Good engineers and startups that push boundaries.<br>And last, but definitely not least, my family."
       },
       {
         title: "Get in touch",
@@ -340,6 +510,14 @@
       bodyEl.innerHTML = screen.body;
       countEl.textContent = (index + 1) + "/" + screens.length;
       renderDots(index);
+
+      // When now playing screen loads, sync UI
+      if (index === 0) {
+        const volEl = document.getElementById("np-volume-val");
+        if (volEl) volEl.textContent = volume;
+        const barEl = document.getElementById("np-bar-fill");
+        if (barEl) barEl.style.width = progress + "%";
+      }
     }
 
     function nextScreen() {
@@ -352,19 +530,76 @@
       renderScreen(currentIndex);
     }
 
-    document.getElementById("btn-next").addEventListener("click", nextScreen);
-    document.getElementById("btn-prev").addEventListener("click", prevScreen);
+    function changeVolume(delta) {
+      volume = Math.max(0, Math.min(100, volume + delta));
+      if (ytPlayer && ytPlayer.setVolume) {
+        ytPlayer.setVolume(volume);
+      }
+      const volEl = document.getElementById("np-volume-val");
+      if (volEl) volEl.textContent = volume;
+    }
 
+    function startProgress() {
+      stopProgress();
+      progressTimer = setInterval(() => {
+        progress = (progress + 1) % 100;
+        const barEl = document.getElementById("np-bar-fill");
+        if (barEl) barEl.style.width = progress + "%";
+      }, 800);
+    }
+
+    function stopProgress() {
+      if (progressTimer) {
+        clearInterval(progressTimer);
+        progressTimer = null;
+      }
+    }
+
+    // Button wiring
+
+    document.getElementById("btn-next").addEventListener("click", () => {
+      if (currentIndex === 0) {
+        // Now playing: adjust volume up
+        changeVolume(5);
+      } else {
+        nextScreen();
+      }
+    });
+
+    document.getElementById("btn-prev").addEventListener("click", () => {
+      if (currentIndex === 0) {
+        // Now playing: adjust volume down
+        changeVolume(-5);
+      } else {
+        prevScreen();
+      }
+    });
+
+    // Menu goes to Playlist
     document.getElementById("btn-menu").addEventListener("click", () => {
-      currentIndex = 0;
+      currentIndex = 1;
       renderScreen(currentIndex);
     });
 
+    // Centre cycles screens
     document.getElementById("btn-center").addEventListener("click", nextScreen);
 
+    // Play / pause toggles YouTube
     document.getElementById("btn-play").addEventListener("click", () => {
-      // Space for a future easter egg
-      alert("Imagine that classic iPod click sound here.");
+      if (!ytPlayer || !ytPlayer.playVideo) return;
+
+      if (isPlaying) {
+        ytPlayer.pauseVideo();
+        isPlaying = false;
+        document.body.classList.remove("playing");
+        stopProgress();
+      } else {
+        ytPlayer.playVideo();
+        ytPlayer.setVolume(volume);
+        isPlaying = true;
+        document.body.classList.add("playing");
+        startProgress();
+      }
     });
 
     // Initial render
