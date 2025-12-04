@@ -21,6 +21,11 @@
       gap: 12px;
     }
 
+    .ipod-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+
     .ipod {
       width: 280px;
       height: 460px;
@@ -301,22 +306,34 @@
       transform: scale(0.97);
     }
 
-    /* Dancing stick figures */
+    /* Dancing stick figures on top of iPod */
 
     .dancers {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 140px;
       height: 90px;
-      display: flex;
-      justify-content: center;
-      align-items: flex-end;
-      gap: 32px;
-      opacity: 0;
-      transform: translateY(8px);
-      transition: opacity 0.25s ease, transform 0.25s ease;
+      pointer-events: none;
     }
 
-    body.playing .dancers {
+    .dancer-group {
+      position: absolute;
+      bottom: -4px; /* just touching top edge of iPod */
+      left: 50%;
+      transform: translateX(-50%) translateY(-40px);
+      display: flex;
+      gap: 32px;
+      align-items: flex-end;
+      opacity: 0;
+      transition: transform 0.35s ease-out, opacity 0.35s ease-out;
+    }
+
+    /* Drop in when class is active */
+    .dancers.dancers-on .dancer-group {
+      transform: translateX(-50%) translateY(0);
       opacity: 1;
-      transform: translateY(0);
     }
 
     .dancer {
@@ -355,7 +372,7 @@
     .dancer-arm-right {
       position: absolute;
       top: 18px;
-      width: 14px;
+      width: 20px; /* longer arms */
       height: 2px;
       background: #111827;
     }
@@ -392,7 +409,7 @@
       transform: rotate(10deg);
     }
 
-    /* Funk / robot / breakdance sequences */
+    /* Funk / robot / breakdance sequences while playing */
 
     body.playing .dancer-left {
       animation: dancer-left-sequence 2.2s linear infinite;
@@ -433,6 +450,15 @@
 
     body.playing .dancer .dancer-head {
       animation: head-pop 0.7s ease-in-out infinite alternate;
+    }
+
+    /* Dive off each side when music stops */
+    .dancers.dancers-on.dive .dancer-left {
+      animation: dive-left 0.7s ease-in;
+    }
+
+    .dancers.dancers-on.dive .dancer-right {
+      animation: dive-right 0.7s ease-in;
     }
 
     /* Footer */
@@ -482,8 +508,8 @@
       40%  { transform: translateY(0) rotate(-8deg); }   /* robot jerk */
       50%  { transform: translateY(0) rotate(8deg); }    /* robot jerk */
       60%  { transform: translateY(-8px) rotate(0deg); }
-      75%  { transform: translateY(2px) rotate(0deg) scale(1.05); } /* prep for spin */
-      100% { transform: translateY(0) rotate(-8deg); }   /* end pose */
+      75%  { transform: translateY(2px) rotate(0deg) scale(1.05); } /* prep */
+      100% { transform: translateY(0) rotate(-8deg); }
     }
 
     @keyframes dancer-right-sequence {
@@ -492,7 +518,7 @@
       30%  { transform: translateY(0) rotate(-4deg); }
       45%  { transform: translateY(-5px) rotate(6deg); }
       60%  { transform: translateY(4px) rotate(-4deg) scale(0.98); } /* drop */
-      80%  { transform: translateY(-10px) rotate(0deg) scale(1.1); } /* little "air" */
+      80%  { transform: translateY(-10px) rotate(0deg) scale(1.1); } /* air */
       100% { transform: translateY(0) rotate(0deg); }
     }
 
@@ -559,66 +585,83 @@
       60%  { transform: translateX(-50%) translateY(-1px); }
       100% { transform: translateX(-50%) translateY(1px); }
     }
+
+    /* Dive off each side */
+    @keyframes dive-left {
+      0%   { transform: translateY(0) translateX(0) rotate(0deg); opacity: 1; }
+      50%  { transform: translateY(10px) translateX(-10px) rotate(-15deg); opacity: 0.9; }
+      100% { transform: translateY(60px) translateX(-80px) rotate(-45deg); opacity: 0; }
+    }
+
+    @keyframes dive-right {
+      0%   { transform: translateY(0) translateX(0) rotate(0deg); opacity: 1; }
+      50%  { transform: translateY(10px) translateX(10px) rotate(15deg); opacity: 0.9; }
+      100% { transform: translateY(60px) translateX(80px) rotate(45deg); opacity: 0; }
+    }
   </style>
 </head>
 <body>
-  <div class="ipod">
-    <div class="screen">
-      <div class="screen-top">
-        <div class="screen-top-left">iPod</div>
-        <div class="screen-top-right">
-          <span id="screen-count">1/1</span>
-          <span class="play-indicator" id="play-indicator"></span>
-          <div class="screen-battery">
-            <div class="screen-battery-level"></div>
+  <div class="ipod-wrapper">
+    <!-- Stick figure dancers on top of iPod -->
+    <div class="dancers">
+      <div class="dancer-group">
+        <div class="dancer dancer-left">
+          <div class="dancer-head"></div>
+          <div class="dancer-body"></div>
+          <div class="dancer-arm-left"></div>
+          <div class="dancer-arm-right"></div>
+          <div class="dancer-leg-left"></div>
+          <div class="dancer-leg-right"></div>
+        </div>
+        <div class="dancer dancer-right">
+          <div class="dancer-head"></div>
+          <div class="dancer-body"></div>
+          <div class="dancer-arm-left"></div>
+          <div class="dancer-arm-right"></div>
+          <div class="dancer-leg-left"></div>
+          <div class="dancer-leg-right"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ipod">
+      <div class="screen">
+        <div class="screen-top">
+          <div class="screen-top-left">iPod</div>
+          <div class="screen-top-right">
+            <span id="screen-count">1/1</span>
+            <span class="play-indicator" id="play-indicator"></span>
+            <div class="screen-battery">
+              <div class="screen-battery-level"></div>
+            </div>
           </div>
+        </div>
+
+        <div class="screen-title-row">
+          <span id="screen-title"></span>
+          <span>&gt;</span>
+        </div>
+
+        <div class="screen-body" id="screen-body"></div>
+
+        <div class="screen-footer" id="screen-footer">
+          <!-- dots injected by JS -->
         </div>
       </div>
 
-      <div class="screen-title-row">
-        <span id="screen-title"></span>
-        <span>&gt;</span>
+      <div class="wheel">
+        <div class="wheel-button top" id="btn-menu">Menu</div>
+        <div class="wheel-button left" id="btn-prev">
+          <span class="wheel-button-icon">◀◀</span>
+        </div>
+        <div class="wheel-button right" id="btn-next">
+          <span class="wheel-button-icon">▶▶</span>
+        </div>
+        <div class="wheel-button bottom" id="btn-play">
+          <span class="wheel-button-icon" id="btn-play-icon">▶║║</span>
+        </div>
+        <div class="wheel-center" id="btn-center">Select</div>
       </div>
-
-      <div class="screen-body" id="screen-body"></div>
-
-      <div class="screen-footer" id="screen-footer">
-        <!-- dots injected by JS -->
-      </div>
-    </div>
-
-    <div class="wheel">
-      <div class="wheel-button top" id="btn-menu">Menu</div>
-      <div class="wheel-button left" id="btn-prev">
-        <span class="wheel-button-icon">◀◀</span>
-      </div>
-      <div class="wheel-button right" id="btn-next">
-        <span class="wheel-button-icon">▶▶</span>
-      </div>
-      <div class="wheel-button bottom" id="btn-play">
-        <span class="wheel-button-icon" id="btn-play-icon">▶║║</span>
-      </div>
-      <div class="wheel-center" id="btn-center">Select</div>
-    </div>
-  </div>
-
-  <!-- Stick figure dancers -->
-  <div class="dancers">
-    <div class="dancer dancer-left">
-      <div class="dancer-head"></div>
-      <div class="dancer-body"></div>
-      <div class="dancer-arm-left"></div>
-      <div class="dancer-arm-right"></div>
-      <div class="dancer-leg-left"></div>
-      <div class="dancer-leg-right"></div>
-    </div>
-    <div class="dancer dancer-right">
-      <div class="dancer-head"></div>
-      <div class="dancer-body"></div>
-      <div class="dancer-arm-left"></div>
-      <div class="dancer-arm-right"></div>
-      <div class="dancer-leg-left"></div>
-      <div class="dancer-leg-right"></div>
     </div>
   </div>
 
@@ -649,6 +692,9 @@
     let volume = 70; // 0-100
     let progress = 0;
     let progressTimer = null;
+    let diveTimeout = null;
+
+    const dancersEl = document.querySelector(".dancers");
 
     // Called by YouTube API when ready
     function onYouTubeIframeAPIReady() {
@@ -665,6 +711,12 @@
         events: {
           onReady: function () {
             ytPlayer.setVolume(volume);
+          },
+          onStateChange: function (event) {
+            if (event.data === YT.PlayerState.ENDED) {
+              isPlaying = false;
+              updatePlayUI();
+            }
           }
         }
       });
@@ -811,11 +863,32 @@
         playIndicatorEl.textContent = "▶";
         if (playBtnIconEl) playBtnIconEl.textContent = "║║";
         startProgress();
+
+        if (dancersEl) {
+          if (diveTimeout) {
+            clearTimeout(diveTimeout);
+            diveTimeout = null;
+          }
+          dancersEl.classList.remove("dive");
+          dancersEl.classList.add("dancers-on"); // triggers drop / visible
+        }
       } else {
         document.body.classList.remove("playing");
         playIndicatorEl.textContent = "";
         if (playBtnIconEl) playBtnIconEl.textContent = "▶║║";
         stopProgress();
+
+        if (dancersEl && dancersEl.classList.contains("dancers-on")) {
+          // Trigger dive animation while still on
+          dancersEl.classList.add("dive");
+          if (!diveTimeout) {
+            diveTimeout = setTimeout(() => {
+              dancersEl.classList.remove("dancers-on");
+              dancersEl.classList.remove("dive");
+              diveTimeout = null;
+            }, 750); // a bit longer than dive animation
+          }
+        }
       }
     }
 
