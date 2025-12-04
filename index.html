@@ -304,13 +304,13 @@
     /* Dancing stick figures */
 
     .dancers {
-      height: 70px;
+      height: 80px;
       display: flex;
       justify-content: center;
       align-items: flex-end;
-      gap: 28px;
+      gap: 32px;
       opacity: 0;
-      transform: translateY(6px);
+      transform: translateY(8px);
       transition: opacity 0.25s ease, transform 0.25s ease;
     }
 
@@ -320,10 +320,13 @@
     }
 
     .dancer {
-      width: 32px;
-      height: 60px;
+      width: 34px;
+      height: 64px;
       position: relative;
+      transform-origin: center bottom;
     }
+
+    /* Base pieces */
 
     .dancer-head {
       width: 14px;
@@ -345,6 +348,7 @@
       height: 22px;
       background: #111827;
       transform: translateX(-50%);
+      transform-origin: top center;
     }
 
     .dancer-arm-left,
@@ -354,18 +358,19 @@
       width: 14px;
       height: 2px;
       background: #111827;
+      transform-origin: 0 50%;
     }
 
     .dancer-arm-left {
       left: 50%;
       transform-origin: right center;
-      transform: translateX(-50%) rotate(-20deg);
+      transform: translateX(-50%) rotate(-15deg);
     }
 
     .dancer-arm-right {
       right: 50%;
       transform-origin: left center;
-      transform: translateX(50%) rotate(20deg);
+      transform: translateX(50%) rotate(15deg);
     }
 
     .dancer-leg-left,
@@ -380,30 +385,58 @@
 
     .dancer-leg-left {
       left: 48%;
-      transform: rotate(-15deg);
+      transform: rotate(-10deg);
     }
 
     .dancer-leg-right {
       left: 52%;
-      transform: rotate(12deg);
+      transform: rotate(10deg);
     }
 
+    /* Funk animations */
+
     body.playing .dancer-left {
-      animation: dancer-left-move 0.7s ease-in-out infinite alternate;
+      animation: dancer-bounce-left 0.6s ease-in-out infinite alternate;
     }
 
     body.playing .dancer-right {
-      animation: dancer-right-move 0.7s ease-in-out infinite alternate;
+      animation: dancer-bounce-right 0.65s ease-in-out infinite alternate;
     }
 
-    @keyframes dancer-left-move {
-      0%   { transform: translateY(0) rotate(-6deg); }
-      100% { transform: translateY(-4px) rotate(6deg); }
+    body.playing .dancer-left .dancer-arm-left {
+      animation: arm-swing-left 0.5s ease-in-out infinite alternate;
     }
 
-    @keyframes dancer-right-move {
-      0%   { transform: translateY(0) rotate(6deg); }
-      100% { transform: translateY(-4px) rotate(-6deg); }
+    body.playing .dancer-left .dancer-arm-right {
+      animation: arm-swing-right 0.5s ease-in-out infinite alternate;
+    }
+
+    body.playing .dancer-right .dancer-arm-left {
+      animation: arm-swing-left 0.55s ease-in-out infinite alternate;
+    }
+
+    body.playing .dancer-right .dancer-arm-right {
+      animation: arm-swing-right 0.55s ease-in-out infinite alternate;
+    }
+
+    body.playing .dancer-left .dancer-leg-left {
+      animation: leg-kick-left 0.6s ease-in-out infinite alternate;
+    }
+
+    body.playing .dancer-left .dancer-leg-right {
+      animation: leg-kick-right 0.6s ease-in-out infinite alternate;
+    }
+
+    body.playing .dancer-right .dancer-leg-left {
+      animation: leg-kick-left 0.65s ease-in-out infinite alternate;
+    }
+
+    body.playing .dancer-right .dancer-leg-right {
+      animation: leg-kick-right 0.65s ease-in-out infinite alternate;
+    }
+
+    body.playing .dancer .dancer-head {
+      animation: head-nod 0.7s ease-in-out infinite alternate;
     }
 
     /* Footer */
@@ -441,6 +474,41 @@
     @keyframes eq-bounce {
       0%,100% { transform: scaleY(0.4); }
       50%     { transform: scaleY(1); }
+    }
+
+    @keyframes dancer-bounce-left {
+      0%   { transform: translateY(0) rotate(-4deg); }
+      100% { transform: translateY(-6px) rotate(6deg); }
+    }
+
+    @keyframes dancer-bounce-right {
+      0%   { transform: translateY(0) rotate(4deg); }
+      100% { transform: translateY(-6px) rotate(-6deg); }
+    }
+
+    @keyframes arm-swing-left {
+      0%   { transform: translateX(-50%) rotate(-10deg); }
+      100% { transform: translateX(-50%) rotate(-45deg); }
+    }
+
+    @keyframes arm-swing-right {
+      0%   { transform: translateX(50%) rotate(10deg); }
+      100% { transform: translateX(50%) rotate(45deg); }
+    }
+
+    @keyframes leg-kick-left {
+      0%   { transform: rotate(-8deg); }
+      100% { transform: rotate(-30deg); }
+    }
+
+    @keyframes leg-kick-right {
+      0%   { transform: rotate(8deg); }
+      100% { transform: rotate(28deg); }
+    }
+
+    @keyframes head-nod {
+      0%   { transform: translateX(-50%) translateY(0); }
+      100% { transform: translateX(-50%) translateY(2px); }
     }
   </style>
 </head>
