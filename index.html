@@ -18,7 +18,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 18px;
+      gap: 12px;
     }
 
     .ipod {
@@ -301,6 +301,111 @@
       transform: scale(0.97);
     }
 
+    /* Dancing stick figures */
+
+    .dancers {
+      height: 70px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 28px;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+
+    body.playing .dancers {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .dancer {
+      width: 32px;
+      height: 60px;
+      position: relative;
+    }
+
+    .dancer-head {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 2px solid #111827;
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #f9fafb;
+    }
+
+    .dancer-body {
+      position: absolute;
+      top: 14px;
+      left: 50%;
+      width: 2px;
+      height: 22px;
+      background: #111827;
+      transform: translateX(-50%);
+    }
+
+    .dancer-arm-left,
+    .dancer-arm-right {
+      position: absolute;
+      top: 18px;
+      width: 14px;
+      height: 2px;
+      background: #111827;
+    }
+
+    .dancer-arm-left {
+      left: 50%;
+      transform-origin: right center;
+      transform: translateX(-50%) rotate(-20deg);
+    }
+
+    .dancer-arm-right {
+      right: 50%;
+      transform-origin: left center;
+      transform: translateX(50%) rotate(20deg);
+    }
+
+    .dancer-leg-left,
+    .dancer-leg-right {
+      position: absolute;
+      top: 34px;
+      width: 2px;
+      height: 20px;
+      background: #111827;
+      transform-origin: top center;
+    }
+
+    .dancer-leg-left {
+      left: 48%;
+      transform: rotate(-15deg);
+    }
+
+    .dancer-leg-right {
+      left: 52%;
+      transform: rotate(12deg);
+    }
+
+    body.playing .dancer-left {
+      animation: dancer-left-move 0.7s ease-in-out infinite alternate;
+    }
+
+    body.playing .dancer-right {
+      animation: dancer-right-move 0.7s ease-in-out infinite alternate;
+    }
+
+    @keyframes dancer-left-move {
+      0%   { transform: translateY(0) rotate(-6deg); }
+      100% { transform: translateY(-4px) rotate(6deg); }
+    }
+
+    @keyframes dancer-right-move {
+      0%   { transform: translateY(0) rotate(6deg); }
+      100% { transform: translateY(-4px) rotate(-6deg); }
+    }
+
     /* Footer */
 
     .footer-note {
@@ -377,6 +482,26 @@
         <span class="wheel-button-icon" id="btn-play-icon">▶║║</span>
       </div>
       <div class="wheel-center" id="btn-center">Select</div>
+    </div>
+  </div>
+
+  <!-- Stick figure dancers -->
+  <div class="dancers">
+    <div class="dancer dancer-left">
+      <div class="dancer-head"></div>
+      <div class="dancer-body"></div>
+      <div class="dancer-arm-left"></div>
+      <div class="dancer-arm-right"></div>
+      <div class="dancer-leg-left"></div>
+      <div class="dancer-leg-right"></div>
+    </div>
+    <div class="dancer dancer-right">
+      <div class="dancer-head"></div>
+      <div class="dancer-body"></div>
+      <div class="dancer-arm-left"></div>
+      <div class="dancer-arm-right"></div>
+      <div class="dancer-leg-left"></div>
+      <div class="dancer-leg-right"></div>
     </div>
   </div>
 
