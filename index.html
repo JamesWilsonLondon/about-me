@@ -505,10 +505,10 @@
       10%  { transform: translateY(-4px) rotate(-5deg); }
       20%  { transform: translateY(0) rotate(5deg); }
       30%  { transform: translateY(-6px) rotate(0deg); }
-      40%  { transform: translateY(0) rotate(-8deg); }   /* robot jerk */
-      50%  { transform: translateY(0) rotate(8deg); }    /* robot jerk */
+      40%  { transform: translateY(0) rotate(-8deg); }
+      50%  { transform: translateY(0) rotate(8deg); }
       60%  { transform: translateY(-8px) rotate(0deg); }
-      75%  { transform: translateY(2px) rotate(0deg) scale(1.05); } /* prep */
+      75%  { transform: translateY(2px) rotate(0deg) scale(1.05); }
       100% { transform: translateY(0) rotate(-8deg); }
     }
 
@@ -517,8 +517,8 @@
       15%  { transform: translateY(-4px) rotate(4deg); }
       30%  { transform: translateY(0) rotate(-4deg); }
       45%  { transform: translateY(-5px) rotate(6deg); }
-      60%  { transform: translateY(4px) rotate(-4deg) scale(0.98); } /* drop */
-      80%  { transform: translateY(-10px) rotate(0deg) scale(1.1); } /* air */
+      60%  { transform: translateY(4px) rotate(-4deg) scale(0.98); }
+      80%  { transform: translateY(-10px) rotate(0deg) scale(1.1); }
       100% { transform: translateY(0) rotate(0deg); }
     }
 
@@ -688,6 +688,9 @@
     const YOUTUBE_VIDEO_ID = "md2fPTglLSI";
 
     let ytPlayer;
+    let ytReady = false;
+    let pendingPlay = false;
+
     let isPlaying = false;
     let volume = 70; // 0-100
     let progress = 0;
@@ -696,7 +699,7 @@
 
     const dancersEl = document.querySelector(".dancers");
 
-    // Called by YouTube API when ready
+    // Called by YouTube API when script has loaded
     function onYouTubeIframeAPIReady() {
       ytPlayer = new YT.Player("ytplayer", {
         height: "0",
@@ -710,7 +713,16 @@
         },
         events: {
           onReady: function () {
+            ytReady = true;
             ytPlayer.setVolume(volume);
+
+            // If user already hit Play before we were ready, start playback now
+            if (pendingPlay) {
+              pendingPlay = false;
+              isPlaying = true;
+              ytPlayer.playVideo();
+              updatePlayUI();
+            }
           },
           onStateChange: function (event) {
             if (event.data === YT.PlayerState.ENDED) {
@@ -834,7 +846,7 @@
 
     function changeVolume(delta) {
       volume = Math.max(0, Math.min(100, volume + delta));
-      if (ytPlayer && ytPlayer.setVolume) {
+      if (ytReady && ytPlayer && ytPlayer.setVolume) {
         ytPlayer.setVolume(volume);
       }
       const volEl = document.getElementById("np-volume-val");
@@ -870,7 +882,7 @@
             diveTimeout = null;
           }
           dancersEl.classList.remove("dive");
-          dancersEl.classList.add("dancers-on"); // triggers drop / visible
+          dancersEl.classList.add("dancers-on"); // dancers drop in
         }
       } else {
         document.body.classList.remove("playing");
@@ -879,21 +891,27 @@
         stopProgress();
 
         if (dancersEl && dancersEl.classList.contains("dancers-on")) {
-          // Trigger dive animation while still on
+          // Trigger dive animation
           dancersEl.classList.add("dive");
           if (!diveTimeout) {
             diveTimeout = setTimeout(() => {
               dancersEl.classList.remove("dancers-on");
               dancersEl.classList.remove("dive");
               diveTimeout = null;
-            }, 750); // a bit longer than dive animation
+            }, 750);
           }
         }
       }
     }
 
     function togglePlayPause() {
-      if (!ytPlayer || !ytPlayer.playVideo) return;
+      // If YouTube not ready yet, remember intent and let onReady handle it
+      if (!ytReady || !ytPlayer || !ytPlayer.playVideo) {
+        if (!isPlaying) {
+          pendingPlay = true;
+        }
+        return;
+      }
 
       if (isPlaying) {
         ytPlayer.pauseVideo();
