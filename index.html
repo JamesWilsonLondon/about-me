@@ -6,612 +6,564 @@
 <title>James Wilson</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html,body{width:100%;height:100%;overflow:hidden;font-family:'MS Sans Serif','Microsoft Sans Serif',Tahoma,Arial,sans-serif;font-size:11px;background:#000;cursor:default;user-select:none}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Geneva','Charcoal',Helvetica,Arial,sans-serif;font-size:12px;background:#000;cursor:default;user-select:none}
 
-/* ── BIOS ── */
-#bios{position:fixed;inset:0;background:#000;color:#aaa;font-family:'Courier New',monospace;font-size:13px;line-height:1.65;padding:14px 18px;overflow:hidden;z-index:9000}
-.bw{color:#fff}.by{color:#ff0}.bc{color:#0ff}
+/* ── HAPPY MAC BOOT ── */
+#boot{position:fixed;inset:0;background:#aaaaaa;display:none;flex-direction:column;align-items:center;justify-content:center;z-index:9000;gap:22px}
+.hmac{width:72px;height:88px;background:#c8c8c8;border:3px solid #000;border-radius:5px 5px 2px 2px;display:flex;flex-direction:column;align-items:center;padding:5px;gap:3px;flex-shrink:0}
+.hm-scrn{width:54px;height:42px;background:#1a1a1a;border:2px solid #555;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px}
+.hm-eyes{display:flex;gap:12px}
+.hm-eye{width:5px;height:7px;background:#fff;border-radius:1px 1px 3px 3px}
+.hm-smile{width:22px;height:10px;border-bottom:3px solid #fff;border-radius:0 0 14px 14px}
+.hm-slot{width:40px;height:5px;background:#888;border:1px solid #555;border-radius:1px}
+.hm-base{width:48px;height:5px;background:#b4b4b4;border:1px solid #888}
+.hm-stand{width:28px;height:4px;background:#a0a0a0;border:1px solid #888;border-radius:0 0 3px 3px}
+#boot-txt{font-size:16px;color:#000;letter-spacing:.02em}
+#ext-wrap{width:268px}
+#ext-lbl{font-size:11px;color:#000;margin-bottom:4px;height:16px}
+#ext-outer{height:14px;border:1px solid #000;background:#fff;overflow:hidden}
+#ext-inner{height:100%;background:#000;width:0;transition:width 0.18s linear}
 
-/* ── WIN95 BOOT ── */
-#w95boot{position:fixed;inset:0;background:#000;display:none;flex-direction:column;align-items:center;justify-content:center;z-index:8000}
-.logo{display:grid;grid-template-columns:1fr 5px 1fr;grid-template-rows:1fr 5px 1fr;width:80px;height:80px}
-.lr{background:#ef3737}.lg{background:#6fc72e}.lb{background:#2196f3}.ly{background:#f5d100}.lk{background:#000}
-.brand{color:#fff;font-family:Arial,sans-serif;font-size:28px;margin-bottom:48px;display:flex;align-items:baseline;gap:8px}
-.brand .thin{font-weight:300}.brand .bold{font-weight:700}
-#bblocks{display:flex;gap:3px;margin-top:48px}
-.bb{width:22px;height:11px;background:transparent}
-.bb.on{background:#00a}
+/* ── MENU BAR ── */
+#mbar{position:fixed;top:0;left:0;right:0;height:20px;background:#dfdfdf;border-bottom:1px solid #000;display:none;align-items:center;z-index:5000;font-size:12px}
+.mb-a{padding:0 9px;font-size:16px;line-height:1;height:100%;display:flex;align-items:center;cursor:pointer}
+.mb-a:hover,.mb-a.act{background:#000;filter:invert(1) hue-rotate(0)}
+.mb-i{padding:0 10px;height:100%;display:flex;align-items:center;cursor:pointer;white-space:nowrap;font-size:12px}
+.mb-i:hover,.mb-i.act{background:#000;color:#fff}
+#mb-r{margin-left:auto;display:flex;align-items:center;padding:0 8px;gap:8px}
+#mb-clk{font-size:11px}
+
+/* ── DROPDOWNS ── */
+.dd{position:fixed;top:20px;min-width:210px;background:#dfdfdf;border:1px solid #000;box-shadow:2px 2px 0 rgba(0,0,0,0.35);display:none;z-index:6000}
+.dd.open{display:block}
+.ddi{padding:2px 16px 2px 28px;font-size:12px;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:6px;line-height:1.8}
+.ddi:hover{background:#000;color:#fff}
+.ddi.dim{color:#aaa;pointer-events:none}
+.ddi.bold{font-weight:bold;pointer-events:none}
+.ddi-ico{width:18px;flex-shrink:0;text-align:center}
+.dds{height:1px;background:#aaa;margin:3px 2px}
 
 /* ── DESKTOP ── */
-#desktop{position:fixed;top:0;left:0;right:0;bottom:40px;background:#008080;overflow:hidden;display:none}
+#desk{position:fixed;top:20px;left:0;right:0;bottom:0;background:#555555;display:none;overflow:hidden}
 
-/* ── ICONS ── */
-.icon{position:absolute;display:flex;flex-direction:column;align-items:center;width:76px;padding:4px 2px;cursor:pointer}
-.ibox{width:48px;height:48px;display:flex;align-items:center;justify-content:center;font-size:30px;line-height:1;margin-bottom:3px}
-.ilabel{color:#fff;text-shadow:1px 1px 1px #000;font-size:11px;text-align:center;line-height:1.25;word-break:break-word}
-.icon:hover .ibox,.icon.sel .ibox{outline:1px dotted #fff;background:rgba(0,0,128,.5)}
+/* ── DESKTOP ICONS ── */
+.ico{position:absolute;width:80px;padding:4px;display:flex;flex-direction:column;align-items:center;cursor:pointer}
+.ico:hover,.ico.sel{background:rgba(0,0,0,0.22);outline:1px dotted rgba(255,255,255,0.5)}
+.ico-img{font-size:40px;line-height:1.1;text-align:center}
+.ico-lbl{font-size:11px;color:#fff;text-align:center;margin-top:3px;line-height:1.3;word-break:break-word;text-shadow:1px 1px 1px #000,-1px 1px 1px #000,1px -1px 1px #000,-1px -1px 1px #000}
+.ico.sel .ico-lbl{background:#000;color:#fff;text-shadow:none;padding:0 2px}
 
-/* ── WINDOWS ── */
-.win{position:absolute;background:#c0c0c0;border:2px solid;border-color:#fff #808080 #808080 #fff;box-shadow:2px 2px 0 #000;min-width:280px;display:none;flex-direction:column}
+/* ── MAC WINDOWS ── */
+.win{position:absolute;background:#fff;border:1px solid #000;box-shadow:2px 2px 0 rgba(0,0,0,0.45);min-width:300px;display:none;flex-direction:column}
 .win.open{display:flex}
 
-.tbar{height:20px;background:linear-gradient(90deg,#000080,#1084d0);display:flex;align-items:center;justify-content:space-between;padding:0 2px 0 4px;cursor:move;flex-shrink:0}
-.tbar.inactive{background:linear-gradient(90deg,#808080,#b0b0b0)}
-.ttitle{color:#fff;font-weight:bold;font-size:11px;display:flex;align-items:center;gap:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
-.tbtns{display:flex;gap:2px;flex-shrink:0}
-.tbtn{width:16px;height:14px;background:#c0c0c0;border:1px solid;border-color:#fff #000 #000 #fff;font-size:9px;font-weight:bold;color:#000;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;line-height:1;font-family:inherit}
-.tbtn:active{border-color:#000 #fff #fff #000}
+/* Title bar */
+.tb{height:20px;display:flex;align-items:center;background:#c0c0c0;border-bottom:1px solid #000;padding:0 3px;gap:3px;cursor:move;flex-shrink:0}
+.win.top .tb{background:repeating-linear-gradient(to bottom,#fff 0px,#fff 1px,#888 1px,#888 2px)}
+.tb-cl{width:13px;height:13px;border:1px solid #000;background:#dfdfdf;flex-shrink:0;cursor:pointer}
+.tb-cl:active{background:#000}
+.tb-zm{width:13px;height:13px;border:1px solid #000;background:#dfdfdf;flex-shrink:0;cursor:pointer}
+.tb-zm:active{background:#000}
+.tb-t{flex:1;text-align:center;font-size:11px;font-weight:bold;background:#dfdfdf;padding:0 4px;line-height:18px;pointer-events:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
-.mbar{height:20px;display:flex;align-items:center;background:#c0c0c0;border-bottom:1px solid #808080;padding:0 2px;flex-shrink:0}
-.mi{padding:1px 6px;font-size:11px;cursor:pointer;height:100%;display:flex;align-items:center}
-.mi:hover{background:#000080;color:#fff}
+/* Window menu bar */
+.wm{height:19px;display:flex;align-items:center;background:#dfdfdf;border-bottom:1px solid #000;flex-shrink:0}
+.wm-i{padding:0 8px;font-size:11px;cursor:pointer;height:100%;display:flex;align-items:center}
+.wm-i:hover{background:#000;color:#fff}
 
-.wbody{flex:1;overflow-y:auto;font-size:11px;line-height:1.65;color:#000}
-.wp{padding:10px 12px}
-.wnote{background:#fff;border:2px solid;border-color:#808080 #fff #fff #808080;margin:6px;padding:8px 10px;font-family:'Courier New',monospace;font-size:11px;line-height:1.8;overflow-y:auto;white-space:pre-wrap}
-.whr{border:none;border-top:1px solid #808080;border-bottom:1px solid #fff;margin:10px 0}
-.wh{font-size:12px;font-weight:bold;color:#000080;margin:0 0 6px}
-.wq{background:#fff;border:1px solid #808080;border-left:3px solid #000080;padding:6px 10px;margin:8px 0;font-style:italic}
-.wul{margin:0 0 8px 16px}.wul li{margin-bottom:3px}
-.wlink{color:#000080}.wlink:visited{color:#800080}
-.wtbl{width:100%;border-collapse:collapse;font-size:11px;margin-bottom:8px}
-.wtbl td{padding:2px 6px;vertical-align:top}
-.wtbl td:first-child{font-weight:bold;color:#000080;white-space:nowrap;width:120px}
+/* Window body */
+.wb{flex:1;color:#000;font-size:12px;line-height:1.7;overflow:hidden;display:flex;flex-direction:column}
+.wp{padding:12px 14px;overflow-y:auto}
 
-.sbar{border-top:1px solid #808080;height:20px;display:flex;align-items:center;flex-shrink:0}
-.sp{border:1px solid;border-color:#808080 #fff #fff #808080;height:15px;margin:2px;padding:0 6px;display:flex;align-items:center;font-size:10px}
+/* Mac-style scrollbars */
+.wp::-webkit-scrollbar,.st::-webkit-scrollbar{width:15px}
+.wp::-webkit-scrollbar-track,.st::-webkit-scrollbar-track{background:#dfdfdf;border-left:1px solid #999}
+.wp::-webkit-scrollbar-thumb,.st::-webkit-scrollbar-thumb{background:#c0c0c0;border:1px solid #888;min-height:20px}
+.wp::-webkit-scrollbar-button,.st::-webkit-scrollbar-button{display:block;height:14px;background:#c0c0c0;border:1px solid #888}
 
-/* ── TASKBAR ── */
-#taskbar{position:fixed;bottom:0;left:0;right:0;height:40px;background:#c0c0c0;border-top:2px solid #fff;display:none;align-items:center;padding:4px;gap:4px;z-index:4000}
-#startbtn{height:32px;padding:0 10px;background:#c0c0c0;border:2px solid;border-color:#fff #808080 #808080 #fff;box-shadow:1px 1px 0 #000;font-size:13px;font-weight:bold;display:flex;align-items:center;gap:6px;cursor:pointer;white-space:nowrap;font-family:inherit}
-#startbtn:active{border-color:#808080 #fff #fff #808080}
-.winlogo{display:grid;grid-template-columns:1fr 1fr;gap:1px;width:16px;height:14px;flex-shrink:0}
-.winlogo div:nth-child(1){background:#ef3737}
-.winlogo div:nth-child(2){background:#6fc72e}
-.winlogo div:nth-child(3){background:#2196f3}
-.winlogo div:nth-child(4){background:#f5d100}
-.tsep{width:2px;height:32px;border-left:1px solid #808080;border-right:1px solid #fff;flex-shrink:0}
-#tbwins{display:flex;gap:3px;flex:1;overflow:hidden;min-width:0}
-.twbtn{height:28px;padding:0 8px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;font-size:11px;cursor:pointer;display:flex;align-items:center;gap:4px;max-width:150px;overflow:hidden;white-space:nowrap;font-family:inherit}
-.twbtn.active{border-color:#808080 #fff #fff #808080;background:#b8b8b8}
-#tray{border:1px solid;border-color:#808080 #fff #fff #808080;height:32px;padding:0 10px;display:flex;align-items:center;gap:8px;flex-shrink:0}
-#clk{font-size:11px}
+/* Status bar */
+.ws{height:17px;border-top:1px solid #888;display:flex;align-items:center;flex-shrink:0;background:#dfdfdf}
+.wsp{padding:0 8px;font-size:10px;border-right:1px solid #bbb}
 
-/* ── START MENU ── */
-#smenu{position:fixed;bottom:40px;left:0;width:248px;background:#c0c0c0;border:2px solid;border-color:#fff #808080 #808080 #fff;box-shadow:2px 2px 0 #000;display:none;flex-direction:row;z-index:5000}
-#smenu.open{display:flex}
-.smbanner{width:30px;background:linear-gradient(to top,#1f1f7f,#000);writing-mode:vertical-rl;transform:rotate(180deg);display:flex;align-items:center;justify-content:flex-end;padding-bottom:8px;color:#c0c0c0;font-size:17px;font-weight:bold;font-family:Arial,sans-serif;letter-spacing:2px;flex-shrink:0}
-.smbanner b{color:#fff}
-.smitems{flex:1;padding:4px 0}
-.smitem{padding:5px 10px 5px 14px;cursor:pointer;display:flex;align-items:center;gap:10px;font-size:12px;white-space:nowrap}
-.smitem:hover{background:#000080;color:#fff}
-.smitem:hover .smisub{color:#ccc}
-.smiico{font-size:20px;width:24px;text-align:center}
-.smilbl{font-weight:bold;font-size:12px}
-.smisub{font-weight:normal;font-size:10px;color:#444;display:block}
-.smsep{height:2px;border-top:1px solid #808080;border-bottom:1px solid #fff;margin:4px 8px}
+/* Content helpers */
+.ch{font-size:12px;font-weight:bold;margin:0 0 6px;border-bottom:1px solid #000;padding-bottom:2px}
+.chr{border:none;border-top:1px solid #ccc;margin:10px 0}
+.cul{margin:0 0 8px 16px;list-style:disc}
+.cul li{margin-bottom:3px}
+.ca{color:#00c;text-decoration:underline}
+.ca:visited{color:#808}
+.ct{width:100%;border-collapse:collapse;font-size:11px;margin-bottom:8px}
+.ct td{padding:3px 6px;border-bottom:1px solid #ebebeb;vertical-align:top}
+.ct td:first-child{font-weight:bold;white-space:nowrap;width:130px}
 
-/* ── SHUTDOWN SCREEN ── */
-#sdscreen{display:none;position:fixed;inset:0;background:#000;z-index:9999;align-items:center;justify-content:center;flex-direction:column;gap:16px}
-#sdscreen p{color:#fff;font-family:'Courier New',monospace;font-size:18px}
-#sdscreen small{color:#666;font-family:'Courier New',monospace;font-size:13px}
+/* SimpleText monospace doc */
+.st{font-family:'Courier New',monospace;font-size:11px;line-height:1.9;padding:12px 14px;background:#fff;white-space:pre-wrap;overflow-y:auto;flex:1}
 
-/* ── HINT ── */
-#hint{position:fixed;bottom:48px;left:50%;transform:translateX(-50%);background:#ffffe1;border:1px solid #000;padding:2px 8px;font-size:11px;display:none;z-index:3000;pointer-events:none;white-space:nowrap}
+/* ── SHUTDOWN ── */
+#sd{display:none;position:fixed;inset:0;background:#aaaaaa;z-index:9999;align-items:center;justify-content:center;flex-direction:column;gap:16px;text-align:center}
+#sd p{font-size:15px;color:#000;max-width:300px;line-height:1.5}
 
-/* ── MOBILE MSG ── */
-@media(max-width:680px){
-  #mobile-msg{display:flex!important}
-  #bios,#w95boot,#desktop,#taskbar,#smenu{display:none!important}
-}
-#mobile-msg{display:none;position:fixed;inset:0;z-index:9999;background:#008080;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;gap:16px}
-#mobile-msg p{color:#fff;font-size:14px;line-height:1.6}
-#mobile-msg strong{font-size:18px;display:block;margin-bottom:8px}
+/* ── MOBILE ── */
+@media(max-width:680px){#mob{display:flex!important}#boot,#desk,#mbar{display:none!important}}
+#mob{display:none;position:fixed;inset:0;z-index:9999;background:#555;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;gap:16px;color:#fff}
 </style>
 </head>
 <body>
 
-<!-- MOBILE FALLBACK -->
-<div id="mobile-msg">
+<!-- MOBILE -->
+<div id="mob">
   <div style="font-size:48px">🖥️</div>
-  <p><strong>Best viewed on a desktop</strong>This is a Windows 95 desktop experience.<br>Grab a laptop and come back.</p>
-  <p style="font-size:12px;color:#c0ffc0">— James Wilson, recruiter, tinkerer, Vigo.</p>
+  <p style="font-size:16px;font-weight:bold;margin-bottom:8px">Best viewed on a desktop</p>
+  <p style="font-size:13px;color:#ccc;line-height:1.6">This is a Mac System 7 experience.<br>Come back with a laptop.</p>
+  <p style="font-size:11px;color:#aaffaa;margin-top:8px">— James Wilson, Vigo.</p>
 </div>
 
-<!-- BIOS -->
-<div id="bios"></div>
-
-<!-- WIN95 BOOT -->
-<div id="w95boot">
-  <div style="display:flex;align-items:center;gap:18px;margin-bottom:4px">
-    <div class="logo">
-      <div class="lr"></div><div class="lk"></div><div class="lg"></div>
-      <div class="lk"></div><div class="lk"></div><div class="lk"></div>
-      <div class="lb"></div><div class="lk"></div><div class="ly"></div>
+<!-- HAPPY MAC BOOT -->
+<div id="boot">
+  <div class="hmac">
+    <div class="hm-scrn">
+      <div class="hm-eyes"><div class="hm-eye"></div><div class="hm-eye"></div></div>
+      <div class="hm-smile"></div>
     </div>
-    <div class="brand"><span class="thin">Windows</span><span class="bold">95</span></div>
+    <div class="hm-slot"></div>
+    <div class="hm-base"></div>
+    <div class="hm-stand"></div>
   </div>
-  <div id="bblocks"></div>
+  <div id="boot-txt">Welcome to Macintosh</div>
+  <div id="ext-wrap">
+    <div id="ext-lbl">Starting up…</div>
+    <div id="ext-outer"><div id="ext-inner"></div></div>
+  </div>
+</div>
+
+<!-- MENU BAR -->
+<div id="mbar">
+  <div class="mb-a" onclick="toggleDd(event,'dd-apple',this)">&#63743;</div>
+  <div class="mb-i" onclick="toggleDd(event,'dd-finder',this)">Finder</div>
+  <div class="mb-i" onclick="toggleDd(event,'dd-file',this)">File</div>
+  <div class="mb-i" onclick="toggleDd(event,'dd-view',this)">View</div>
+  <div class="mb-i" onclick="toggleDd(event,'dd-special',this)">Special</div>
+  <div id="mb-r"><div id="mb-clk"></div><span style="font-size:14px">🖥️</span></div>
+</div>
+
+<!-- Apple ▸ -->
+<div class="dd" id="dd-apple">
+  <div class="ddi bold"><span class="ddi-ico"></span>About This Mac</div>
+  <div class="dds"></div>
+  <div class="ddi" onclick="openW('about');closeDd()"><span class="ddi-ico">📄</span>About Me</div>
+  <div class="ddi" onclick="openW('work');closeDd()"><span class="ddi-ico">📁</span>Recruiting</div>
+  <div class="ddi" onclick="openW('projects');closeDd()"><span class="ddi-ico">📁</span>Projects</div>
+  <div class="ddi" onclick="openW('life');closeDd()"><span class="ddi-ico">📄</span>Life</div>
+  <div class="ddi" onclick="openW('contact');closeDd()"><span class="ddi-ico">📄</span>Contact</div>
+  <div class="dds"></div>
+  <div class="ddi" onclick="openW('trash');closeDd()"><span class="ddi-ico">🗑</span>Trash</div>
+  <div class="dds"></div>
+  <div class="ddi" onclick="openW('shutdown');closeDd()"><span class="ddi-ico"></span>Shut Down…</div>
+</div>
+
+<!-- Finder ▸ -->
+<div class="dd" id="dd-finder">
+  <div class="ddi" onclick="openW('about');closeDd()"><span class="ddi-ico"></span>About Me</div>
+  <div class="ddi" onclick="openW('work');closeDd()"><span class="ddi-ico"></span>Recruiting</div>
+  <div class="ddi" onclick="openW('projects');closeDd()"><span class="ddi-ico"></span>Projects</div>
+  <div class="ddi" onclick="openW('life');closeDd()"><span class="ddi-ico"></span>Life</div>
+  <div class="ddi" onclick="openW('contact');closeDd()"><span class="ddi-ico"></span>Contact</div>
+</div>
+
+<!-- File ▸ -->
+<div class="dd" id="dd-file">
+  <div class="ddi dim"><span class="ddi-ico"></span>New Folder <span style="float:right;padding-left:24px">⌘N</span></div>
+  <div class="ddi dim"><span class="ddi-ico"></span>Open <span style="float:right;padding-left:24px">⌘O</span></div>
+  <div class="ddi dim"><span class="ddi-ico"></span>Close Window <span style="float:right;padding-left:24px">⌘W</span></div>
+  <div class="dds"></div>
+  <div class="ddi dim"><span class="ddi-ico"></span>Get Info <span style="float:right;padding-left:24px">⌘I</span></div>
+</div>
+
+<!-- View ▸ -->
+<div class="dd" id="dd-view">
+  <div class="ddi dim"><span class="ddi-ico"></span>by Small Icon</div>
+  <div class="ddi dim"><span class="ddi-ico"></span>by Icon</div>
+  <div class="ddi dim"><span class="ddi-ico"></span>by Name</div>
+  <div class="ddi dim"><span class="ddi-ico"></span>by Date</div>
+</div>
+
+<!-- Special ▸ -->
+<div class="dd" id="dd-special">
+  <div class="ddi dim"><span class="ddi-ico"></span>Clean Up</div>
+  <div class="ddi dim"><span class="ddi-ico"></span>Empty Trash…</div>
+  <div class="dds"></div>
+  <div class="ddi" onclick="doRestart();closeDd()"><span class="ddi-ico"></span>Restart</div>
+  <div class="ddi" onclick="openW('shutdown');closeDd()"><span class="ddi-ico"></span>Shut Down</div>
 </div>
 
 <!-- DESKTOP -->
-<div id="desktop">
+<div id="desk" onclick="deskClick(event)">
 
-  <!-- ICONS -->
-  <div class="icon" style="top:16px;left:16px" ondblclick="openWin('about')" onclick="selIcon(this)">
-    <div class="ibox">📋</div><div class="ilabel">readme.txt</div>
+  <!-- Icons (left column, Mac convention) -->
+  <div class="ico" style="top:12px;left:8px" ondblclick="openW('about')" onclick="selIco(this)">
+    <div class="ico-img">📄</div><div class="ico-lbl">About Me</div>
   </div>
-  <div class="icon" style="top:104px;left:16px" ondblclick="openWin('work')" onclick="selIcon(this)">
-    <div class="ibox">💼</div><div class="ilabel">Recruiting.exe</div>
+  <div class="ico" style="top:100px;left:8px" ondblclick="openW('work')" onclick="selIco(this)">
+    <div class="ico-img">📁</div><div class="ico-lbl">Recruiting</div>
   </div>
-  <div class="icon" style="top:192px;left:16px" ondblclick="openWin('projects')" onclick="selIcon(this)">
-    <div class="ibox">⚙️</div><div class="ilabel">Projects/</div>
+  <div class="ico" style="top:188px;left:8px" ondblclick="openW('projects')" onclick="selIco(this)">
+    <div class="ico-img">📁</div><div class="ico-lbl">Projects</div>
   </div>
-  <div class="icon" style="top:280px;left:16px" ondblclick="openWin('life')" onclick="selIcon(this)">
-    <div class="ibox">🌍</div><div class="ilabel">Life.ini</div>
+  <div class="ico" style="top:276px;left:8px" ondblclick="openW('life')" onclick="selIco(this)">
+    <div class="ico-img">📄</div><div class="ico-lbl">Life</div>
   </div>
-  <div class="icon" style="top:368px;left:16px" ondblclick="openWin('contact')" onclick="selIcon(this)">
-    <div class="ibox">📧</div><div class="ilabel">contact.txt</div>
+  <div class="ico" style="top:364px;left:8px" ondblclick="openW('contact')" onclick="selIco(this)">
+    <div class="ico-img">📄</div><div class="ico-lbl">Contact</div>
   </div>
-  <div class="icon" style="bottom:10px;right:16px" ondblclick="openWin('recycle')" onclick="selIcon(this)">
-    <div class="ibox">🗑️</div><div class="ilabel">Recycle Bin</div>
+  <!-- Trash — bottom right, Mac convention -->
+  <div class="ico" style="bottom:6px;right:6px" ondblclick="openW('trash')" onclick="selIco(this)">
+    <div class="ico-img">🗑</div><div class="ico-lbl">Trash</div>
   </div>
 
-  <!-- ═══ WINDOW: ABOUT ═══ -->
-  <div class="win" id="win-about" style="top:55px;left:130px;width:510px">
-    <div class="tbar" onmousedown="drag(event,'win-about')">
-      <div class="ttitle">📋 readme.txt — Notepad</div>
-      <div class="tbtns">
-        <button class="tbtn" onclick="minWin('win-about')">_</button>
-        <button class="tbtn" onclick="maxWin('win-about')">□</button>
-        <button class="tbtn" onclick="closeWin('win-about')">✕</button>
-      </div>
+  <!-- ═══ WIN: ABOUT ME ═══ -->
+  <div class="win top" id="win-about" style="top:36px;left:100px;width:490px;height:470px">
+    <div class="tb" onmousedown="drag(event,'win-about')">
+      <div class="tb-cl" onclick="closeW('win-about')"></div>
+      <div class="tb-t">About Me</div>
+      <div class="tb-zm" onclick="zoom('win-about')"></div>
     </div>
-    <div class="mbar"><span class="mi">File</span><span class="mi">Edit</span><span class="mi">Search</span><span class="mi">Help</span></div>
-    <div class="wbody"><div class="wnote" style="max-height:380px">README — JAMES_WILSON.EXE
+    <div class="wb"><div class="st">About Me — James Wilson
 Last modified: 2026
-================================
+──────────────────────────────────────────
 
-Name:       James Wilson
-Location:   Vigo, Spain
-Function:   Dad, recruiter, recent paddle enthusiast
+Name        James Wilson
+Location    Vigo, Spain
+Function    Dad, recruiter, recent padel enthusiast
 
-For my day job I work with startups to find really
-really good engineers. I've been working in
-recruitment for around five years. Over the last
-few years I've focused on software engineers —
-mostly at startups.
+For my day job I work with startups to find
+really good engineers. I've been in
+recruitment for around five years. Over the
+last few years I've focused on software
+engineers — mostly at startups.
 
-My niche is product engineers. Whether they lean
-more backend or frontend — and more recently AI
-product engineers. Basically engineers who love
-shipping things and care about what the customer
-wants.
+My niche is product engineers. Whether they
+lean more backend or frontend — and more
+recently AI product engineers. Basically
+engineers who love shipping things and care
+about what the customer wants.
 
-If I were an engineer — which I'm not, and probably
-shouldn't be — I think that's what I'd want to be.
-A product engineer.
+If I were an engineer — which I'm not, and
+probably shouldn't be — I think that's what
+I'd want to be. A product engineer.
 
-I'm scrappy. I like to move fast. I get a genuine
-kick out of shipping something, even if it's only
-some lame recruiting tool that only I use.
+I'm scrappy. I like to move fast. I get a
+genuine kick out of shipping something, even
+if it's only some lame recruiting tool that
+only I use.
 
-I'm Australian. I now live in Spain with my wife
-and two boys.
+I'm Australian. I now live in Spain with my
+wife and two boys.
 
----
-Double-click any icon on the left to learn more.</div>
+──────────────────────────────────────────
+Double-click any icon on the left to explore.</div>
     </div>
-    <div class="sbar"><div class="sp" style="flex:1">Ln 1, Col 1</div><div class="sp">100%</div></div>
+    <div class="ws"><div class="wsp">SimpleText 1.31</div></div>
   </div>
 
-  <!-- ═══ WINDOW: WORK ═══ -->
-  <div class="win" id="win-work" style="top:75px;left:170px;width:530px">
-    <div class="tbar" onmousedown="drag(event,'win-work')">
-      <div class="ttitle">💼 Recruiting.exe — Properties</div>
-      <div class="tbtns">
-        <button class="tbtn" onclick="minWin('win-work')">_</button>
-        <button class="tbtn" onclick="maxWin('win-work')">□</button>
-        <button class="tbtn" onclick="closeWin('win-work')">✕</button>
-      </div>
+  <!-- ═══ WIN: RECRUITING ═══ -->
+  <div class="win" id="win-work" style="top:55px;left:135px;width:520px;height:500px">
+    <div class="tb" onmousedown="drag(event,'win-work')">
+      <div class="tb-cl" onclick="closeW('win-work')"></div>
+      <div class="tb-t">Recruiting</div>
+      <div class="tb-zm" onclick="zoom('win-work')"></div>
     </div>
-    <div class="wbody"><div class="wp" style="max-height:440px;overflow-y:auto">
-      <p class="wh">What I do</p>
+    <div class="wm"><span class="wm-i">File</span><span class="wm-i">Edit</span><span class="wm-i">Format</span><span class="wm-i">Font</span></div>
+    <div class="wb"><div class="wp">
+      <p class="ch">What I do</p>
       <p style="margin-bottom:8px">I work with startups — mostly Seed through to Series D. A lot of London-based, but European-based startups too. I'm usually working with about six or seven startups at any one time, recruiting multiple roles for each. Generally the profiles are similar but often with some clear differences. I'm happiest when I'm talking to candidates and placing people in awesome new startups.</p>
-      <hr class="whr">
-      <p class="wh">What I'm looking for</p>
-      <ul class="wul">
+      <hr class="chr">
+      <p class="ch">What I'm looking for</p>
+      <ul class="cul">
         <li>Product engineers who care about what they're building, not just the stack</li>
         <li>Full-stack engineers comfortable shipping in small, fast-moving teams</li>
         <li>People with startup pedigree — who've shipped, broken things, fixed them, repeated</li>
       </ul>
-      <hr class="whr">
-      <p class="wh">What I'm not</p>
-      <p style="margin-bottom:8px">Transactional. Spray-and-pray. The recruiter who sends your CV somewhere without calling you first. Not that one.</p>
-      <div class="wq">"The best engineers I've placed weren't looking. Getting those conversations right is the job."</div>
-      <p style="margin-top:8px;display:flex;gap:14px;flex-wrap:wrap">
-        <a class="wlink" href="https://www.linkedin.com/in/james-wilson-92170656/" target="_blank">→ LinkedIn</a>
-        <a class="wlink" href="https://github.com/JamesWilsonLondon" target="_blank">→ GitHub</a>
-        <a class="wlink" href="mailto:james@ethiqrec.com">→ james@ethiqrec.com</a>
+      <hr class="chr">
+      <p class="ch">A brief history of how not to recruit</p>
+      <p style="margin-bottom:8px">In 2017, a previous version of me discovered LinkedIn Recruiter's "Select All" checkbox. What followed was an afternoon no one should be proud of. 847 InMails. Response rate: 0.4%. One reply was from someone who hadn't updated their profile since 2009. Another asked how I'd obtained their details. A third was from my mum, who is not a software engineer.</p>
+      <p style="margin-bottom:12px">I've read every profile since. Apparently this is now a competitive advantage.</p>
+      <p style="display:flex;gap:14px;flex-wrap:wrap">
+        <a class="ca" href="https://www.linkedin.com/in/james-wilson-92170656/" target="_blank">→ LinkedIn</a>
+        <a class="ca" href="https://github.com/JamesWilsonLondon" target="_blank">→ GitHub</a>
+        <a class="ca" href="mailto:james@ethiqrec.com">→ james@ethiqrec.com</a>
       </p>
     </div></div>
-    <div class="sbar"><div class="sp" style="flex:1">Ready</div></div>
   </div>
 
-  <!-- ═══ WINDOW: PROJECTS ═══ -->
-  <div class="win" id="win-projects" style="top:90px;left:190px;width:490px">
-    <div class="tbar" onmousedown="drag(event,'win-projects')">
-      <div class="ttitle">⚙️ C:\Users\James\Projects\ — Explorer</div>
-      <div class="tbtns">
-        <button class="tbtn" onclick="minWin('win-projects')">_</button>
-        <button class="tbtn" onclick="maxWin('win-projects')">□</button>
-        <button class="tbtn" onclick="closeWin('win-projects')">✕</button>
-      </div>
+  <!-- ═══ WIN: PROJECTS ═══ -->
+  <div class="win" id="win-projects" style="top:72px;left:162px;width:470px;height:460px">
+    <div class="tb" onmousedown="drag(event,'win-projects')">
+      <div class="tb-cl" onclick="closeW('win-projects')"></div>
+      <div class="tb-t">Projects</div>
+      <div class="tb-zm" onclick="zoom('win-projects')"></div>
     </div>
-    <div class="mbar"><span class="mi">File</span><span class="mi">View</span><span class="mi">Go</span><span class="mi">Favorites</span></div>
-    <div class="wbody"><div class="wp" style="max-height:400px;overflow-y:auto">
-      <p class="wh">Side projects</p>
-      <p style="margin-bottom:8px">Since I started placing engineers, I've had a problem: I actually find this stuff interesting. So I started building things. Recruiting tools, mostly. React and TypeScript. The code quality varies enormously and I'm completely fine with that.</p>
-      <hr class="whr">
-      <p class="wh">System specs</p>
-      <table class="wtbl">
-        <tr><td>Stack:</td><td>React / TypeScript (mostly)</td></tr>
-        <tr><td>Philosophy:</td><td>Ship first, refactor... eventually</td></tr>
-        <tr><td>Test coverage:</td><td>Let's not talk about this</td></tr>
-        <tr><td>Style:</td><td>Scrappy with good intentions</td></tr>
-        <tr><td>Motivation:</td><td>Genuine kick out of shipping something</td></tr>
+    <div class="wm"><span class="wm-i">File</span><span class="wm-i">Edit</span><span class="wm-i">View</span></div>
+    <div class="wb"><div class="wp">
+      <p class="ch">The problem</p>
+      <p style="margin-bottom:8px">Since I started working with startups and placing engineers, I've had a problem: I actually find this stuff really interesting. So naturally, I got curious and started building my own things to learn about the technology. With the help of AI, it wasn't as hard as it once was.</p>
+      <p style="margin-bottom:8px">I started building recruiting tools — mostly using React and TypeScript. The code quality probably varied enormously, but I actually have no idea. Usually it worked and I was happy with that. It usually had a maximum of one user at any one time. Being me.</p>
+      <hr class="chr">
+      <p class="ch">Daily tools</p>
+      <table class="ct">
+        <tr><td>Writing</td><td>Wispr Flow</td></tr>
+        <tr><td>Comms</td><td>Google Suite, Slack, WhatsApp</td></tr>
+        <tr><td>Sourcing</td><td>LinkedIn Recruiter</td></tr>
+        <tr><td>CRM</td><td>Atlas (Recruitment CRM)</td></tr>
+        <tr><td>AI</td><td>Claude, Gemini</td></tr>
+        <tr><td>Browser</td><td>Google Chrome</td></tr>
+        <tr><td>Hardware</td><td>MacBook</td></tr>
+        <tr><td>Stack</td><td>React, TypeScript</td></tr>
       </table>
-      <hr class="whr">
-      <p class="wh">The honest part</p>
-      <p style="margin-bottom:8px">I don't have the engineering brain — I know this. But I have the obsession with getting something working, and it turns out that takes you further than you'd expect.</p>
-      <p style="margin-bottom:8px">If I'd become an engineer, I'd have been a product engineer. In this life I'm their recruiter, which means I've spent years watching how the best ones think. That's worth something too.</p>
-      <p><a class="wlink" href="https://github.com/JamesWilsonLondon" target="_blank">→ GitHub</a></p>
+      <p><a class="ca" href="https://github.com/JamesWilsonLondon" target="_blank">→ GitHub</a></p>
     </div></div>
   </div>
 
-  <!-- ═══ WINDOW: LIFE ═══ -->
-  <div class="win" id="win-life" style="top:85px;left:210px;width:470px">
-    <div class="tbar" onmousedown="drag(event,'win-life')">
-      <div class="ttitle">🌍 Life.ini — System Properties</div>
-      <div class="tbtns">
-        <button class="tbtn" onclick="minWin('win-life')">_</button>
-        <button class="tbtn" onclick="maxWin('win-life')">□</button>
-        <button class="tbtn" onclick="closeWin('win-life')">✕</button>
-      </div>
+  <!-- ═══ WIN: LIFE ═══ -->
+  <div class="win" id="win-life" style="top:62px;left:182px;width:460px">
+    <div class="tb" onmousedown="drag(event,'win-life')">
+      <div class="tb-cl" onclick="closeW('win-life')"></div>
+      <div class="tb-t">Life</div>
+      <div class="tb-zm" onclick="zoom('win-life')"></div>
     </div>
-    <div class="wbody"><div class="wp" style="max-height:380px;overflow-y:auto">
-      <table class="wtbl">
-        <tr><td>Origin:</td><td>Australian. Don't hold it against me.</td></tr>
-        <tr><td>Current OS:</td><td>Vigo, Spain</td></tr>
-        <tr><td>Dependants:</td><td>Two boys. Chaotic. Brilliant. Both.</td></tr>
-        <tr><td>Co-founder:</td><td>My wife. More organised than me, which is the whole system.</td></tr>
-        <tr><td>Primary market:</td><td>London, UK startups</td></tr>
-        <tr><td>Former sport:</td><td>Rowing. Got reasonably good. Now just explains the early mornings.</td></tr>
-        <tr><td>Current sport:</td><td>Paddle. Recent convert. Still figuring it out.</td></tr>
-        <tr><td>Local cuisine:</td><td>Vigo has unreasonably good seafood.</td></tr>
-        <tr><td>Favourite weather:</td><td>Not relevant. We're staying.</td></tr>
+    <div class="wb"><div class="wp">
+      <table class="ct">
+        <tr><td>Origin</td><td>Australian. That's all we need to say.</td></tr>
+        <tr><td>Current</td><td>Vigo, Spain. Fair bit of time in the UK too.</td></tr>
+        <tr><td>Dependants</td><td>Two boys — Harry &amp; Charlie. Chaotic. Brilliant. Both.</td></tr>
+        <tr><td>Co-founder</td><td>My wife. More organised than me, which is the whole system.</td></tr>
+        <tr><td>Primary market</td><td>UK and EMEA startups</td></tr>
+        <tr><td>Former sport</td><td>Rowing. Got reasonably good. Now I realise it was just training for getting up early with young kids.</td></tr>
+        <tr><td>Current sport</td><td>Padel. Recent convert. Still figuring out how to use the back wall.</td></tr>
+        <tr><td>Local cuisine</td><td>Vigo has reasonably good seafood. But I can't go past a good pizza.</td></tr>
       </table>
-      <hr class="whr">
-      <div class="wq">"Moving to Spain wasn't a lifestyle brand decision. We just like it here. The bureaucracy is genuinely awful and we're staying anyway."</div>
-      <p>Work is London. Life is Spain. The time zone works fine and I don't plan to discuss it further.</p>
     </div></div>
-    <div class="sbar"><div class="sp" style="flex:1">System: Stable</div><div class="sp">Uptime: mid-30s</div></div>
+    <div class="ws"><div class="wsp">System: Stable (just)</div><div class="wsp">Uptime: mid-30s</div></div>
   </div>
 
-  <!-- ═══ WINDOW: CONTACT ═══ -->
-  <div class="win" id="win-contact" style="top:100px;left:230px;width:390px">
-    <div class="tbar" onmousedown="drag(event,'win-contact')">
-      <div class="ttitle">📧 contact.txt — Notepad</div>
-      <div class="tbtns">
-        <button class="tbtn" onclick="minWin('win-contact')">_</button>
-        <button class="tbtn" onclick="maxWin('win-contact')">□</button>
-        <button class="tbtn" onclick="closeWin('win-contact')">✕</button>
-      </div>
+  <!-- ═══ WIN: CONTACT ═══ -->
+  <div class="win" id="win-contact" style="top:82px;left:202px;width:370px;height:360px">
+    <div class="tb" onmousedown="drag(event,'win-contact')">
+      <div class="tb-cl" onclick="closeW('win-contact')"></div>
+      <div class="tb-t">Contact</div>
+      <div class="tb-zm" onclick="zoom('win-contact')"></div>
     </div>
-    <div class="mbar"><span class="mi">File</span><span class="mi">Edit</span><span class="mi">Help</span></div>
-    <div class="wbody"><div class="wnote" style="max-height:300px">CONTACT JAMES WILSON
-======================
+    <div class="wb"><div class="st">Contact — James Wilson
+────────────────────────────
 
-Email:     james@ethiqrec.com
-LinkedIn:  /in/james-wilson-92170656
-GitHub:    /JamesWilsonLondon
+Email      james@ethiqrec.com
+LinkedIn   /in/james-wilson-92170656
+GitHub     /JamesWilsonLondon
 
-If you're a startup hiring product engineers,
-let's talk.
+If you're a startup hiring product
+engineers, let's talk.
 
-If you're an engineer curious about what's
-out there, also let's talk.
+If you're an engineer curious about
+what's out there, also let's talk.
 
-If you're a recruiter with a job for me...
-I'm very happy where I am 😊
+If you're a recruiter with a job for
+me... I'm very happy where I am 😊
 
-<a class="wlink" href="mailto:james@ethiqrec.com">→ Send email</a>
-<a class="wlink" href="https://www.linkedin.com/in/james-wilson-92170656/" target="_blank">→ Open LinkedIn</a>
-<a class="wlink" href="https://github.com/JamesWilsonLondon" target="_blank">→ Open GitHub</a></div>
+<a class="ca" href="mailto:james@ethiqrec.com">→ Send email</a>
+<a class="ca" href="https://www.linkedin.com/in/james-wilson-92170656/" target="_blank">→ Open LinkedIn</a>
+<a class="ca" href="https://github.com/JamesWilsonLondon" target="_blank">→ Open GitHub</a></div>
     </div>
   </div>
 
-  <!-- ═══ WINDOW: RECYCLE BIN ═══ -->
-  <div class="win" id="win-recycle" style="top:90px;left:200px;width:400px">
-    <div class="tbar" onmousedown="drag(event,'win-recycle')">
-      <div class="ttitle">🗑️ Recycle Bin</div>
-      <div class="tbtns">
-        <button class="tbtn" onclick="minWin('win-recycle')">_</button>
-        <button class="tbtn" onclick="maxWin('win-recycle')">□</button>
-        <button class="tbtn" onclick="closeWin('win-recycle')">✕</button>
-      </div>
+  <!-- ═══ WIN: TRASH ═══ -->
+  <div class="win" id="win-trash" style="top:70px;left:188px;width:470px">
+    <div class="tb" onmousedown="drag(event,'win-trash')">
+      <div class="tb-cl" onclick="closeW('win-trash')"></div>
+      <div class="tb-t">Trash</div>
+      <div class="tb-zm" onclick="zoom('win-trash')"></div>
     </div>
-    <div class="mbar"><span class="mi">File</span><span class="mi">Edit</span><span class="mi">View</span></div>
-    <div class="wbody"><div class="wp" style="max-height:300px;overflow-y:auto">
-      <table class="wtbl">
-        <tr><td style="color:#c00;width:20px">✕</td><td>"I'm a people person"</td></tr>
-        <tr><td style="color:#c00">✕</td><td>Motivational posts about the grind</td></tr>
-        <tr><td style="color:#c00">✕</td><td>Recruiters who don't read CVs</td></tr>
-        <tr><td style="color:#c00">✕</td><td>"Rockstar ninja developer" (the job description, not the person)</td></tr>
-        <tr><td style="color:#c00">✕</td><td>My rowing medals (long story, no regrets)</td></tr>
-        <tr><td style="color:#c00">✕</td><td>The idea that recruiting is just sales</td></tr>
+    <div class="wm"><span class="wm-i">File</span><span class="wm-i">Edit</span><span class="wm-i">View</span></div>
+    <div class="wb"><div class="wp">
+      <table class="ct">
+        <tr><td style="width:20px;color:#bbb;font-weight:normal">⊠</td><td>"I'm a people person"</td></tr>
+        <tr><td style="color:#bbb;font-weight:normal">⊠</td><td>Motivational posts about the grind</td></tr>
+        <tr><td style="color:#bbb;font-weight:normal">⊠</td><td>Recruiters who don't read CVs</td></tr>
+        <tr><td style="color:#bbb;font-weight:normal">⊠</td><td>The idea that recruiting is just sales</td></tr>
+        <tr><td style="color:#bbb;font-weight:normal">⊠</td><td>A full-time rowing career</td></tr>
+        <tr><td style="color:#bbb;font-weight:normal">⊠</td><td>Wearing Lycra (the rowing years)</td></tr>
+        <tr><td style="color:#bbb;font-weight:normal">⊠</td><td>Exciting night life</td></tr>
+        <tr><td style="color:#bbb;font-weight:normal">⊠</td><td>Using "Rockstar Developer" in a job description</td></tr>
+        <tr><td style="color:#bbb;font-weight:normal">⊠</td><td>Selecting all in LinkedIn Recruiter and sending a generic message without reading a profile <em style="color:#ccc">(didn't realise there was a credit limit)</em></td></tr>
+        <tr><td style="color:#bbb;font-weight:normal">⊠</td><td>Melbourne coffee culture</td></tr>
       </table>
-      <hr class="whr">
-      <p style="font-size:10px;color:#808080">6 item(s). Permanently deleted. No restore option.</p>
+      <hr class="chr">
+      <p style="font-size:10px;color:#aaa">10 items. This trash has not been emptied.</p>
     </div></div>
-    <div class="sbar"><div class="sp" style="flex:1">6 object(s)</div></div>
+    <div class="ws"><div class="wsp">10 items</div></div>
   </div>
 
-  <!-- ═══ SHUTDOWN DIALOG ═══ -->
-  <div class="win" id="win-shutdown" style="top:28%;left:50%;transform:translate(-50%,0);width:360px;z-index:900">
-    <div class="tbar" onmousedown="drag(event,'win-shutdown')">
-      <div class="ttitle">Shut Down Windows</div>
-      <div class="tbtns"><button class="tbtn" onclick="closeWin('win-shutdown')">✕</button></div>
+  <!-- ═══ WIN: SHUTDOWN DIALOG ═══ -->
+  <div class="win" id="win-shutdown" style="width:330px;z-index:800">
+    <div class="tb" onmousedown="drag(event,'win-shutdown')">
+      <div class="tb-cl" onclick="closeW('win-shutdown')"></div>
+      <div class="tb-t">Shut Down</div>
+      <div class="tb-zm"></div>
     </div>
-    <div class="wbody"><div class="wp" style="display:flex;gap:14px;align-items:flex-start">
-      <div style="font-size:48px;flex-shrink:0">🖥️</div>
+    <div class="wb"><div class="wp" style="display:flex;gap:14px;align-items:flex-start">
+      <div style="font-size:44px;flex-shrink:0;line-height:1">💻</div>
       <div>
         <p style="font-weight:bold;margin-bottom:8px">Are you sure you want to shut down?</p>
-        <p style="color:#444;margin-bottom:12px;font-size:11px">This will close James's about page, which seems unnecessary.</p>
-        <div style="display:flex;gap:8px">
-          <button onclick="closeWin('win-shutdown')" style="padding:3px 16px;background:#c0c0c0;border:2px solid;border-color:#fff #808080 #808080 #fff;cursor:pointer;font-family:inherit;font-size:11px">Cancel</button>
-          <button onclick="doShutdown()" style="padding:3px 16px;background:#c0c0c0;border:2px solid;border-color:#fff #808080 #808080 #fff;cursor:pointer;font-family:inherit;font-size:11px">Shut Down</button>
+        <p style="color:#555;margin-bottom:14px;font-size:11px;line-height:1.5">This will close James's about page, which seems unnecessary.</p>
+        <div style="display:flex;gap:8px;justify-content:flex-end">
+          <button onclick="closeW('win-shutdown')" style="padding:4px 18px;background:#dfdfdf;border:1px solid #000;border-radius:4px;cursor:pointer;font-family:inherit;font-size:12px">Cancel</button>
+          <button onclick="doShutdown()" style="padding:4px 18px;background:#dfdfdf;border:2px solid #000;border-radius:4px;font-weight:bold;cursor:pointer;font-family:inherit;font-size:12px;outline:2px solid #000;outline-offset:2px">Shut Down</button>
         </div>
       </div>
     </div></div>
   </div>
 
-</div><!-- /desktop -->
+</div><!-- /desk -->
 
-<!-- TASKBAR -->
-<div id="taskbar">
-  <button id="startbtn" onclick="toggleStart()">
-    <div class="winlogo"><div></div><div></div><div></div><div></div></div>
-    <strong>Start</strong>
-  </button>
-  <div class="tsep"></div>
-  <div id="tbwins"></div>
-  <div id="tray"><span style="font-size:14px">🔊</span><span id="clk">12:00 PM</span></div>
+<!-- Shutdown screen -->
+<div id="sd">
+  <div style="font-size:64px;margin-bottom:12px">💻</div>
+  <p>It is now safe to turn off<br>your computer.</p>
+  <p style="margin-top:16px;font-size:12px;color:#777">(or just refresh the page)</p>
 </div>
-
-<!-- START MENU -->
-<div id="smenu">
-  <div class="smbanner"><b>Windows</b>95</div>
-  <div class="smitems">
-    <div class="smitem" onclick="openWin('about');closeStart()">
-      <span class="smiico">📋</span>
-      <span class="smilbl">About Me <span class="smisub">readme.txt</span></span>
-    </div>
-    <div class="smitem" onclick="openWin('work');closeStart()">
-      <span class="smiico">💼</span>
-      <span class="smilbl">Recruiting <span class="smisub">What I do</span></span>
-    </div>
-    <div class="smitem" onclick="openWin('projects');closeStart()">
-      <span class="smiico">⚙️</span>
-      <span class="smilbl">Projects <span class="smisub">Side stuff</span></span>
-    </div>
-    <div class="smitem" onclick="openWin('life');closeStart()">
-      <span class="smiico">🌍</span>
-      <span class="smilbl">Life.ini <span class="smisub">The rest of it</span></span>
-    </div>
-    <div class="smitem" onclick="openWin('contact');closeStart()">
-      <span class="smiico">📧</span>
-      <span class="smilbl">Contact <span class="smisub">Let's talk</span></span>
-    </div>
-    <div class="smsep"></div>
-    <div class="smitem" onclick="openWin('recycle');closeStart()">
-      <span class="smiico">🗑️</span>
-      <span class="smilbl">Recycle Bin</span>
-    </div>
-    <div class="smsep"></div>
-    <div class="smitem" onclick="openWin('shutdown');closeStart()">
-      <span class="smiico">🔌</span>
-      <span class="smilbl">Shut Down</span>
-    </div>
-  </div>
-</div>
-
-<!-- SHUTDOWN SCREEN -->
-<div id="sdscreen">
-  <p>It is now safe to turn off your computer.</p>
-  <small>(or just refresh the page)</small>
-</div>
-
-<!-- HINT -->
-<div id="hint">Double-click icons to open</div>
 
 <script>
-// ─── BIOS ────────────────────────────────────────────
-const biosLines=[
-  ['bw','Award Medallion BIOS v4.51PG, An Energy Star Ally'],
-  ['','Copyright (C) 1984-98, Award Software, Inc.'],
-  ['',''],
-  ['bw','Intel Pentium II 350MHz'],
-  ['','Memory Test : 65536K OK'],
-  ['',''],
-  ['','Primary Master   ... Maxtor 6.4GB'],
-  ['','Primary Slave    ... None'],
-  ['','Secondary Master ... ATAPI CD-ROM'],
-  ['',''],
-  ['by','[JAMES_WILSON.DAT] Initialising personality module...'],
-  ['','  Scrappiness index    ......... HIGH'],
-  ['','  Australia.ini        ......... Loaded (standby mode)'],
-  ['','  Vigo, Spain config   ......... ACTIVE'],
-  ['','  Side projects        ......... 3 shipped / 7 in progress'],
-  ['','  Engineering brain    ......... Not found (acceptable)'],
-  ['','  Product instincts    ......... OK'],
-  ['bc','  All systems nominal.'],
-  ['',''],
-  ['bw','Starting Windows 95...'],
+// ─── BOOT ─────────────────────────────────────────────
+window.addEventListener('load',()=>setTimeout(startBoot,350));
+
+const exts=[
+  'James Wilson…',
+  'Scrappiness module…',
+  'Vigo, Spain (occasional UK visits)…',
+  'Harry &amp; Charlie…',
+  'Padel.ext — back wall: unresolved…',
+  'Product instincts…',
+  'Engineering brain: not found — OK…',
+  'Welcome to Macintosh.',
 ];
-let bi=0;
-const biosEl=document.getElementById('bios');
-function biosNext(){
-  if(bi>=biosLines.length){setTimeout(showW95,300);return}
-  const[cls,txt]=biosLines[bi++];
-  const d=document.createElement('div');
-  d.textContent=txt||'\u00a0';
-  if(cls)d.className=cls;
-  biosEl.appendChild(d);
-  setTimeout(biosNext,bi<10?70:105);
+function startBoot(){
+  document.getElementById('boot').style.display='flex';
+  let i=0;
+  const bar=document.getElementById('ext-inner');
+  const lbl=document.getElementById('ext-lbl');
+  const N=exts.length;
+  const tick=()=>{
+    if(i>=N){setTimeout(showDesk,600);return}
+    lbl.innerHTML=exts[i];
+    bar.style.width=((i+1)/N*100)+'%';
+    i++;setTimeout(tick,i<N?240:700);
+  };
+  setTimeout(tick,900);
 }
-setTimeout(biosNext,500);
-
-// ─── WIN95 BOOT ──────────────────────────────────────
-function showW95(){
-  biosEl.style.display='none';
-  const w=document.getElementById('w95boot');
-  w.style.display='flex';
-  const c=document.getElementById('bblocks');
-  const N=14;
-  for(let i=0;i<N;i++){const d=document.createElement('div');d.className='bb';c.appendChild(d)}
-  let n=0;
-  const iv=setInterval(()=>{
-    const bs=c.querySelectorAll('.bb');
-    if(n<N){bs[n].classList.add('on');n++}
-    if(n>=N){clearInterval(iv);setTimeout(showDesktop,750)}
-  },190);
-}
-
-// ─── SHOW DESKTOP ────────────────────────────────────
-function showDesktop(){
-  document.getElementById('w95boot').style.display='none';
-  document.getElementById('desktop').style.display='block';
-  document.getElementById('taskbar').style.display='flex';
+function showDesk(){
+  document.getElementById('boot').style.display='none';
+  document.getElementById('desk').style.display='block';
+  document.getElementById('mbar').style.display='flex';
   tickClock();
-  setTimeout(()=>{
-    openWin('about');
-    const h=document.getElementById('hint');
-    h.style.display='block';
-    setTimeout(()=>h.style.display='none',3200);
-  },450);
+  // Center shutdown dialog
+  const sd=document.getElementById('win-shutdown');
+  sd.style.left=Math.max(0,(window.innerWidth-330)/2)+'px';
+  sd.style.top=Math.max(0,(window.innerHeight-200)/2)+'px';
+  setTimeout(()=>openW('about'),300);
 }
 
-// ─── WINDOW CONFIG ───────────────────────────────────
-const WC={
-  about:   {id:'win-about',    ico:'📋',lbl:'readme.txt'},
-  work:    {id:'win-work',     ico:'💼',lbl:'Recruiting'},
-  projects:{id:'win-projects', ico:'⚙️',lbl:'Projects/'},
-  life:    {id:'win-life',     ico:'🌍',lbl:'Life.ini'},
-  contact: {id:'win-contact',  ico:'📧',lbl:'contact.txt'},
-  recycle: {id:'win-recycle',  ico:'🗑️',lbl:'Recycle Bin'},
-  shutdown:{id:'win-shutdown', ico:'🔌',lbl:'Shut Down'},
-};
-const WS={};
+// ─── WINDOWS ──────────────────────────────────────────
 let Z=100;
-
-function openWin(k){
-  const c=WC[k];if(!c)return;
-  const el=document.getElementById(c.id);if(!el)return;
+function openW(k){
+  const el=document.getElementById('win-'+k);
+  if(!el)return;
   el.classList.add('open');
   front(el);
-  if(!WS[k]){WS[k]={min:false};addTB(k)}
-  else{WS[k].min=false;upTB(k)}
 }
-function closeWin(elId){
-  const el=document.getElementById(elId);if(!el)return;
-  el.classList.remove('open');
-  const k=k4el(elId);if(!k)return;
-  delete WS[k];rmTB(k);
+function closeW(id){
+  const el=document.getElementById(id);
+  if(el){el.classList.remove('open','top')}
 }
-function minWin(elId){
-  const el=document.getElementById(elId);if(!el)return;
-  el.classList.remove('open');
-  const k=k4el(elId);if(k&&WS[k]){WS[k].min=true;upTB(k)}
-}
-function maxWin(elId){
-  const el=document.getElementById(elId);if(!el)return;
-  if(el.dataset.mx==='1'){
-    el.style.top=el.dataset.pt||'';el.style.left=el.dataset.pl||'';
-    el.style.width=el.dataset.pw||'';el.style.height='';el.dataset.mx='';
+function zoom(id){
+  const el=document.getElementById(id);if(!el)return;
+  if(el.dataset.z==='1'){
+    Object.assign(el.style,{top:el.dataset.pt,left:el.dataset.pl,width:el.dataset.pw,height:el.dataset.ph});
+    el.dataset.z='';
   }else{
-    el.dataset.pt=el.style.top;el.dataset.pl=el.style.left;el.dataset.pw=el.style.width;
-    el.style.top='0';el.style.left='0';el.style.width='100%';
-    el.style.height='calc(100vh - 40px)';el.dataset.mx='1';
+    el.dataset.pt=el.style.top;el.dataset.pl=el.style.left;
+    el.dataset.pw=el.style.width;el.dataset.ph=el.style.height;
+    Object.assign(el.style,{top:'0',left:'0',width:'100%',height:'calc(100vh - 20px)'});
+    el.dataset.z='1';
   }
 }
 function front(el){
+  document.querySelectorAll('.win').forEach(w=>w.classList.remove('top'));
+  el.classList.add('top');
   el.style.zIndex=++Z;
-  document.querySelectorAll('.tbar').forEach(t=>t.classList.add('inactive'));
-  el.querySelector('.tbar').classList.remove('inactive');
 }
-function k4el(id){return Object.keys(WC).find(k=>WC[k].id===id)}
+document.querySelectorAll('.win').forEach(w=>{
+  w.addEventListener('mousedown',function(e){
+    if(!e.target.classList.contains('tb-cl')&&!e.target.classList.contains('tb-zm'))front(this);
+  });
+});
 
-// ─── TASKBAR BUTTONS ─────────────────────────────────
-const tbBar=document.getElementById('tbwins');
-function addTB(k){
-  const c=WC[k];
-  const b=document.createElement('button');
-  b.className='twbtn active';b.id='tb-'+k;
-  b.textContent=c.ico+' '+c.lbl;
-  b.onclick=()=>{
-    if(WS[k]&&WS[k].min)openWin(k);
-    else minWin(WC[k].id);
-  };
-  tbBar.appendChild(b);
-}
-function rmTB(k){const b=document.getElementById('tb-'+k);if(b)b.remove()}
-function upTB(k){const b=document.getElementById('tb-'+k);if(b)b.classList.toggle('active',!WS[k].min)}
-
-// ─── DRAG ────────────────────────────────────────────
-let dEl=null,dX=0,dY=0;
+// ─── DRAG ─────────────────────────────────────────────
+let dEl=null,dx=0,dy=0;
 function drag(e,id){
-  if(e.target.classList.contains('tbtn')||e.target.classList.contains('mi'))return;
+  const t=e.target;
+  if(t.classList.contains('tb-cl')||t.classList.contains('tb-zm'))return;
   dEl=document.getElementById(id);
-  dX=e.clientX-dEl.offsetLeft;dY=e.clientY-dEl.offsetTop;
+  dx=e.clientX-dEl.offsetLeft;dy=e.clientY-dEl.offsetTop;
   front(dEl);e.preventDefault();
 }
-document.addEventListener('mousemove',e=>{if(!dEl)return;dEl.style.left=(e.clientX-dX)+'px';dEl.style.top=(e.clientY-dY)+'px'});
-document.addEventListener('mouseup',()=>{dEl=null});
-document.querySelectorAll('.win').forEach(w=>{
-  w.addEventListener('mousedown',function(e){if(!e.target.classList.contains('tbtn'))front(this)})
+document.addEventListener('mousemove',e=>{
+  if(!dEl)return;
+  dEl.style.left=(e.clientX-dx)+'px';
+  dEl.style.top=Math.max(0,e.clientY-dy)+'px';
 });
+document.addEventListener('mouseup',()=>dEl=null);
 
-// ─── START MENU ──────────────────────────────────────
-function toggleStart(){document.getElementById('smenu').classList.toggle('open')}
-function closeStart(){document.getElementById('smenu').classList.remove('open')}
-document.addEventListener('click',e=>{
-  if(!e.target.closest('#smenu')&&!e.target.closest('#startbtn'))closeStart()
-});
+// ─── MENUS ────────────────────────────────────────────
+function toggleDd(e,id,btn){
+  e.stopPropagation();
+  const dd=document.getElementById(id);
+  const wasOpen=dd.classList.contains('open');
+  closeDd();
+  if(!wasOpen){
+    const r=btn.getBoundingClientRect();
+    dd.style.left=r.left+'px';
+    dd.classList.add('open');
+    btn.classList.add('act');
+  }
+}
+function closeDd(){
+  document.querySelectorAll('.dd').forEach(d=>d.classList.remove('open'));
+  document.querySelectorAll('.mb-a,.mb-i').forEach(b=>b.classList.remove('act'));
+}
+document.addEventListener('click',()=>closeDd());
 
-// ─── SHUTDOWN ────────────────────────────────────────
-function doShutdown(){
-  closeWin('win-shutdown');
-  const s=document.getElementById('sdscreen');s.style.display='flex';
+// ─── ICONS ────────────────────────────────────────────
+function selIco(el){
+  document.querySelectorAll('.ico').forEach(i=>i.classList.remove('sel'));
+  el.classList.add('sel');
+}
+function deskClick(e){
+  if(!e.target.closest('.ico'))document.querySelectorAll('.ico').forEach(i=>i.classList.remove('sel'));
 }
 
-// ─── CLOCK ───────────────────────────────────────────
+// ─── SHUTDOWN / RESTART ───────────────────────────────
+function doShutdown(){
+  document.querySelectorAll('.win').forEach(w=>w.classList.remove('open'));
+  document.getElementById('sd').style.display='flex';
+}
+function doRestart(){location.reload()}
+
+// ─── CLOCK ────────────────────────────────────────────
 function tickClock(){
   const n=new Date();
   let h=n.getHours(),m=n.getMinutes();
   const ap=h>=12?'PM':'AM';h=h%12||12;
-  document.getElementById('clk').textContent=h+':'+String(m).padStart(2,'0')+' '+ap;
-  setTimeout(tickClock,10000);
+  document.getElementById('mb-clk').textContent=`${h}:${String(m).padStart(2,'0')} ${ap}`;
+  setTimeout(tickClock,15000);
 }
-
-// ─── ICON SELECTION ──────────────────────────────────
-function selIcon(el){
-  document.querySelectorAll('.icon').forEach(i=>i.classList.remove('sel'));
-  el.classList.add('sel');
-}
-document.getElementById('desktop').addEventListener('click',e=>{
-  if(!e.target.closest('.icon'))document.querySelectorAll('.icon').forEach(i=>i.classList.remove('sel'))
-});
 </script>
 </body>
 </html>
