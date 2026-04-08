@@ -65,6 +65,11 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'MS Sans Serif','Mi
 #taskbar{position:fixed;bottom:0;left:0;right:0;height:40px;background:#c0c0c0;border-top:2px solid #fff;display:none;align-items:center;padding:4px;gap:4px;z-index:4000}
 #startbtn{height:32px;padding:0 10px;background:#c0c0c0;border:2px solid;border-color:#fff #808080 #808080 #fff;box-shadow:1px 1px 0 #000;font-size:13px;font-weight:bold;display:flex;align-items:center;gap:6px;cursor:pointer;white-space:nowrap;font-family:inherit}
 #startbtn:active{border-color:#808080 #fff #fff #808080}
+.winlogo{display:grid;grid-template-columns:1fr 1fr;gap:1px;width:16px;height:14px;flex-shrink:0}
+.winlogo div:nth-child(1){background:#ef3737}
+.winlogo div:nth-child(2){background:#6fc72e}
+.winlogo div:nth-child(3){background:#2196f3}
+.winlogo div:nth-child(4){background:#f5d100}
 .tsep{width:2px;height:32px;border-left:1px solid #808080;border-right:1px solid #fff;flex-shrink:0}
 #tbwins{display:flex;gap:3px;flex:1;overflow:hidden;min-width:0}
 .twbtn{height:28px;padding:0 8px;background:#c0c0c0;border:1px solid;border-color:#fff #808080 #808080 #fff;font-size:11px;cursor:pointer;display:flex;align-items:center;gap:4px;max-width:150px;overflow:hidden;white-space:nowrap;font-family:inherit}
@@ -164,36 +169,35 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'MS Sans Serif','Mi
     </div>
     <div class="mbar"><span class="mi">File</span><span class="mi">Edit</span><span class="mi">Search</span><span class="mi">Help</span></div>
     <div class="wbody"><div class="wnote" style="max-height:380px">README — JAMES_WILSON.EXE
-Last modified: 2025
+Last modified: 2026
 ================================
 
 Name:       James Wilson
-Status:     Operational
-Location:   Vigo, Spain (yes, on purpose)
-Function:   Recruiter for software engineers
+Location:   Vigo, Spain
+Function:   Dad, recruiter, recent paddle enthusiast
 
-I find engineers for startups. I've been doing
-it long enough to get good at it, and curious
-enough to accidentally learn a lot of software
-along the way.
+For my day job I work with startups to find really
+really good engineers. I've been working in
+recruitment for around five years. Over the last
+few years I've focused on software engineers —
+mostly at startups.
 
-The engineers I place: product engineers. The
-ones who argue about UX in Slack, who care
-about retention, who ship things and look at
-what happens.
+My niche is product engineers. Whether they lean
+more backend or frontend — and more recently AI
+product engineers. Basically engineers who love
+shipping things and care about what the customer
+wants.
 
-If I were an engineer — I'm not, and probably
-shouldn't be — that's what I'd want to be.
-The product engineer. The one who cares about
-the thing working, not just how it's built.
+If I were an engineer — which I'm not, and probably
+shouldn't be — I think that's what I'd want to be.
+A product engineer.
 
-I'm scrappy. I move fast. I get a genuine kick
-out of shipping something, even if it's only a
-recruiting tool that only I use.
+I'm scrappy. I like to move fast. I get a genuine
+kick out of shipping something, even if it's only
+some lame recruiting tool that only I use.
 
-Australian. Live in Spain with my wife and two
-boys. Used to row. Currently: father, recruiter,
-occasional builder of things.
+I'm Australian. I now live in Spain with my wife
+and two boys.
 
 ---
 Double-click any icon on the left to learn more.</div>
@@ -213,7 +217,7 @@ Double-click any icon on the left to learn more.</div>
     </div>
     <div class="wbody"><div class="wp" style="max-height:440px;overflow-y:auto">
       <p class="wh">What I do</p>
-      <p style="margin-bottom:8px">I place software engineers at startups — Seed through Series D, mostly London-based or remote-first UK companies. I take a small number of roles at a time and go deep. The goal is fit: for the company, the candidate, and where things are headed in 18 months.</p>
+      <p style="margin-bottom:8px">I work with startups — mostly Seed through to Series D. A lot of London-based, but European-based startups too. I'm usually working with about six or seven startups at any one time, recruiting multiple roles for each. Generally the profiles are similar but often with some clear differences. I'm happiest when I'm talking to candidates and placing people in awesome new startups.</p>
       <hr class="whr">
       <p class="wh">What I'm looking for</p>
       <ul class="wul">
@@ -225,7 +229,11 @@ Double-click any icon on the left to learn more.</div>
       <p class="wh">What I'm not</p>
       <p style="margin-bottom:8px">Transactional. Spray-and-pray. The recruiter who sends your CV somewhere without calling you first. Not that one.</p>
       <div class="wq">"The best engineers I've placed weren't looking. Getting those conversations right is the job."</div>
-      <p style="margin-top:8px"><a class="wlink" href="https://www.linkedin.com/in/jameswilsonlondon" target="_blank">→ Find me on LinkedIn</a></p>
+      <p style="margin-top:8px;display:flex;gap:14px;flex-wrap:wrap">
+        <a class="wlink" href="https://www.linkedin.com/in/james-wilson-92170656/" target="_blank">→ LinkedIn</a>
+        <a class="wlink" href="https://github.com/JamesWilsonLondon" target="_blank">→ GitHub</a>
+        <a class="wlink" href="mailto:james@ethiqrec.com">→ james@ethiqrec.com</a>
+      </p>
     </div></div>
     <div class="sbar"><div class="sp" style="flex:1">Ready</div></div>
   </div>
@@ -257,7 +265,7 @@ Double-click any icon on the left to learn more.</div>
       <p class="wh">The honest part</p>
       <p style="margin-bottom:8px">I don't have the engineering brain — I know this. But I have the obsession with getting something working, and it turns out that takes you further than you'd expect.</p>
       <p style="margin-bottom:8px">If I'd become an engineer, I'd have been a product engineer. In this life I'm their recruiter, which means I've spent years watching how the best ones think. That's worth something too.</p>
-      <p><a class="wlink" href="https://github.com/jameswilsonlondon" target="_blank">→ GitHub</a></p>
+      <p><a class="wlink" href="https://github.com/JamesWilsonLondon" target="_blank">→ GitHub</a></p>
     </div></div>
   </div>
 
@@ -279,6 +287,7 @@ Double-click any icon on the left to learn more.</div>
         <tr><td>Co-founder:</td><td>My wife. More organised than me, which is the whole system.</td></tr>
         <tr><td>Primary market:</td><td>London, UK startups</td></tr>
         <tr><td>Former sport:</td><td>Rowing. Got reasonably good. Now just explains the early mornings.</td></tr>
+        <tr><td>Current sport:</td><td>Paddle. Recent convert. Still figuring it out.</td></tr>
         <tr><td>Local cuisine:</td><td>Vigo has unreasonably good seafood.</td></tr>
         <tr><td>Favourite weather:</td><td>Not relevant. We're staying.</td></tr>
       </table>
@@ -290,7 +299,7 @@ Double-click any icon on the left to learn more.</div>
   </div>
 
   <!-- ═══ WINDOW: CONTACT ═══ -->
-  <div class="win" id="win-contact" style="top:100px;left:230px;width:370px">
+  <div class="win" id="win-contact" style="top:100px;left:230px;width:390px">
     <div class="tbar" onmousedown="drag(event,'win-contact')">
       <div class="ttitle">📧 contact.txt — Notepad</div>
       <div class="tbtns">
@@ -303,8 +312,9 @@ Double-click any icon on the left to learn more.</div>
     <div class="wbody"><div class="wnote" style="max-height:300px">CONTACT JAMES WILSON
 ======================
 
-LinkedIn:  /in/jameswilsonlondon
-GitHub:    /jameswilsonlondon
+Email:     james@ethiqrec.com
+LinkedIn:  /in/james-wilson-92170656
+GitHub:    /JamesWilsonLondon
 
 If you're a startup hiring product engineers,
 let's talk.
@@ -313,10 +323,11 @@ If you're an engineer curious about what's
 out there, also let's talk.
 
 If you're a recruiter with a job for me...
-I'm good thanks.
+I'm very happy where I am 😊
 
-<a class="wlink" href="https://www.linkedin.com/in/jameswilsonlondon" target="_blank">→ Open LinkedIn</a>
-<a class="wlink" href="https://github.com/jameswilsonlondon" target="_blank">→ Open GitHub</a></div>
+<a class="wlink" href="mailto:james@ethiqrec.com">→ Send email</a>
+<a class="wlink" href="https://www.linkedin.com/in/james-wilson-92170656/" target="_blank">→ Open LinkedIn</a>
+<a class="wlink" href="https://github.com/JamesWilsonLondon" target="_blank">→ Open GitHub</a></div>
     </div>
   </div>
 
@@ -370,7 +381,8 @@ I'm good thanks.
 <!-- TASKBAR -->
 <div id="taskbar">
   <button id="startbtn" onclick="toggleStart()">
-    <span style="font-size:18px">🪟</span><strong>Start</strong>
+    <div class="winlogo"><div></div><div></div><div></div><div></div></div>
+    <strong>Start</strong>
   </button>
   <div class="tsep"></div>
   <div id="tbwins"></div>
