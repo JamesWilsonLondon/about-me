@@ -4,563 +4,1270 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>James Wilson</title>
+<meta name="description" content="I hire product engineers for early-stage startups. This is a personal site wearing a chat interface.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2c.6 4.9 4.5 8.8 9.4 9.4v1.2C16.5 13.2 12.6 17.1 12 22c-.6-4.9-4.5-8.8-9.4-9.4v-1.2C7.5 10.8 11.4 6.9 12 2z' fill='%237BB89D'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
+:root{
+  --bg:#0F1410; --sidebar:#0A0E0B; --panel:#161C18; --panel-2:#1B221D;
+  --border:#232924; --border-soft:#1B211C;
+  --ink:#F5F2EA; --muted:#A8AFA9; --dim:#6B736D;
+  --accent:#7BB89D; --accent-2:#9FD4B8; --accent-ink:#0F1410;
+  --mark:#D97757;         /* the mark. Ethiq sage is var(--accent) if you ever want it back. */
+  --accent-wash:rgba(123,184,157,.10); --accent-line:rgba(123,184,157,.28);
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  --mono:'DM Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sw:266px;
+}
+:root[data-theme="light"]{
+  --bg:#FAF9F5; --sidebar:#F0EEE7; --panel:#FFFFFF; --panel-2:#F5F3EC;
+  --border:#E1DED4; --border-soft:#EAE7DE;
+  --ink:#18201A; --muted:#5B655E; --dim:#8A938C;
+  --accent:#2F5D4F; --accent-2:#3E7A66; --accent-ink:#FFFFFF;
+  --mark:#C4623F;
+  --accent-wash:rgba(47,93,79,.07); --accent-line:rgba(47,93,79,.22);
+}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html,body{width:100%;height:100%;overflow:hidden;font-family:'Geneva','Charcoal',Helvetica,Arial,sans-serif;font-size:12px;background:#000;cursor:default;user-select:none}
+html,body{height:100%}
+body{
+  background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased;
+  overflow:hidden;
+}
+a{color:inherit}
+button{font-family:inherit;color:inherit;background:none;border:none;cursor:pointer}
+::selection{background:var(--accent-line);color:var(--ink)}
 
-/* ── HAPPY MAC BOOT ── */
-#boot{position:fixed;inset:0;background:#aaaaaa;display:none;flex-direction:column;align-items:center;justify-content:center;z-index:9000;gap:22px}
-.hmac{width:72px;height:88px;background:#c8c8c8;border:3px solid #000;border-radius:5px 5px 2px 2px;display:flex;flex-direction:column;align-items:center;padding:5px;gap:3px;flex-shrink:0}
-.hm-scrn{width:54px;height:42px;background:#1a1a1a;border:2px solid #555;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px}
-.hm-eyes{display:flex;gap:12px}
-.hm-eye{width:5px;height:7px;background:#fff;border-radius:1px 1px 3px 3px}
-.hm-smile{width:22px;height:10px;border-bottom:3px solid #fff;border-radius:0 0 14px 14px}
-.hm-slot{width:40px;height:5px;background:#888;border:1px solid #555;border-radius:1px}
-.hm-base{width:48px;height:5px;background:#b4b4b4;border:1px solid #888}
-.hm-stand{width:28px;height:4px;background:#a0a0a0;border:1px solid #888;border-radius:0 0 3px 3px}
-#boot-txt{font-size:16px;color:#000;letter-spacing:.02em}
-#ext-wrap{width:268px}
-#ext-lbl{font-size:11px;color:#000;margin-bottom:4px;height:16px}
-#ext-outer{height:14px;border:1px solid #000;background:#fff;overflow:hidden}
-#ext-inner{height:100%;background:#000;width:0;transition:width 0.18s linear}
+/* ══ LAYOUT ══ */
+#app{display:flex;height:100%}
 
-/* ── MENU BAR ── */
-#mbar{position:fixed;top:0;left:0;right:0;height:20px;background:#dfdfdf;border-bottom:1px solid #000;display:none;align-items:center;z-index:5000;font-size:12px}
-.mb-a{padding:0 9px;font-size:16px;line-height:1;height:100%;display:flex;align-items:center;cursor:pointer}
-.mb-a:hover,.mb-a.act{background:#000;filter:invert(1) hue-rotate(0)}
-.mb-i{padding:0 10px;height:100%;display:flex;align-items:center;cursor:pointer;white-space:nowrap;font-size:12px}
-.mb-i:hover,.mb-i.act{background:#000;color:#fff}
-#mb-r{margin-left:auto;display:flex;align-items:center;padding:0 8px;gap:8px}
-#mb-clk{font-size:11px}
+/* ══ SIDEBAR ══ */
+#sidebar{
+  width:var(--sw);flex-shrink:0;background:var(--sidebar);
+  border-right:1px solid var(--border-soft);
+  display:flex;flex-direction:column;height:100%;
+  transition:margin-left .28s cubic-bezier(.4,0,.2,1);
+}
+#sidebar.collapsed{margin-left:calc(var(--sw) * -1)}
+.sb-top{padding:14px 14px 8px;display:flex;align-items:center;gap:9px}
+.brand{display:flex;align-items:center;gap:8px;font-weight:500;font-size:14.5px;letter-spacing:-.01em;
+  padding:4px 6px;margin-left:-6px;border-radius:8px;transition:.14s;text-align:left}
+.brand:hover{background:var(--panel)}
+.sb-collapse{margin-left:auto;width:28px;height:28px;border-radius:7px;display:grid;place-items:center;color:var(--dim)}
+.sb-collapse:hover{background:var(--panel);color:var(--ink)}
+.sb-links{display:flex;gap:7px;padding:6px 14px 12px}
+.sb-link{
+  flex:1;display:flex;align-items:center;justify-content:center;gap:6px;
+  padding:7px 4px;border:1px solid var(--border);border-radius:9px;
+  font-size:12.5px;color:var(--muted);background:var(--panel);transition:.16s;
+  text-decoration:none;white-space:nowrap;
+}
+.sb-link:hover{color:var(--ink);border-color:var(--accent-line);background:var(--panel-2)}
+.sb-act{padding:0 8px}
+.sb-btn{
+  width:100%;display:flex;align-items:center;gap:10px;padding:8px 10px;
+  border-radius:9px;font-size:13.5px;color:var(--muted);transition:.14s;text-align:left;
+}
+.sb-btn:hover{background:var(--panel);color:var(--ink)}
+.sb-btn.primary{color:var(--accent)}
+#searchbox{
+  display:none;margin:2px 8px 0;width:calc(100% - 16px);padding:8px 10px;
+  background:var(--panel);border:1px solid var(--accent-line);border-radius:9px;
+  color:var(--ink);font-size:13.5px;font-family:inherit;outline:none;
+}
+#searchbox::placeholder{color:var(--dim)}
+.sb-head{
+  padding:18px 18px 6px;font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--dim);font-weight:500;
+}
+#recents{flex:1;overflow-y:auto;padding:0 8px 12px;min-height:0}
+.rec{
+  width:100%;display:block;text-align:left;padding:7px 10px;border-radius:8px;
+  font-size:13.5px;color:var(--muted);white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;transition:.14s;
+}
+.rec:hover{background:var(--panel);color:var(--ink)}
+.rec.active{background:var(--panel-2);color:var(--ink)}
+.rec-empty{padding:8px 10px;font-size:12.5px;color:var(--dim);font-style:italic}
+.sb-foot{border-top:1px solid var(--border-soft);padding:10px}
+.who{display:flex;align-items:center;gap:10px;width:100%;padding:6px 8px;border-radius:9px;transition:.14s}
+.who:hover{background:var(--panel)}
+.who-av{
+  width:28px;height:28px;border-radius:50%;flex-shrink:0;display:grid;place-items:center;
+  background:var(--accent);color:var(--accent-ink);font-size:12px;font-weight:700;
+}
+.who-t{min-width:0;text-align:left}
+.who-n{display:block;font-size:13px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.who-p{display:block;font-size:11.5px;color:var(--dim);line-height:1.3}
 
-/* ── DROPDOWNS ── */
-.dd{position:fixed;top:20px;min-width:210px;background:#dfdfdf;border:1px solid #000;box-shadow:2px 2px 0 rgba(0,0,0,0.35);display:none;z-index:6000}
-.dd.open{display:block}
-.ddi{padding:2px 16px 2px 28px;font-size:12px;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:6px;line-height:1.8}
-.ddi:hover{background:#000;color:#fff}
-.ddi.dim{color:#aaa;pointer-events:none}
-.ddi.bold{font-weight:bold;pointer-events:none}
-.ddi-ico{width:18px;flex-shrink:0;text-align:center}
-.dds{height:1px;background:#aaa;margin:3px 2px}
+/* ══ MAIN ══ */
+#main{flex:1;display:flex;flex-direction:column;min-width:0;position:relative}
+#topbar{
+  height:50px;flex-shrink:0;display:flex;align-items:center;gap:10px;
+  padding:0 16px;border-bottom:1px solid transparent;
+}
+.tb-btn{width:30px;height:30px;border-radius:8px;display:none;place-items:center;color:var(--muted)}
+.tb-btn:hover{background:var(--panel);color:var(--ink)}
+#tb-title{font-size:13.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#tb-right{margin-left:auto;display:flex;align-items:center;gap:6px}
+#theme{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;color:var(--muted)}
+#theme:hover{background:var(--panel);color:var(--ink)}
 
-/* ── DESKTOP ── */
-#desk{position:fixed;top:20px;left:0;right:0;bottom:0;background:#555555;display:none;overflow:hidden}
+#scroll{flex:1;overflow-y:auto;scroll-behavior:smooth}
+.col{max-width:720px;margin:0 auto;padding:0 24px}
 
-/* ── DESKTOP ICONS ── */
-.ico{position:absolute;width:80px;padding:4px;display:flex;flex-direction:column;align-items:center;cursor:pointer}
-.ico:hover,.ico.sel{background:rgba(0,0,0,0.22);outline:1px dotted rgba(255,255,255,0.5)}
-.ico-img{font-size:40px;line-height:1.1;text-align:center}
-.ico-lbl{font-size:11px;color:#fff;text-align:center;margin-top:3px;line-height:1.3;word-break:break-word;text-shadow:1px 1px 1px #000,-1px 1px 1px #000,1px -1px 1px #000,-1px -1px 1px #000}
-.ico.sel .ico-lbl{background:#000;color:#fff;text-shadow:none;padding:0 2px}
+/* ══ HOME ══ */
+#home{padding:6vh 24px 40px;animation:rise .5s cubic-bezier(.2,.7,.3,1)}
+.hi{
+  font-family:var(--serif);font-size:clamp(30px,5.2vw,45px);line-height:1.15;
+  font-weight:500;letter-spacing:-.015em;display:flex;align-items:center;
+  gap:14px;flex-wrap:wrap;margin-bottom:14px;
+}
+.hi em{font-style:italic;color:var(--accent)}
+.hi .mark{flex-shrink:0;display:inline-flex;margin-right:-2px}
+.hi-sub{color:var(--muted);font-size:14.5px;max-width:44ch;margin-bottom:26px}
+.pick-lbl{font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--dim);margin-bottom:9px}
+.picker{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:26px}
+.pick{
+  padding:8px 15px;border:1px solid var(--border);border-radius:999px;
+  font-size:13.5px;color:var(--muted);background:var(--panel);transition:.18s;
+}
+.pick:hover{color:var(--ink);border-color:var(--accent-line)}
+.pick.on{background:var(--accent-wash);border-color:var(--accent-line);color:var(--accent);font-weight:500}
+.sugg-lbl{font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--dim);margin:26px 0 10px}
+.suggs{display:flex;flex-direction:column;border-top:1px solid var(--border-soft)}
+.sugg{
+  display:flex;align-items:center;gap:11px;padding:11px 4px;text-align:left;
+  border-bottom:1px solid var(--border-soft);color:var(--muted);font-size:14px;transition:.14s;
+}
+.sugg:hover{color:var(--ink);padding-left:8px}
+.sugg .arw{margin-left:auto;color:var(--dim);opacity:0;transition:.16s;font-size:13px}
+.sugg:hover .arw{opacity:1}
 
-/* ── MAC WINDOWS ── */
-.win{position:absolute;background:#fff;border:1px solid #000;box-shadow:2px 2px 0 rgba(0,0,0,0.45);min-width:300px;display:none;flex-direction:column}
-.win.open{display:flex}
+/* ══ CHAT ══ */
+#chat{padding:22px 24px 30px}
+.turn{margin-bottom:30px}
+.u-row{display:flex;justify-content:flex-end;margin-bottom:26px}
+.u-msg{
+  background:var(--panel);border:1px solid var(--border-soft);
+  padding:11px 16px;border-radius:16px 16px 5px 16px;max-width:82%;font-size:14.5px;
+  animation:rise .35s cubic-bezier(.2,.7,.3,1);
+}
+.a-row{display:flex;gap:14px;align-items:flex-start}
+.a-mark{margin-top:2px;flex-shrink:0}
+.a-body{min-width:0;flex:1}
+.blk{animation:rise .34s cubic-bezier(.2,.7,.3,1)}
+.blk+.blk{margin-top:14px}
+.a-body p{font-size:15px}
+.a-body p.lead{font-family:var(--serif);font-size:19.5px;line-height:1.45;letter-spacing:-.01em}
+.a-body h4{
+  font-family:var(--serif);font-size:17px;font-weight:600;letter-spacing:-.01em;
+  margin-top:6px;
+}
+.a-body ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.a-body li{position:relative;padding-left:19px;font-size:14.5px}
+.a-body li::before{
+  content:"";position:absolute;left:2px;top:9px;width:5px;height:5px;
+  border-radius:50%;background:var(--accent);opacity:.75;
+}
+.a-body b,.a-body strong{font-weight:700;color:var(--ink)}
+.a-body a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent-line);transition:.14s}
+.a-body a:hover{border-bottom-color:var(--accent)}
+blockquote{
+  border-left:2px solid var(--accent-line);padding:2px 0 2px 16px;
+  font-family:var(--serif);font-style:italic;font-size:17px;color:var(--muted);line-height:1.5;
+}
+.kv{width:100%;border-collapse:collapse;font-size:14px}
+.kv td{padding:8px 0;border-bottom:1px solid var(--border-soft);vertical-align:top}
+.kv tr:last-child td{border-bottom:none}
+.kv td:first-child{
+  width:36%;padding-right:18px;color:var(--dim);font-size:12px;
+  letter-spacing:.05em;text-transform:uppercase;padding-top:10px;
+}
+.tool{
+  display:inline-flex;align-items:center;flex-wrap:wrap;gap:4px 9px;max-width:100%;
+  padding:6px 12px 6px 10px;
+  border:1px solid var(--border);border-radius:8px;background:var(--panel);
+  font-family:var(--mono);font-size:11.5px;color:var(--dim);
+}
+.tool .dot{width:5px;height:5px;border-radius:50%;background:var(--accent);animation:pulse 1.4s ease-in-out infinite}
+.tool .nm{color:var(--muted)}
+.tool.done .dot{animation:none;opacity:.55}
+.tool .dt{min-width:0}
+.links{display:flex;flex-wrap:wrap;gap:8px}
+.lnk{
+  display:inline-flex;align-items:center;gap:7px;padding:7px 13px;
+  border:1px solid var(--border);border-radius:999px;background:var(--panel);
+  font-size:13px;color:var(--muted);text-decoration:none;transition:.16s;
+}
+.lnk:hover{color:var(--accent);border-color:var(--accent-line);background:var(--accent-wash)}
 
-/* Title bar */
-.tb{height:20px;display:flex;align-items:center;background:#c0c0c0;border-bottom:1px solid #000;padding:0 3px;gap:3px;cursor:move;flex-shrink:0}
-.win.top .tb{background:repeating-linear-gradient(to bottom,#fff 0px,#fff 1px,#888 1px,#888 2px)}
-.tb-cl{width:13px;height:13px;border:1px solid #000;background:#dfdfdf;flex-shrink:0;cursor:pointer}
-.tb-cl:active{background:#000}
-.tb-zm{width:13px;height:13px;border:1px solid #000;background:#dfdfdf;flex-shrink:0;cursor:pointer}
-.tb-zm:active{background:#000}
-.tb-t{flex:1;text-align:center;font-size:11px;font-weight:bold;background:#dfdfdf;padding:0 4px;line-height:18px;pointer-events:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* artifact */
+.art{border:1px solid var(--border);border-radius:12px;background:var(--panel);overflow:hidden}
+.art-hd{display:flex;align-items:center;gap:12px;padding:13px 15px;width:100%;text-align:left;transition:.16s}
+.art-hd:hover{background:var(--panel-2)}
+.art-ic{
+  width:32px;height:32px;border-radius:8px;flex-shrink:0;display:grid;place-items:center;
+  background:var(--accent-wash);color:var(--accent);
+}
+.art-t{min-width:0;flex:1}
+.art-n{display:block;font-size:13.5px;font-weight:500;color:var(--ink)}
+.art-s{display:block;font-size:12px;color:var(--dim);line-height:1.4}
+.art-cv{color:var(--dim);transition:transform .25s;flex-shrink:0}
+.art.open .art-cv{transform:rotate(180deg)}
+.art-bd{display:none;padding:2px 15px 16px;border-top:1px solid var(--border-soft)}
+.art.open .art-bd{display:block;animation:rise .3s cubic-bezier(.2,.7,.3,1)}
+.art-bd .blk:first-child{margin-top:14px}
 
-/* Window menu bar */
-.wm{height:19px;display:flex;align-items:center;background:#dfdfdf;border-bottom:1px solid #000;flex-shrink:0}
-.wm-i{padding:0 8px;font-size:11px;cursor:pointer;height:100%;display:flex;align-items:center}
-.wm-i:hover{background:#000;color:#fff}
+.follow{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px;padding-top:20px;border-top:1px solid var(--border-soft)}
+.follow-l{width:100%;font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--dim);margin-bottom:2px}
+.fchip{
+  padding:7px 13px;border:1px solid var(--border);border-radius:999px;
+  font-size:13px;color:var(--muted);background:var(--panel);transition:.16s;text-align:left;
+}
+.fchip:hover{color:var(--accent);border-color:var(--accent-line);background:var(--accent-wash)}
 
-/* Window body */
-.wb{flex:1;color:#000;font-size:12px;line-height:1.7;overflow:hidden;display:flex;flex-direction:column}
-.wp{padding:12px 14px;overflow-y:auto}
+/* ══ COMPOSER ══ */
+#dock{flex-shrink:0;padding:0 24px 12px;background:linear-gradient(to top,var(--bg) 62%,transparent)}
+#dock .col{padding:0}
+#comp{
+  border:1px solid var(--border);border-radius:16px;background:var(--panel);
+  padding:12px 13px 9px;transition:.2s;
+}
+#comp:focus-within{border-color:var(--accent-line);box-shadow:0 0 0 3px var(--accent-wash)}
+#input{
+  width:100%;background:none;border:none;outline:none;resize:none;color:var(--ink);
+  font-family:inherit;font-size:14.5px;line-height:1.6;max-height:150px;min-height:24px;
+}
+#input::placeholder{color:var(--dim)}
+#input{scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+#input::-webkit-scrollbar{width:6px}
+#input::-webkit-scrollbar-thumb{background:var(--border);border-radius:6px}
+.comp-b{display:flex;align-items:center;gap:8px;margin-top:8px}
+#model{position:relative}
+#model-btn{
+  display:flex;align-items:center;gap:6px;padding:4px 8px;border-radius:7px;
+  font-family:var(--mono);font-size:11.5px;color:var(--dim);transition:.14s;
+}
+#model-btn:hover{background:var(--panel-2);color:var(--muted)}
+#model-menu{
+  display:none;position:absolute;bottom:calc(100% + 8px);left:0;width:280px;
+  background:var(--panel);border:1px solid var(--border);border-radius:12px;
+  padding:5px;box-shadow:0 12px 34px rgba(0,0,0,.35);z-index:60;
+}
+#model-menu.open{display:block;animation:rise .18s ease}
+.mi{width:100%;text-align:left;padding:8px 10px;border-radius:8px;transition:.14s}
+.mi:hover{background:var(--panel-2)}
+.mi-n{font-family:var(--mono);font-size:12px;color:var(--ink);display:flex;align-items:center;gap:7px}
+.mi-d{font-size:11.5px;color:var(--dim);margin-top:1px;line-height:1.45}
+.mi.on .mi-n::after{content:"✓";color:var(--accent);margin-left:auto}
+#send{
+  margin-left:auto;width:31px;height:31px;border-radius:50%;flex-shrink:0;
+  display:grid;place-items:center;background:var(--accent);color:var(--accent-ink);transition:.16s;
+}
+#send:hover{filter:brightness(1.08)}
+#send:disabled{opacity:.32;cursor:default;filter:none}
+#foot{
+  text-align:center;font-size:11.5px;color:var(--dim);line-height:1.55;
+  padding:9px 24px 12px;
+}
+#foot a{color:var(--dim);text-decoration:underline;text-underline-offset:2px}
+#foot a:hover{color:var(--muted)}
 
-/* Mac-style scrollbars */
-.wp::-webkit-scrollbar,.st::-webkit-scrollbar{width:15px}
-.wp::-webkit-scrollbar-track,.st::-webkit-scrollbar-track{background:#dfdfdf;border-left:1px solid #999}
-.wp::-webkit-scrollbar-thumb,.st::-webkit-scrollbar-thumb{background:#c0c0c0;border:1px solid #888;min-height:20px}
-.wp::-webkit-scrollbar-button,.st::-webkit-scrollbar-button{display:block;height:14px;background:#c0c0c0;border:1px solid #888}
+#overlay{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:40;
+  animation:fade .2s ease;
+}
 
-/* Status bar */
-.ws{height:17px;border-top:1px solid #888;display:flex;align-items:center;flex-shrink:0;background:#dfdfdf}
-.wsp{padding:0 8px;font-size:10px;border-right:1px solid #bbb}
+.cursor{
+  display:inline-block;width:7px;height:15px;background:var(--accent);
+  vertical-align:-2px;margin-left:2px;animation:blink .9s step-end infinite;border-radius:1px;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+@keyframes rise{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes pulse{0%,100%{opacity:.35}50%{opacity:1}}
 
-/* Content helpers */
-.ch{font-size:12px;font-weight:bold;margin:0 0 6px;border-bottom:1px solid #000;padding-bottom:2px}
-.chr{border:none;border-top:1px solid #ccc;margin:10px 0}
-.cul{margin:0 0 8px 16px;list-style:disc}
-.cul li{margin-bottom:3px}
-.ca{color:#00c;text-decoration:underline}
-.ca:visited{color:#808}
-.ct{width:100%;border-collapse:collapse;font-size:11px;margin-bottom:8px}
-.ct td{padding:3px 6px;border-bottom:1px solid #ebebeb;vertical-align:top}
-.ct td:first-child{font-weight:bold;white-space:nowrap;width:130px}
+#scroll::-webkit-scrollbar,#recents::-webkit-scrollbar{width:9px}
+#scroll::-webkit-scrollbar-thumb,#recents::-webkit-scrollbar-thumb{background:var(--border);border-radius:9px;border:3px solid transparent;background-clip:content-box}
+#scroll::-webkit-scrollbar-thumb:hover,#recents::-webkit-scrollbar-thumb:hover{background:var(--dim);background-clip:content-box}
 
-/* SimpleText monospace doc */
-.st{font-family:'Courier New',monospace;font-size:11px;line-height:1.9;padding:12px 14px;background:#fff;white-space:pre-wrap;overflow-y:auto;flex:1}
-
-/* ── SHUTDOWN ── */
-#sd{display:none;position:fixed;inset:0;background:#aaaaaa;z-index:9999;align-items:center;justify-content:center;flex-direction:column;gap:16px;text-align:center}
-#sd p{font-size:15px;color:#000;max-width:300px;line-height:1.5}
-
-/* ── MOBILE ── */
-@media(max-width:680px){#mob{display:flex!important}#boot,#desk,#mbar{display:none!important}}
-#mob{display:none;position:fixed;inset:0;z-index:9999;background:#555;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;gap:16px;color:#fff}
+@media(max-width:860px){
+  #sidebar{position:fixed;top:0;left:0;bottom:0;z-index:50;margin-left:calc(var(--sw) * -1);box-shadow:0 0 40px rgba(0,0,0,.4)}
+  #sidebar.open{margin-left:0}
+  #sidebar.collapsed{margin-left:calc(var(--sw) * -1)}
+  .sb-collapse{display:grid}
+  .tb-btn{display:grid}
+  .col{padding:0 18px}
+  #dock{padding:0 18px 10px}
+  #home{padding:4vh 18px 30px}
+  #chat{padding:22px 18px 30px}
+  .hi{font-size:29px;gap:11px}
+  .u-msg{max-width:88%}
+  .a-row{gap:11px}
+  .kv td:first-child{width:38%}
+  .tool{align-items:flex-start}
+  .tool .dt{flex:1 1 100%;padding-left:14px}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms!important;transition-duration:.01ms!important}
+  #scroll{scroll-behavior:auto}
+}
 </style>
 </head>
 <body>
+<div id="app">
 
-<!-- MOBILE -->
-<div id="mob">
-  <div style="font-size:48px">🖥️</div>
-  <p style="font-size:16px;font-weight:bold;margin-bottom:8px">Best viewed on a desktop</p>
-  <p style="font-size:13px;color:#ccc;line-height:1.6">This is a Mac System 7 experience.<br>Come back with a laptop.</p>
-  <p style="font-size:11px;color:#aaffaa;margin-top:8px">— James Wilson, Vigo.</p>
-</div>
-
-<!-- HAPPY MAC BOOT -->
-<div id="boot">
-  <div class="hmac">
-    <div class="hm-scrn">
-      <div class="hm-eyes"><div class="hm-eye"></div><div class="hm-eye"></div></div>
-      <div class="hm-smile"></div>
+  <!-- ══════ SIDEBAR ══════ -->
+  <aside id="sidebar">
+    <div class="sb-top">
+      <button class="brand" onclick="goHome()" title="Back to the start"><span id="brand-mark"></span> James Wilson</button>
+      <button class="sb-collapse" onclick="toggleSidebar()" aria-label="Close sidebar">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg>
+      </button>
     </div>
-    <div class="hm-slot"></div>
-    <div class="hm-base"></div>
-    <div class="hm-stand"></div>
-  </div>
-  <div id="boot-txt">Welcome to Macintosh</div>
-  <div id="ext-wrap">
-    <div id="ext-lbl">Starting up…</div>
-    <div id="ext-outer"><div id="ext-inner"></div></div>
-  </div>
-</div>
-
-<!-- MENU BAR -->
-<div id="mbar">
-  <div class="mb-a" onclick="toggleDd(event,'dd-apple',this)">&#63743;</div>
-  <div class="mb-i" onclick="toggleDd(event,'dd-finder',this)">Finder</div>
-  <div class="mb-i" onclick="toggleDd(event,'dd-file',this)">File</div>
-  <div class="mb-i" onclick="toggleDd(event,'dd-view',this)">View</div>
-  <div class="mb-i" onclick="toggleDd(event,'dd-special',this)">Special</div>
-  <div id="mb-r"><div id="mb-clk"></div><span style="font-size:14px">🖥️</span></div>
-</div>
-
-<!-- Apple ▸ -->
-<div class="dd" id="dd-apple">
-  <div class="ddi bold"><span class="ddi-ico"></span>About This Mac</div>
-  <div class="dds"></div>
-  <div class="ddi" onclick="openW('about');closeDd()"><span class="ddi-ico">📄</span>About Me</div>
-  <div class="ddi" onclick="openW('work');closeDd()"><span class="ddi-ico">📁</span>Recruiting</div>
-  <div class="ddi" onclick="openW('projects');closeDd()"><span class="ddi-ico">📁</span>Projects</div>
-  <div class="ddi" onclick="openW('life');closeDd()"><span class="ddi-ico">📄</span>Life</div>
-  <div class="ddi" onclick="openW('contact');closeDd()"><span class="ddi-ico">📄</span>Contact</div>
-  <div class="dds"></div>
-  <div class="ddi" onclick="openW('trash');closeDd()"><span class="ddi-ico">🗑</span>Trash</div>
-  <div class="dds"></div>
-  <div class="ddi" onclick="openW('shutdown');closeDd()"><span class="ddi-ico"></span>Shut Down…</div>
-</div>
-
-<!-- Finder ▸ -->
-<div class="dd" id="dd-finder">
-  <div class="ddi" onclick="openW('about');closeDd()"><span class="ddi-ico"></span>About Me</div>
-  <div class="ddi" onclick="openW('work');closeDd()"><span class="ddi-ico"></span>Recruiting</div>
-  <div class="ddi" onclick="openW('projects');closeDd()"><span class="ddi-ico"></span>Projects</div>
-  <div class="ddi" onclick="openW('life');closeDd()"><span class="ddi-ico"></span>Life</div>
-  <div class="ddi" onclick="openW('contact');closeDd()"><span class="ddi-ico"></span>Contact</div>
-</div>
-
-<!-- File ▸ -->
-<div class="dd" id="dd-file">
-  <div class="ddi dim"><span class="ddi-ico"></span>New Folder <span style="float:right;padding-left:24px">⌘N</span></div>
-  <div class="ddi dim"><span class="ddi-ico"></span>Open <span style="float:right;padding-left:24px">⌘O</span></div>
-  <div class="ddi dim"><span class="ddi-ico"></span>Close Window <span style="float:right;padding-left:24px">⌘W</span></div>
-  <div class="dds"></div>
-  <div class="ddi dim"><span class="ddi-ico"></span>Get Info <span style="float:right;padding-left:24px">⌘I</span></div>
-</div>
-
-<!-- View ▸ -->
-<div class="dd" id="dd-view">
-  <div class="ddi dim"><span class="ddi-ico"></span>by Small Icon</div>
-  <div class="ddi dim"><span class="ddi-ico"></span>by Icon</div>
-  <div class="ddi dim"><span class="ddi-ico"></span>by Name</div>
-  <div class="ddi dim"><span class="ddi-ico"></span>by Date</div>
-</div>
-
-<!-- Special ▸ -->
-<div class="dd" id="dd-special">
-  <div class="ddi dim"><span class="ddi-ico"></span>Clean Up</div>
-  <div class="ddi dim"><span class="ddi-ico"></span>Empty Trash…</div>
-  <div class="dds"></div>
-  <div class="ddi" onclick="doRestart();closeDd()"><span class="ddi-ico"></span>Restart</div>
-  <div class="ddi" onclick="openW('shutdown');closeDd()"><span class="ddi-ico"></span>Shut Down</div>
-</div>
-
-<!-- DESKTOP -->
-<div id="desk" onclick="deskClick(event)">
-
-  <!-- Icons (left column, Mac convention) -->
-  <div class="ico" style="top:12px;left:8px" ondblclick="openW('about')" onclick="selIco(this)">
-    <div class="ico-img">📄</div><div class="ico-lbl">About Me</div>
-  </div>
-  <div class="ico" style="top:100px;left:8px" ondblclick="openW('work')" onclick="selIco(this)">
-    <div class="ico-img">📁</div><div class="ico-lbl">Recruiting</div>
-  </div>
-  <div class="ico" style="top:188px;left:8px" ondblclick="openW('projects')" onclick="selIco(this)">
-    <div class="ico-img">📁</div><div class="ico-lbl">Projects</div>
-  </div>
-  <div class="ico" style="top:276px;left:8px" ondblclick="openW('life')" onclick="selIco(this)">
-    <div class="ico-img">📄</div><div class="ico-lbl">Life</div>
-  </div>
-  <div class="ico" style="top:364px;left:8px" ondblclick="openW('contact')" onclick="selIco(this)">
-    <div class="ico-img">📄</div><div class="ico-lbl">Contact</div>
-  </div>
-  <!-- Trash — bottom right, Mac convention -->
-  <div class="ico" style="bottom:6px;right:6px" ondblclick="openW('trash')" onclick="selIco(this)">
-    <div class="ico-img">🗑</div><div class="ico-lbl">Trash</div>
-  </div>
-
-  <!-- ═══ WIN: ABOUT ME ═══ -->
-  <div class="win top" id="win-about" style="top:36px;left:100px;width:490px;height:470px">
-    <div class="tb" onmousedown="drag(event,'win-about')">
-      <div class="tb-cl" onclick="closeW('win-about')"></div>
-      <div class="tb-t">About Me</div>
-      <div class="tb-zm" onclick="zoom('win-about')"></div>
+    <div class="sb-links">
+      <a class="sb-link" href="mailto:james@ethiqrec.com">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>Email</a>
+      <a class="sb-link" href="https://www.linkedin.com/in/james-wilson-92170656/" target="_blank" rel="noopener">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM10 9h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.78 2.5 4.78 5.75V21h-4v-5.6c0-1.34-.03-3.06-1.9-3.06-1.9 0-2.2 1.45-2.2 2.96V21h-4z"/></svg>LinkedIn</a>
+      <a class="sb-link" href="https://www.whatnext.dev" target="_blank" rel="noopener">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3z"/><path d="M19 11a7 7 0 0 1-14 0M12 18v3"/></svg>Pod</a>
     </div>
-    <div class="wb"><div class="st">About Me — James Wilson
-Last modified: 2026
-──────────────────────────────────────────
-
-Name        James Wilson
-Location    Vigo, Spain
-Function    Dad, recruiter, recent padel enthusiast
-
-For my day job I work with startups to find
-really good engineers. I've been in
-recruitment for around five years. Over the
-last few years I've focused on software
-engineers — mostly at startups.
-
-My niche is product engineers. Whether they
-lean more backend or frontend — and more
-recently AI product engineers. Basically
-engineers who love shipping things and care
-about what the customer wants.
-
-If I were an engineer — which I'm not, and
-probably shouldn't be — I think that's what
-I'd want to be. A product engineer.
-
-I'm scrappy. I like to move fast. I get a
-genuine kick out of shipping something, even
-if it's only some lame recruiting tool that
-only I use.
-
-I'm Australian. I now live in Spain with my
-wife and two boys.
-
-──────────────────────────────────────────
-Double-click any icon on the left to explore.</div>
+    <div class="sb-act">
+      <button class="sb-btn primary" onclick="goHome()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>New chat</button>
+      <button class="sb-btn" id="search-btn" onclick="openSearch()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Search history</button>
+      <input id="searchbox" placeholder="Filter conversations..." autocomplete="off">
     </div>
-    <div class="ws"><div class="wsp">SimpleText 1.31</div></div>
-  </div>
-
-  <!-- ═══ WIN: RECRUITING ═══ -->
-  <div class="win" id="win-work" style="top:55px;left:135px;width:520px;height:500px">
-    <div class="tb" onmousedown="drag(event,'win-work')">
-      <div class="tb-cl" onclick="closeW('win-work')"></div>
-      <div class="tb-t">Recruiting</div>
-      <div class="tb-zm" onclick="zoom('win-work')"></div>
+    <div class="sb-head" id="rec-head">Recents</div>
+    <nav id="recents"></nav>
+    <div class="sb-foot">
+      <button class="who" onclick="goHome()">
+        <span class="who-av" id="who-av">V</span>
+        <span class="who-t"><span class="who-n" id="who-n">Visitor</span><span class="who-p" id="who-p">Free plan</span></span>
+      </button>
     </div>
-    <div class="wm"><span class="wm-i">File</span><span class="wm-i">Edit</span><span class="wm-i">Format</span><span class="wm-i">Font</span></div>
-    <div class="wb"><div class="wp">
-      <p class="ch">What I do</p>
-      <p style="margin-bottom:8px">I work with startups — mostly Seed through to Series D. A lot of London-based, but European-based startups too. I'm usually working with about six or seven startups at any one time, recruiting multiple roles for each. Generally the profiles are similar but often with some clear differences. I'm happiest when I'm talking to candidates and placing people in awesome new startups.</p>
-      <hr class="chr">
-      <p class="ch">What I'm looking for</p>
-      <ul class="cul">
-        <li>Product engineers who care about what they're building, not just the stack</li>
-        <li>Full-stack engineers comfortable shipping in small, fast-moving teams</li>
-        <li>People with startup pedigree — who've shipped, broken things, fixed them, repeated</li>
-      </ul>
-      <hr class="chr">
-      <p class="ch">A brief history of how not to recruit</p>
-      <p style="margin-bottom:8px">In 2021, a previous version of me discovered LinkedIn Recruiter's "Select All" checkbox. What followed was an afternoon no one should be proud of. 847 InMails. Response rate: 0.4%. One reply was from someone who hadn't updated their profile since 2009. Another asked how I'd obtained their details. A third was from my mum, who is not a software engineer.</p>
-      <p style="margin-bottom:12px">I've read every profile since. Apparently this is now a competitive advantage.</p>
-      <p style="display:flex;gap:14px;flex-wrap:wrap">
-        <a class="ca" href="https://www.linkedin.com/in/james-wilson-92170656/" target="_blank">→ LinkedIn</a>
-        <a class="ca" href="https://github.com/JamesWilsonLondon" target="_blank">→ GitHub</a>
-        <a class="ca" href="mailto:james@ethiqrec.com">→ james@ethiqrec.com</a>
-      </p>
-    </div></div>
-  </div>
+  </aside>
+  <div id="overlay" onclick="toggleSidebar()"></div>
 
-  <!-- ═══ WIN: PROJECTS ═══ -->
-  <div class="win" id="win-projects" style="top:72px;left:162px;width:470px;height:460px">
-    <div class="tb" onmousedown="drag(event,'win-projects')">
-      <div class="tb-cl" onclick="closeW('win-projects')"></div>
-      <div class="tb-t">Projects</div>
-      <div class="tb-zm" onclick="zoom('win-projects')"></div>
+  <!-- ══════ MAIN ══════ -->
+  <div id="main">
+    <div id="topbar">
+      <button class="tb-btn" onclick="toggleSidebar()" aria-label="Open sidebar">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/></svg>
+      </button>
+      <span id="tb-title">James Wilson</span>
+      <div id="tb-right">
+        <button id="theme" onclick="toggleTheme()" aria-label="Toggle theme"></button>
+      </div>
     </div>
-    <div class="wm"><span class="wm-i">File</span><span class="wm-i">Edit</span><span class="wm-i">View</span></div>
-    <div class="wb"><div class="wp">
-      <p class="ch">The problem</p>
-      <p style="margin-bottom:8px">Since I started working with startups and placing engineers, I've had a problem: I actually find this stuff really interesting. So naturally, I got curious and started building my own things to learn about the technology. With the help of AI, it wasn't as hard as it once was.</p>
-      <p style="margin-bottom:8px">I started building recruiting tools — mostly using React and TypeScript and whatever database I could get it to work in, usually Vercel. The code quality probably varied enormously, but I actually have no idea. Usually it worked and I was happy with that. It usually had a maximum of one user at any one time. Being me.</p>
-      <hr class="chr">
-      <p class="ch">Daily tools</p>
-      <table class="ct">
-        <tr><td>Writing</td><td>Wispr Flow</td></tr>
-        <tr><td>Comms</td><td>Google Suite, Slack, WhatsApp</td></tr>
-        <tr><td>Sourcing</td><td>LinkedIn Recruiter</td></tr>
-        <tr><td>CRM</td><td>Atlas (Recruitment CRM)</td></tr>
-        <tr><td>AI</td><td>Claude, Gemini</td></tr>
-        <tr><td>Browser</td><td>Google Chrome</td></tr>
-        <tr><td>Hardware</td><td>MacBook / iPhone</td></tr>
-      </table>
-      <p><a class="ca" href="https://github.com/JamesWilsonLondon" target="_blank">→ GitHub</a></p>
-    </div></div>
-  </div>
 
-  <!-- ═══ WIN: LIFE ═══ -->
-  <div class="win" id="win-life" style="top:62px;left:182px;width:460px">
-    <div class="tb" onmousedown="drag(event,'win-life')">
-      <div class="tb-cl" onclick="closeW('win-life')"></div>
-      <div class="tb-t">Life</div>
-      <div class="tb-zm" onclick="zoom('win-life')"></div>
+    <div id="scroll">
+      <div id="home" class="col"></div>
+      <div id="chat" class="col" style="display:none"></div>
     </div>
-    <div class="wb"><div class="wp">
-      <table class="ct">
-        <tr><td>Origin</td><td>Australian.</td></tr>
-        <tr><td>Current</td><td>Vigo, Spain. Fair bit of time in the UK too.</td></tr>
-        <tr><td>Dependants</td><td>Two boys — Harry &amp; Charlie. Chaotic. Brilliant. Both.</td></tr>
-        <tr><td>Co-founder</td><td>My wife. More organised than me, which is the whole system.</td></tr>
-        <tr><td>Primary market</td><td>UK and EMEA startups</td></tr>
-        <tr><td>Former sport</td><td>Rowing. Got reasonably good. Now I realise it was just training for getting up early with young kids.</td></tr>
-        <tr><td>Current sport</td><td>Padel. Recent convert. Still figuring out how to use the back wall.</td></tr>
-        <tr><td>Local cuisine</td><td>Vigo has unreasonably good seafood. But I can't go past a good pizza.</td></tr>
-      </table>
-    </div></div>
-    <div class="ws"><div class="wsp">System: Stable (just)</div><div class="wsp">Uptime: mid-30s</div></div>
-  </div>
 
-  <!-- ═══ WIN: CONTACT ═══ -->
-  <div class="win" id="win-contact" style="top:82px;left:202px;width:370px;height:360px">
-    <div class="tb" onmousedown="drag(event,'win-contact')">
-      <div class="tb-cl" onclick="closeW('win-contact')"></div>
-      <div class="tb-t">Contact</div>
-      <div class="tb-zm" onclick="zoom('win-contact')"></div>
-    </div>
-    <div class="wb"><div class="st">Contact — James Wilson
-────────────────────────────
-
-Email      james@ethiqrec.com
-LinkedIn   /in/james-wilson-92170656
-GitHub     /JamesWilsonLondon
-
-If you're a startup hiring product
-engineers, let's talk.
-
-If you're an engineer curious about
-what's out there, also let's talk.
-
-If you're a recruiter with a job for
-me... I'm very happy where I am 😊
-
-<a class="ca" href="mailto:james@ethiqrec.com">→ Send email</a>
-<a class="ca" href="https://www.linkedin.com/in/james-wilson-92170656/" target="_blank">→ Open LinkedIn</a>
-<a class="ca" href="https://github.com/JamesWilsonLondon" target="_blank">→ Open GitHub</a></div>
-    </div>
-  </div>
-
-  <!-- ═══ WIN: TRASH ═══ -->
-  <div class="win" id="win-trash" style="top:70px;left:188px;width:470px">
-    <div class="tb" onmousedown="drag(event,'win-trash')">
-      <div class="tb-cl" onclick="closeW('win-trash')"></div>
-      <div class="tb-t">Trash</div>
-      <div class="tb-zm" onclick="zoom('win-trash')"></div>
-    </div>
-    <div class="wm"><span class="wm-i">File</span><span class="wm-i">Edit</span><span class="wm-i">View</span></div>
-    <div class="wb"><div class="wp">
-      <table class="ct">
-        <tr><td style="width:20px;color:#bbb;font-weight:normal">⊠</td><td>Motivational posts about the grind</td></tr>
-        <tr><td style="color:#bbb;font-weight:normal">⊠</td><td>Recruiters who don't read CVs</td></tr>
-        <tr><td style="color:#bbb;font-weight:normal">⊠</td><td>A full-time rowing career</td></tr>
-        <tr><td style="color:#bbb;font-weight:normal">⊠</td><td>Wearing Lycra (the rowing years)</td></tr>
-        <tr><td style="color:#bbb;font-weight:normal">⊠</td><td>Exciting night life</td></tr>
-        <tr><td style="color:#bbb;font-weight:normal">⊠</td><td>Using "Rockstar Developer" in a job description</td></tr>
-        <tr><td style="color:#bbb;font-weight:normal">⊠</td><td>Selecting all in LinkedIn Recruiter and sending a generic message without reading a profile <em style="color:#ccc">(didn't realise there was a credit limit)</em></td></tr>
-        <tr><td style="color:#bbb;font-weight:normal">⊠</td><td>Melbourne coffee culture :(</td></tr>
-      </table>
-      <hr class="chr">
-      <p style="font-size:10px;color:#aaa">10 items. This trash has not been emptied.</p>
-    </div></div>
-    <div class="ws"><div class="wsp">10 items</div></div>
-  </div>
-
-  <!-- ═══ WIN: SHUTDOWN DIALOG ═══ -->
-  <div class="win" id="win-shutdown" style="width:330px;z-index:800">
-    <div class="tb" onmousedown="drag(event,'win-shutdown')">
-      <div class="tb-cl" onclick="closeW('win-shutdown')"></div>
-      <div class="tb-t">Shut Down</div>
-      <div class="tb-zm"></div>
-    </div>
-    <div class="wb"><div class="wp" style="display:flex;gap:14px;align-items:flex-start">
-      <div style="font-size:44px;flex-shrink:0;line-height:1">💻</div>
-      <div>
-        <p style="font-weight:bold;margin-bottom:8px">Are you sure you want to shut down?</p>
-        <p style="color:#555;margin-bottom:14px;font-size:11px;line-height:1.5">This will close James's about page, which seems unnecessary.</p>
-        <div style="display:flex;gap:8px;justify-content:flex-end">
-          <button onclick="closeW('win-shutdown')" style="padding:4px 18px;background:#dfdfdf;border:1px solid #000;border-radius:4px;cursor:pointer;font-family:inherit;font-size:12px">Cancel</button>
-          <button onclick="doShutdown()" style="padding:4px 18px;background:#dfdfdf;border:2px solid #000;border-radius:4px;font-weight:bold;cursor:pointer;font-family:inherit;font-size:12px;outline:2px solid #000;outline-offset:2px">Shut Down</button>
+    <div id="dock">
+      <div class="col">
+        <div id="comp">
+          <textarea id="input" rows="1" placeholder="Ask me something..."></textarea>
+          <div class="comp-b">
+            <div id="model">
+              <button id="model-btn" onclick="toggleModel(event)">
+                <span id="model-name">James 5.0</span>
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>
+              </button>
+              <div id="model-menu"></div>
+            </div>
+            <button id="send" onclick="submit()" aria-label="Send">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+            </button>
+          </div>
         </div>
       </div>
-    </div></div>
+    </div>
+    <div id="foot">
+      This site can make mistakes. I wrote it, so the mistakes are mine.<br>
+      For anything current, check <a href="https://live.ethiqrec.com" target="_blank" rel="noopener">my live roles</a> or just email me.
+    </div>
   </div>
-
-</div><!-- /desk -->
-
-<!-- Shutdown screen -->
-<div id="sd">
-  <div style="font-size:64px;margin-bottom:12px">💻</div>
-  <p>It is now safe to turn off<br>your computer.</p>
-  <p style="margin-top:16px;font-size:12px;color:#777">(or just refresh the page)</p>
 </div>
 
 <script>
-// ─── BOOT ─────────────────────────────────────────────
-window.addEventListener('load',()=>setTimeout(startBoot,350));
+/* ═══════════════════════════════════════════════════════════
+   THE CONTENT. Everything James says lives in here.
+   Edit the threads below and the site rebuilds itself.
+   ═══════════════════════════════════════════════════════════ */
 
-const exts=[
-  'James Wilson…',
-  'Scrappiness module…',
-  'Vigo, Spain (occasional UK visits)…',
-  'Harry &amp; Charlie…',
-  'Padel.ext — back wall: unresolved…',
-  'Product instincts…',
-  'Engineering brain: not found — OK…',
-  'Welcome to Macintosh.',
+const AUD = {
+  nosy: {
+    label:'Just having a look', greet:'stranger', who:'Visitor', plan:'Free plan', av:'V',
+    sub:'I always thought having your own website was a bit much. Then somebody told me I needed to build a personal brand. So here we are. The questions are already written, you just press send.'
+  },
+  founder: {
+    label:'I am hiring engineers', greet:'hiring manager', who:'Hiring', plan:'Hiring plan', av:'H',
+    sub:'You are probably here to work out whether I am any use to you. There is a thread below on the roles I am the wrong person for, which is the fastest way to find out.'
+  },
+  engineer: {
+    label:'I am an engineer', greet:'engineer', who:'Engineer', plan:'Curious plan', av:'E',
+    sub:'No pitch. Ask me what the market is doing, or ignore all of this and email me a question instead.'
+  }
+};
+
+const MODELS = [
+  {n:'James 5.0', d:'Me now. Principal Recruiter at Ethiq, living in Spain, working London hours.'},
+  {n:'James 3.0', d:'2022. Robert Walters, newly landed in London, has just discovered startups.'},
+  {n:'James 1.0', d:'2013. Lightweight rower on a scholarship. Faster, hungrier, considerably poorer.'}
 ];
-function startBoot(){
-  document.getElementById('boot').style.display='flex';
-  let i=0;
-  const bar=document.getElementById('ext-inner');
-  const lbl=document.getElementById('ext-lbl');
-  const N=exts.length;
-  const tick=()=>{
-    if(i>=N){setTimeout(showDesk,600);return}
-    lbl.innerHTML=exts[i];
-    bar.style.width=((i+1)/N*100)+'%';
-    i++;setTimeout(tick,i<N?240:700);
-  };
-  setTimeout(tick,900);
+
+const T = [
+
+/* ───────── CORE ───────── */
+{
+  id:'start', title:'Start here', aud:['nosy','founder','engineer'],
+  q:'Who are you and what do you do?',
+  tool:{n:'sources.read', d:'linkedin, github, whatnext.dev, ethiqrec.com'},
+  b:[
+    {t:'p', lead:true, c:'I am a Principal Recruiter at Ethiq. I hire software engineers for early-stage startups, and product engineers specifically.'},
+    {t:'kv', c:[
+      ['Role','Principal Recruiter at Ethiq. One of its first hires, joined January 2026.'],
+      ['My patch','Software and product engineers. Seed through Series D.'],
+      ['Market','London mostly, plus the rest of Europe.'],
+      ['Load','Six or seven clients at a time, several roles each.'],
+      ['Based','Vigo, Spain. London hours. In the UK regularly.'],
+      ['Before this','Robert Walters, 2021 to 2025. Melbourne, then London.'],
+      ['Before that','About fifteen years in and around rowing, most of it selling things.'],
+      ['Also','I co-host a podcast for engineers and build small tools nobody asked for.'],
+      ['Email','james@ethiqrec.com']
+    ]},
+    {t:'p', c:'I am Australian, I live in Spain with my wife and two boys, and I have been recruiting since January 2021.'},
+    {t:'p', c:'Almost none of that is secret. It is just scattered across LinkedIn, GitHub, a podcast feed and a roles site. This puts it in one place. If it does not answer your question, email me and ask, which is faster than it sounds.'}
+  ],
+  next:['why-site','path','ethiq']
+},
+
+{
+  id:'why-site', title:'Why this site exists', aud:['nosy','founder','engineer'],
+  q:'Why does a recruiter have a personal website?',
+  b:[
+    {t:'p', lead:true, c:'Because I was told I needed a personal brand.'},
+    {t:'p', c:'I have always thought having your own website was a bit much. A bit extra. The sort of thing that turns up in a LinkedIn bio next to the word "storyteller".'},
+    {t:'p', c:'Then it was pointed out to me that I spend my days telling engineers to make it easy for people to work out what they are good at, and that my own answer to that question was a LinkedIn profile and a phone number. Which is a bit rich, when you say it out loud.'},
+    {t:'p', c:'So here we are. It is a chat interface because I could not face writing an About page about myself in the third person, and because I read a lot of these and thought I could probably build one. There is no model behind it. The typing is fake. Every answer is something I sat down and wrote.'},
+    {t:'p', c:'The rest of it is just information. If it does not cover your question, email me and I will answer it properly.'},
+    {t:'links', c:[
+      {l:'Email me', h:'mailto:james@ethiqrec.com'},
+      {l:'My other site, which is a Macintosh', h:'mac/'}
+    ]}
+  ],
+  next:['start','building','path']
+},
+
+{
+  id:'path', title:'How I ended up in recruitment', aud:['nosy','founder','engineer'],
+  q:'How does someone end up doing this?',
+  b:[
+    {t:'p', lead:true, c:'I was a rower first, and for a long time.'},
+    {t:'p', c:'Lightweight rower on a Victorian Institute of Sport scholarship from 2013 to 2016. Senior national teams, a few World Championships, and a very specific relationship with the Yarra river and the erg.'},
+    {t:'p', c:'Alongside and after that I sold things to people who row. Five years at <b>Wattbike</b> doing sales, marketing, outbound, inbound, building the bikes, servicing them and running the exhibition stands. It helped that I was competing at the time, so I actually used the kit I was selling. Then four and a half years at <b>Sykes Rowing</b>, the largest rowing boat manufacturer in Australia, on key accounts and market share, running a small support team and feeding what customers told us back into the product.'},
+    {t:'p', c:'I also sat on <b>Rowing Australia’s Athletes’ Commission</b> from 2016 to 2021. That is the athletes’ voice when something needs raising with the people running the sport, mostly around wellbeing and development at the high performance end.'},
+    {t:'p', c:'Recruitment started in January 2021 at <b>Robert Walters</b> in Melbourne. Consultant, then senior, then principal. Partway through I moved to London, found startups, and worked out they were the people I actually wanted to recruit for. I joined <b>Ethiq</b> in January 2026.'},
+    {t:'q', c:'Former Australian rower, retired before anyone could make me do the Olympics.'},
+    {t:'p', c:'The through line, if you want one, is that I have spent most of my working life selling something I personally used to people who cared a great deal about it. Recruitment turned out to be a version of the same job.'}
+  ],
+  next:['cv','ethiq','life']
+},
+
+{
+  id:'ethiq', title:'Where I work', aud:['nosy','founder','engineer'],
+  q:'What is Ethiq, and what is your actual job there?',
+  b:[
+    {t:'p', lead:true, c:'Ethiq is a small specialist agency for tech, AI and data hiring.'},
+    {t:'p', c:'It was founded by <b>Fraser Tait</b> and <b>Anton Howell</b>, both with roughly fifteen years in staffing behind them. There are five or six of us. I was one of the first hires and joined in January 2026. I do not own it, and I would rather say that plainly than let a website imply otherwise.'},
+    {t:'p', c:'The firm covers data, AI, production engineering and the commercial roles around them. My patch is narrower than that: software engineers at early-stage startups, seed through Series D, with product engineers as the specialism.'},
+    {t:'p', c:'If what you need sits outside that, I will hand you to whoever here actually covers it rather than take the brief and work it out later.'},
+    {t:'links', c:[
+      {l:'ethiqrec.com', h:'https://www.ethiqrec.com'},
+      {l:'My live roles', h:'https://live.ethiqrec.com'}
+    ]}
+  ],
+  next:['how-i-work','honest','clients']
+},
+
+{
+  id:'product-engineer', title:'What I mean by product engineer', aud:['nosy','founder','engineer'],
+  q:'Everyone says "product engineer" now. What do you actually mean by it?',
+  b:[
+    {t:'p', lead:true, c:'An engineer who cares about what is being built, not just the stack it is built in.'},
+    {t:'p', c:'The practical version: they pick up a ticket, notice the ticket is solving the wrong problem, go and ask an actual customer, and come back with something smaller that works. The stack is a detail. The instinct is the job.'},
+    {t:'h', c:'What that looks like on a CV'},
+    {t:'ul', c:[
+      '<b>They ship.</b> Repeatedly, in public, and they can tell you what happened after it shipped.',
+      '<b>They talk to users</b> without being asked twice, and without a product manager standing behind them.',
+      '<b>They have an opinion about the product</b> and will hold it in a room with the founder.',
+      '<b>They can lean backend or frontend.</b> The label is about judgement, not about where they sit in the codebase.'
+    ]},
+    {t:'h', c:'The AI version'},
+    {t:'p', c:'The newer variant is the AI product engineer. Same instinct, applied to systems where the output is probabilistic and the evaluation is the genuinely hard part. There are far fewer of them than LinkedIn suggests, and the gap between someone who has shipped an agent to real users and someone who has read about it is enormous.'},
+    {t:'q', c:'If I were an engineer, which I am not and probably should not be, this is what I would want to be.'},
+    {t:'art', title:'What I actually look for', sub:'Six things, in rough order of weight', b:[
+      {t:'kv', c:[
+        ['Shipped surface','Something real, used by real people, that they can talk about for ten minutes without notes'],
+        ['Scope taken','Did they widen the problem or narrow the ticket'],
+        ['Company shape','Small teams. A shipping track, not a promotion track.'],
+        ['Direction of travel','What they moved towards, and whether they can say why'],
+        ['Written trace','Repos, posts, docs, anything where you can watch them think'],
+        ['The awkward one','Would they be difficult to work with. It matters more than anyone admits.']
+      ]}
+    ]}
+  ],
+  next:['hard-roles','how-i-work','start']
+},
+
+{
+  id:'cv', title:'My actual CV', aud:['nosy','founder','engineer'],
+  q:'Can I just see the CV?',
+  tool:{n:'profile.read', d:'work history'},
+  b:[
+    {t:'p', lead:true, c:'In order, most recent first.'},
+    {t:'kv', c:[
+      ['Ethiq','<b>Principal Recruiter.</b> Jan 2026 to now. London and Europe. Software engineers at early-stage startups, product engineers specifically. One of the first hires.'],
+      ['Robert Walters','<b>Principal Consultant.</b> May 2022 to Dec 2025. Started Melbourne, relocated to London partway through.'],
+      ['Robert Walters','<b>Senior Consultant.</b> Nov 2021 to May 2022, Melbourne.'],
+      ['Robert Walters','<b>Recruitment Consultant.</b> Jan 2021 to Oct 2021, Melbourne.'],
+      ['Rowing Australia','<b>Athletes’ Commission.</b> 2016 to 2021. Athlete wellbeing and development at the high performance end.'],
+      ['Sykes Rowing','<b>Business Development and Account Management.</b> 2016 to 2020. Key accounts and market share at Australia’s largest rowing boat manufacturer.'],
+      ['Victorian Institute of Sport','<b>Rower.</b> 2013 to 2016. Lightweight, on scholarship. Senior national teams and World Championships.'],
+      ['Wattbike','<b>Sales and Marketing.</b> 2011 to 2015. Sales, marketing, building the bikes, servicing them, running the stands.'],
+      ['RMIT University','Bachelor of Business, Marketing.'],
+      ['The Geelong College','School.']
+    ]},
+    {t:'p', c:'Five and a half years in recruitment. About a decade of selling things before that, all of it in a sport I was competing in at the same time.'},
+    {t:'links', c:[
+      {l:'LinkedIn', h:'https://www.linkedin.com/in/james-wilson-92170656/'},
+      {l:'GitHub', h:'https://github.com/JamesWilsonLondon'}
+    ]}
+  ],
+  next:['path','ethiq','contact']
+},
+
+{
+  id:'honest', title:'What I am not good at', aud:['nosy','founder','engineer'],
+  q:'What are you not the right person for?',
+  b:[
+    {t:'p', lead:true, c:'Worth knowing before you spend an afternoon on me.'},
+    {t:'ul', c:[
+      '<b>I am not an engineer.</b> I can talk about your stack at the level of somebody who reads a lot and builds toys at the weekend. I cannot assess your architecture and I am not going to pretend I can.',
+      '<b>My patch is narrow.</b> Software and product engineers, seed to Series D. Data leadership, infrastructure at scale and enterprise hiring sit with other people at Ethiq.',
+      '<b>Volume is not the model.</b> There are five or six of us. Fifteen engineers this quarter across three countries is a different kind of firm.',
+      '<b>Geography.</b> London and Europe. I am not going to be useful to you in San Francisco.',
+      '<b>I live in Spain.</b> Which changes nothing for calls, and occasionally matters if you want somebody in the room at short notice.'
+    ]},
+    {t:'p', c:'None of that is false modesty. It is the list I would give you on a first call anyway, and saying it here saves us both a fortnight.'}
+  ],
+  next:['ethiq','how-i-work','contact']
+},
+
+{
+  id:'podcast', title:'The podcast', aud:['nosy','engineer','founder'],
+  q:'Tell me about the podcast.',
+  tool:{n:'feed.fetch', d:'whatnext.dev'},
+  b:[
+    {t:'p', lead:true, c:'It is called I’m a Software Engineer, What Next? We are on season two.'},
+    {t:'p', c:'I make it with <b>Matthew Sinclair</b>, who is an actual engineer, a VP of Engineering and a veteran. Matt brings the engineering leadership seat. I bring the recruiter seat, which is a polite way of saying I bring the market gossip.'},
+    {t:'p', c:'Episodes have covered things like <em>Startups, setbacks, and landing at Anthropic</em>, <em>You are not your title: rethinking career progression in tech</em>, <em>Do you really need to do a coding interview?</em> and <em>When to jump ship, or stay put, as an engineer</em>.'},
+    {t:'p', c:'The current format is about twenty minutes, two of us, usually opened with a hypothesis. Something like "I have got this hypothesis that engineering management is a one way door", and then we spend the episode taking it apart. Sometimes the hypothesis survives.'},
+    {t:'p', c:'It is aimed at mid to senior engineers standing at a crossroads. It is deliberately not clickbait, which is very possibly why it is not enormous yet.'},
+    {t:'links', c:[
+      {l:'whatnext.dev', h:'https://www.whatnext.dev'},
+      {l:'Spotify', h:'https://open.spotify.com/show/0AhQb9QRJqCuBlE4u9kJNe'},
+      {l:'Apple Podcasts', h:'https://podcasts.apple.com/gb/podcast/im-a-software-engineer-what-next/id1796203069'},
+      {l:'YouTube', h:'https://www.youtube.com/@WhatNextDev'}
+    ]}
+  ],
+  next:['next','building','start']
+},
+
+{
+  id:'building', title:'The things I build', aud:['nosy','engineer'],
+  q:'You build things? You are a recruiter.',
+  b:[
+    {t:'p', lead:true, c:'Badly, but continuously.'},
+    {t:'p', c:'Since I started placing engineers I have had a problem, which is that I find the work genuinely interesting. So I build things. Mostly recruiting tools, mostly React and TypeScript, mostly deployed to Vercel, mostly with an AI sitting next to me doing the parts I cannot do.'},
+    {t:'p', c:'The code quality varies enormously and I have no real idea by how much. It usually works, and there is usually a maximum of one user, so the blast radius stays small.'},
+    {t:'kv', c:[
+      ['about-me','A working Macintosh System 7 desktop in one HTML file. Windows, menu bar, trash, the lot.'],
+      ['Real-or-Nonesense-Startup','Is this a real startup or did somebody make it up. Harder than it sounds.'],
+      ['Hedgehog-play','Some hedgehog facts. There is no deeper reason.'],
+      ['This site','Also one file. The typing is fake and the model is not real.']
+    ]},
+    {t:'h', c:'What I actually use day to day'},
+    {t:'kv', c:[
+      ['Writing','Wispr Flow, because talking is faster than typing'],
+      ['Comms','Google Workspace, Slack, WhatsApp'],
+      ['Sourcing','LinkedIn Recruiter, plus a pile of things bolted onto it'],
+      ['CRM','Atlas'],
+      ['AI','Claude, mostly. Some Gemini.'],
+      ['Hardware','A MacBook and an iPhone with too many notifications']
+    ]},
+    {t:'links', c:[
+      {l:'GitHub', h:'https://github.com/JamesWilsonLondon'},
+      {l:'The Macintosh one', h:'mac/'}
+    ]}
+  ],
+  next:['why-site','podcast','life']
+},
+
+{
+  id:'life', title:'Vigo, two boys, and padel', aud:['nosy','engineer','founder'],
+  q:'What are you like when you are not working?',
+  b:[
+    {t:'p', lead:true, c:'Reasonably tired.'},
+    {t:'kv', c:[
+      ['Origin','Australian. Geelong, then Melbourne.'],
+      ['Current','Vigo, Spain. A fair bit of time in the UK too.'],
+      ['Dependants','Two boys, Harry and Charlie. Chaotic. Brilliant. Both at once.'],
+      ['Co-founder','My wife. More organised than me, which is the entire system.'],
+      ['Former sport','Rowing, seriously, for about a decade. I now realise it was mostly training for getting up early with small children.'],
+      ['Current sport','Padel. Recent convert. Still working out what to do with the back wall.'],
+      ['Local cuisine','Vigo has unreasonably good seafood. I still cannot walk past a good pizza.'],
+      ['Missing','Melbourne coffee. Genuinely, not as a joke.']
+    ]},
+    {t:'p', c:'The Spain part is not a lifestyle statement. The calls are still London hours and the laptop is still open at seven in the evening. It is just warmer.'}
+  ],
+  next:['path','building','contact']
+},
+
+/* ───────── HIRING ───────── */
+{
+  id:'how-i-work', title:'How I run a search', aud:['founder','nosy'],
+  q:'If we work with you, what actually happens?',
+  tool:{n:'atlas.pipeline', d:'reading your last three hires'},
+  b:[
+    {t:'p', lead:true, c:'The first week goes on working out who you actually hire, which is rarely who the job description says you hire.'},
+    {t:'ul', c:[
+      '<b>I reverse engineer the real bar.</b> Your existing team, your past interview feedback, the people you rejected and why. That is where the actual profile lives.',
+      '<b>I confirm it before spending your time.</b> One page back to you with the profile as I understand it, and you tell me where I am wrong. I usually am, in one specific place, and that place matters.',
+      '<b>Then I source.</b> By hand, with tooling behind it. I read the profiles rather than filtering on titles.',
+      '<b>I screen against reality.</b> Who is already in process elsewhere, who has been contacted too recently, who is not realistically moving for your band. Most lists quietly skip this step.',
+      '<b>You get a short ranked list with reasons.</b> Not forty CVs. Usually six to twelve, each with a line on why they are on it and, more usefully, what the risk is.'
+    ]},
+    {t:'p', c:'The whole thing is built to avoid the standard agency failure mode, which is volume dressed up as effort.'},
+    {t:'art', title:'What is on each shortlist', sub:'Per candidate, one screen, no filler', b:[
+      {t:'kv', c:[
+        ['The case','Two or three lines on why they clear your bar specifically'],
+        ['The risk','The reason this might not work. Always included.'],
+        ['Evidence','What they shipped, where, and how you can verify it'],
+        ['Motivation','Why they would move, in their words rather than mine'],
+        ['Comp reality','What it will actually take, before anyone gets attached']
+      ]}
+    ]}
+  ],
+  next:['why-me','honest','hard-roles']
+},
+
+{
+  id:'why-me', title:'Why me and not a bigger firm', aud:['founder'],
+  q:'Why would I use you over a bigger firm?',
+  b:[
+    {t:'p', lead:true, c:'Sometimes you should not, and I will say so on the first call.'},
+    {t:'p', c:'If you need fifteen engineers this quarter across three countries, you want a firm with fifty people in it. There are five or six of us. That maths does not work, and pretending otherwise costs you a quarter.'},
+    {t:'p', c:'What does work is the other shape. A handful of roles where the profile is specific, the bar is high and getting it wrong is expensive. I carry six or seven clients at a time deliberately, because that is the number where I can still hold every pipeline in my head.'},
+    {t:'ul', c:[
+      'The person doing the searching is the person on your call. Your role does not get handed down a chain.',
+      'You get told when the brief is the problem. That conversation is uncomfortable and it saves months.',
+      'I will not tell you the market is impossible in order to renegotiate a fee. I might tell you the market is impossible. It will just be true.',
+      'If the role is outside my patch I pass it to whoever at Ethiq covers it, or tell you to go elsewhere.'
+    ]}
+  ],
+  next:['how-i-work','honest','clients']
+},
+
+{
+  id:'hard-roles', title:'What the market is doing', aud:['founder','engineer'],
+  q:'What is the London engineering market actually doing right now?',
+  tool:{n:'market.read', d:'offers, benchmarks, and some scar tissue'},
+  b:[
+    {t:'p', lead:true, c:'Two markets, one job title. That is the short version, and it is also the title of our last Market Note.'},
+    {t:'ul', c:[
+      '<b>General engineering pay has barely moved.</b> Roughly flat over the last six months on the benchmark data. Not a crash, a freeze.',
+      '<b>Anything genuinely AI shaped has detached.</b> The frontier labs expanding around King’s Cross reset the top of the range, and everyone underneath is now benchmarking against a number they cannot pay.',
+      '<b>Clearing prices I have actually seen.</b> Senior lands around £120k to £155k, outliers to £175k. Staff around £135k to £170k, outliers to £200k.',
+      '<b>Five days in the office is a real filter, not a preference.</b> It is fillable. It is a smaller pool and a longer search, and it should be priced that way rather than argued about.'
+    ]},
+    {t:'p', c:'None of that is a forecast. It is what offers have actually cleared at, cross checked against the public benchmarks. Anyone giving you a forecast is guessing with more confidence than the data supports.'},
+    {t:'links', c:[
+      {l:'Ethiq Market Notes', h:'https://live.ethiqrec.com'}
+    ]}
+  ],
+  next:['worth','how-i-work','whats-out-there']
+},
+
+{
+  id:'clients', title:'Who I have worked with', aud:['founder','nosy'],
+  q:'Who have you actually recruited for?',
+  b:[
+    {t:'p', lead:true, c:'A rotating set of six or seven at a time.'},
+    {t:'p', c:'Recent and current ones include Attio, Plain, Junction, Capsa, Cosine, ClaimSorted, Edra and Linklaters. Mostly London, mostly seed through Series D, mostly product and AI engineering roles.'},
+    {t:'p', c:'The genuinely live ones are on my roles site, which is more current than this page will ever be. It exists because I got tired of job adverts that say nothing, so each role page is closer to what I would tell you over a coffee.'},
+    {t:'links', c:[
+      {l:'My live roles', h:'https://live.ethiqrec.com'},
+      {l:'Ethiq', h:'https://www.ethiqrec.com'}
+    ]}
+  ],
+  next:['how-i-work','why-me','contact']
+},
+
+/* ───────── ENGINEERS ───────── */
+{
+  id:'outreach', title:'What happens if I contact you', aud:['engineer'],
+  q:'If you message me, what should I expect?',
+  b:[
+    {t:'p', lead:true, c:'One message, and it will be about you specifically.'},
+    {t:'ul', c:[
+      '<b>I read the profile first.</b> All of it, including the part where you have written that you are not looking.',
+      '<b>The comp band is in the first message.</b> Hiding it wastes both of our afternoons.',
+      '<b>No reply is a no.</b> I record it as one. It is not a no I retry at you in six weeks.',
+      '<b>No role, no problem.</b> I have a lot of conversations that never end in a job, and I am fine with that.'
+    ]},
+    {t:'p', c:'If I get that wrong, reply and tell me. Being told is considerably more useful than being ignored politely.'}
+  ],
+  next:['whats-out-there','worth','next']
+},
+
+{
+  id:'whats-out-there', title:'What is actually out there', aud:['engineer'],
+  q:'What is actually out there for a senior engineer right now?',
+  tool:{n:'roles.list', d:'live.ethiqrec.com'},
+  b:[
+    {t:'p', lead:true, c:'More than the timeline suggests, and less than 2021. Boring, but accurate.'},
+    {t:'ul', c:[
+      'Product engineering at Series A and B startups is the healthiest part of the market. Small teams, real ownership, comp that is competitive without being silly.',
+      'AI shaped roles are hiring hard and paying above everything else, but the bar is genuinely different. Shipping an agent to real users beats reading about it by a distance.',
+      'Large generalist backend hiring is the quiet part. Flat pay, longer processes, more rounds.',
+      'Office policy is the biggest hidden filter in any search. Work out where you actually stand before you start, because it decides which half of the market you are looking at.'
+    ]},
+    {t:'p', c:'The roles I am personally working are listed publicly, with the context rather than the advert. You can also just email me without going through any of it.'},
+    {t:'links', c:[
+      {l:'My live roles', h:'https://live.ethiqrec.com'},
+      {l:'Email me', h:'mailto:james@ethiqrec.com'}
+    ]}
+  ],
+  next:['worth','outreach','product-engineer']
+},
+
+{
+  id:'worth', title:'Am I underpaid?', aud:['engineer'],
+  q:'Am I underpaid?',
+  b:[
+    {t:'p', lead:true, c:'Possibly. Here is the honest version rather than the recruiter version.'},
+    {t:'kv', c:[
+      ['Strong 2 to 4 years','£95k to £120k, stretching to £140k for the standouts'],
+      ['Senior','£120k to £155k, outliers to £175k'],
+      ['Staff','£135k to £170k, outliers to £200k'],
+      ['AI shaped roles','Detached from all of the above, and still moving']
+    ]},
+    {t:'p', c:'Two caveats, and they matter. These are clearing prices from actual offers over the last year, not a survey. And the ninetieth percentile has pulled away from the median, so if you are benchmarking against a number you saw on a jobs board, you are very likely benchmarking against an outlier.'},
+    {t:'p', c:'Read the Market Notes rather than taking a recruiter’s word for it, including mine. They show the working.'},
+    {t:'links', c:[
+      {l:'Market Notes', h:'https://live.ethiqrec.com'}
+    ]}
+  ],
+  next:['hard-roles','whats-out-there','next']
+},
+
+{
+  id:'next', title:'I do not know what I want next', aud:['engineer','nosy'],
+  q:'I am a software engineer and I do not know what I want next. Any use?',
+  b:[
+    {t:'p', lead:true, c:'That question is literally the name of the podcast, so I have thought about it more than is healthy.'},
+    {t:'ul', c:[
+      '<b>Management is a career change, not a promotion.</b> It is close to a one way door, and the door is getting heavier as the tooling underneath it improves.',
+      '<b>Senior is not a destination.</b> It is the point where the interesting choices start, and where most people stop choosing.',
+      '<b>The people who move well can say what they want to be doing in two years.</b> Almost nobody can. If you can, you are already ahead of the queue.',
+      '<b>Optimise for the feedback loop.</b> The job that teaches you fastest usually wins over five years, even when it loses on paper today.'
+    ]},
+    {t:'p', c:'No pitch attached. I have these conversations regularly with people I have no role for, and I am happy to have one with you.'},
+    {t:'links', c:[
+      {l:'The podcast', h:'https://www.whatnext.dev'},
+      {l:'Email me', h:'mailto:james@ethiqrec.com'}
+    ]}
+  ],
+  next:['podcast','worth','contact']
+},
+
+/* ───────── CLOSE ───────── */
+{
+  id:'contact', title:'How to reach me', aud:['nosy','founder','engineer'],
+  q:'How do I actually get hold of you?',
+  b:[
+    {t:'p', lead:true, c:'Email is best. I answer it.'},
+    {t:'kv', c:[
+      ['Email','james@ethiqrec.com'],
+      ['LinkedIn','/in/james-wilson-92170656'],
+      ['GitHub','/JamesWilsonLondon'],
+      ['Live roles','live.ethiqrec.com'],
+      ['Podcast','whatnext.dev'],
+      ['Firm','ethiqrec.com']
+    ]},
+    {t:'ul', c:[
+      'If you are hiring product engineers at an early-stage startup, that is the easy one.',
+      'If you are an engineer wondering what is out there, also easy, and there is no catch.',
+      'If you are hiring something outside my patch, say so and I will point you at the right person at Ethiq.',
+      'If you are a recruiter with a job for me, I am very happy where I am.'
+    ]},
+    {t:'links', c:[
+      {l:'Send me an email', h:'mailto:james@ethiqrec.com'},
+      {l:'LinkedIn', h:'https://www.linkedin.com/in/james-wilson-92170656/'},
+      {l:'GitHub', h:'https://github.com/JamesWilsonLondon'}
+    ]}
+  ],
+  next:['start','how-i-work','whats-out-there']
 }
-function showDesk(){
-  document.getElementById('boot').style.display='none';
-  document.getElementById('desk').style.display='block';
-  document.getElementById('mbar').style.display='flex';
-  tickClock();
-  // Center shutdown dialog
-  const sd=document.getElementById('win-shutdown');
-  sd.style.left=Math.max(0,(window.innerWidth-330)/2)+'px';
-  sd.style.top=Math.max(0,(window.innerHeight-200)/2)+'px';
-  setTimeout(()=>openW('about'),300);
+];
+
+/* ═══════════════════════════════════════════════════════════
+   THE ENGINE
+   ═══════════════════════════════════════════════════════════ */
+
+const $  = s => document.querySelector(s);
+const byId = id => T.find(t => t.id === id);
+const state = { aud:'nosy', model:0, threadId:null, typers:[], instant:false, seen:new Set(), busy:false };
+
+const el = (tag, cls, html) => { const n=document.createElement(tag); if(cls)n.className=cls; if(html!=null)n.innerHTML=html; return n; };
+
+/* The mark. Six rounded capsules rotated in 30 degree steps, which reads as a
+   twelve spoke burst. Two are trimmed slightly so it is not perfectly uniform.
+   Colour comes from --mark in :root. */
+const SPOKES = [[0,94],[30,88],[60,94],[90,90],[120,94],[150,88]];
+function markSVG(size){
+  let r = '';
+  for(const [deg,h] of SPOKES){
+    r += '<rect x="-4.6" y="'+(-h/2)+'" width="9.2" height="'+h+'" rx="4.6" transform="rotate('+deg+')"/>';
+  }
+  return '<svg width="'+size+'" height="'+size+'" viewBox="-50 -50 100 100" aria-hidden="true">'+
+         '<g fill="var(--mark)">'+r+'</g></svg>';
+}
+const mark      = s => markSVG(s);
+const markSmall = s => markSVG(s);
+
+/* ── AUDIENCE ── */
+function threadsFor(a){ return T.filter(t => t.aud.includes(a)); }
+
+function setAud(a, silent){
+  state.aud = a;
+  const A = AUD[a];
+  $('#who-av').textContent = A.av;
+  $('#who-n').textContent  = A.who;
+  $('#who-p').textContent  = A.plan;
+  renderSidebar();
+  if(!silent) renderHome();
+  try{ localStorage.setItem('jw-aud', a); }catch(e){}
 }
 
-// ─── WINDOWS ──────────────────────────────────────────
-let Z=100;
-function openW(k){
-  const el=document.getElementById('win-'+k);
-  if(!el)return;
-  el.classList.add('open');
-  front(el);
-}
-function closeW(id){
-  const el=document.getElementById(id);
-  if(el){el.classList.remove('open','top')}
-}
-function zoom(id){
-  const el=document.getElementById(id);if(!el)return;
-  if(el.dataset.z==='1'){
-    Object.assign(el.style,{top:el.dataset.pt,left:el.dataset.pl,width:el.dataset.pw,height:el.dataset.ph});
-    el.dataset.z='';
-  }else{
-    el.dataset.pt=el.style.top;el.dataset.pl=el.style.left;
-    el.dataset.pw=el.style.width;el.dataset.ph=el.style.height;
-    Object.assign(el.style,{top:'0',left:'0',width:'100%',height:'calc(100vh - 20px)'});
-    el.dataset.z='1';
+/* ── SIDEBAR ── */
+let filterTerm = '';
+function renderSidebar(){
+  const host = $('#recents'); host.innerHTML='';
+  let list = threadsFor(state.aud);
+  if(filterTerm){
+    const f = filterTerm.toLowerCase();
+    list = T.filter(t => (t.title+' '+t.q).toLowerCase().includes(f));
   }
-}
-function front(el){
-  document.querySelectorAll('.win').forEach(w=>w.classList.remove('top'));
-  el.classList.add('top');
-  el.style.zIndex=++Z;
-}
-document.querySelectorAll('.win').forEach(w=>{
-  w.addEventListener('mousedown',function(e){
-    if(!e.target.classList.contains('tb-cl')&&!e.target.classList.contains('tb-zm'))front(this);
+  if(!list.length){ host.appendChild(el('div','rec-empty','Nothing matches. I am only one person.')); return; }
+  list.forEach(t => {
+    const b = el('button','rec'+(t.id===state.threadId?' active':''), t.title);
+    b.onclick = () => { openThread(t.id); if(window.innerWidth<=860) closeSidebar(); };
+    host.appendChild(b);
   });
-});
-
-// ─── DRAG ─────────────────────────────────────────────
-let dEl=null,dx=0,dy=0;
-function drag(e,id){
-  const t=e.target;
-  if(t.classList.contains('tb-cl')||t.classList.contains('tb-zm'))return;
-  dEl=document.getElementById(id);
-  dx=e.clientX-dEl.offsetLeft;dy=e.clientY-dEl.offsetTop;
-  front(dEl);e.preventDefault();
 }
-document.addEventListener('mousemove',e=>{
-  if(!dEl)return;
-  dEl.style.left=(e.clientX-dx)+'px';
-  dEl.style.top=Math.max(0,e.clientY-dy)+'px';
+function openSearch(){
+  const s = $('#searchbox');
+  s.style.display='block'; $('#search-btn').style.display='none'; s.focus();
+}
+$('#searchbox').addEventListener('input', e => { filterTerm = e.target.value.trim(); renderSidebar(); });
+$('#searchbox').addEventListener('keydown', e => {
+  if(e.key==='Escape'){ e.target.value=''; filterTerm=''; e.target.style.display='none'; $('#search-btn').style.display=''; renderSidebar(); }
 });
-document.addEventListener('mouseup',()=>dEl=null);
 
-// ─── MENUS ────────────────────────────────────────────
-function toggleDd(e,id,btn){
-  e.stopPropagation();
-  const dd=document.getElementById(id);
-  const wasOpen=dd.classList.contains('open');
-  closeDd();
-  if(!wasOpen){
-    const r=btn.getBoundingClientRect();
-    dd.style.left=r.left+'px';
-    dd.classList.add('open');
-    btn.classList.add('act');
+function toggleSidebar(){
+  const sb = $('#sidebar');
+  if(window.innerWidth<=860){
+    sb.classList.toggle('open');
+    $('#overlay').style.display = sb.classList.contains('open') ? 'block' : 'none';
+  } else sb.classList.toggle('collapsed');
+}
+function closeSidebar(){ $('#sidebar').classList.remove('open'); $('#overlay').style.display='none'; }
+
+/* ── HOME ── */
+function goHome(){
+  state.threadId = null;
+  document.title = 'James Wilson';
+  $('#tb-title').textContent = 'James Wilson';
+  $('#chat').style.display='none'; $('#chat').innerHTML='';
+  $('#home').style.display='';
+  renderHome(); renderSidebar();
+  $('#scroll').scrollTop = 0;
+  closeSidebar();
+}
+
+function renderHome(){
+  const A = AUD[state.aud], host = $('#home');
+  host.innerHTML='';
+  const h = el('div','hi');
+  h.innerHTML = '<span class="mark">'+mark(34)+'</span> Hello, <em>'+A.greet+'</em>';
+  host.appendChild(h);
+  host.appendChild(el('p','hi-sub', A.sub));
+
+  host.appendChild(el('div','pick-lbl','Who is asking'));
+  const p = el('div','picker');
+  Object.keys(AUD).forEach(k => {
+    const b = el('button','pick'+(k===state.aud?' on':''), AUD[k].label);
+    b.onclick = () => setAud(k);
+    p.appendChild(b);
+  });
+  host.appendChild(p);
+
+  host.appendChild(el('div','sugg-lbl','Questions I have already answered'));
+  const s = el('div','suggs');
+  threadsFor(state.aud).forEach(t => {
+    const b = el('button','sugg');
+    b.innerHTML = markSmall(13)+'<span>'+t.title+'</span><span class="arw">&rarr;</span>';
+    b.onclick = () => openThread(t.id);
+    s.appendChild(b);
+  });
+  host.appendChild(s);
+
+  prefill(threadsFor(state.aud)[0]);
+}
+
+/* ── BLOCK RENDERING ── */
+function makeBlock(b){
+  if(b.t==='p'){ return el('p','blk'+(b.lead?' lead':''), b.c); }
+  if(b.t==='h'){ return el('h4','blk', b.c); }
+  if(b.t==='q'){ return el('blockquote','blk', b.c); }
+  if(b.t==='ul'){
+    const u = el('ul','blk');
+    b.c.forEach(i => u.appendChild(el('li',null,i)));
+    return u;
+  }
+  if(b.t==='kv'){
+    const wrap = el('div','blk');
+    const tb = el('table','kv');
+    b.c.forEach(([k,v]) => {
+      const tr = el('tr');
+      tr.appendChild(el('td',null,k));
+      tr.appendChild(el('td',null,v));
+      tb.appendChild(tr);
+    });
+    wrap.appendChild(tb); return wrap;
+  }
+  if(b.t==='links'){
+    const w = el('div','blk links');
+    b.c.forEach(l => {
+      const a = el('a','lnk', l.l+' <span style="opacity:.6">&rarr;</span>');
+      a.href=l.h; if(!l.h.startsWith('mailto')){ a.target='_blank'; a.rel='noopener'; }
+      w.appendChild(a);
+    });
+    return w;
+  }
+  if(b.t==='art'){
+    const w = el('div','blk art');
+    const hd = el('button','art-hd');
+    hd.innerHTML = '<span class="art-ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7z"/><path d="M14 2v5h5M9 13h6M9 17h4"/></svg></span>'+
+      '<span class="art-t"><span class="art-n">'+b.title+'</span><span class="art-s">'+b.sub+'</span></span>'+
+      '<span class="art-cv"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg></span>';
+    const bd = el('div','art-bd');
+    b.b.forEach(x => bd.appendChild(makeBlock(x)));
+    hd.onclick = () => w.classList.toggle('open');
+    w.appendChild(hd); w.appendChild(bd);
+    return w;
+  }
+  return el('div','blk','');
+}
+
+/* ── TYPEWRITER ── */
+function typeEl(node, speed, done){
+  if(state.instant){ done&&done(); return; }
+  const items=[];
+  (function walk(n){
+    Array.prototype.forEach.call(n.childNodes, c => {
+      if(c.nodeType===3){ const t=c.nodeValue; if(t){ items.push({node:c, parts:t.match(/\s+|\S+/g)||[]}); c.nodeValue=''; } }
+      else if(c.nodeType===1) walk(c);
+    });
+  })(node);
+  if(!items.length){ done&&done(); return; }
+
+  const cur = el('span','cursor'); node.appendChild(cur);
+  let i=0, j=0;
+  const handle = { finish };
+  state.typers.push(handle);
+  const timer = setInterval(step, speed);
+
+  function finish(){
+    clearInterval(timer);
+    items.forEach(o => o.node.nodeValue = o.parts.join(''));
+    if(cur.parentNode) cur.remove();
+    state.typers = state.typers.filter(x => x!==handle);
+    done && done();
+  }
+  function step(){
+    let n = 2;
+    while(n-- > 0){
+      if(i >= items.length){ finish(); return; }
+      const it = items[i];
+      if(j >= it.parts.length){ i++; j=0; continue; }
+      it.node.nodeValue += it.parts[j++];
+    }
+    autoscroll();
   }
 }
-function closeDd(){
-  document.querySelectorAll('.dd').forEach(d=>d.classList.remove('open'));
-  document.querySelectorAll('.mb-a,.mb-i').forEach(b=>b.classList.remove('act'));
-}
-document.addEventListener('click',()=>closeDd());
-
-// ─── ICONS ────────────────────────────────────────────
-function selIco(el){
-  document.querySelectorAll('.ico').forEach(i=>i.classList.remove('sel'));
-  el.classList.add('sel');
-}
-function deskClick(e){
-  if(!e.target.closest('.ico'))document.querySelectorAll('.ico').forEach(i=>i.classList.remove('sel'));
+function skipAll(){
+  if(!state.typers.length && !state.busy) return;
+  state.instant = true;
+  state.typers.slice().forEach(h => h.finish());
 }
 
-// ─── SHUTDOWN / RESTART ───────────────────────────────
-function doShutdown(){
-  document.querySelectorAll('.win').forEach(w=>w.classList.remove('open'));
-  document.getElementById('sd').style.display='flex';
+/* ── SCROLL ── */
+function autoscroll(force){
+  const s = $('#scroll');
+  const near = s.scrollHeight - s.scrollTop - s.clientHeight < 220;
+  if(near || force) s.scrollTop = s.scrollHeight;
 }
-function doRestart(){location.reload()}
 
-// ─── CLOCK ────────────────────────────────────────────
-function tickClock(){
-  const n=new Date();
-  let h=n.getHours(),m=n.getMinutes();
-  const ap=h>=12?'PM':'AM';h=h%12||12;
-  document.getElementById('mb-clk').textContent=`${h}:${String(m).padStart(2,'0')} ${ap}`;
-  setTimeout(tickClock,15000);
+/* ── ANSWERING ── */
+function playBlocks(host, blocks, i, cb){
+  if(i >= blocks.length){ cb && cb(); return; }
+  const b = blocks[i];
+  const node = makeBlock(b);
+  host.appendChild(node);
+  autoscroll();
+  const textual = ['p','h','q','ul'].includes(b.t);
+  if(textual) typeEl(node, 17, () => playBlocks(host, blocks, i+1, cb));
+  else setTimeout(() => playBlocks(host, blocks, i+1, cb), state.instant ? 0 : 170);
 }
+
+function answer(t){
+  state.instant = false; state.busy = true;
+  $('#send').disabled = true;
+
+  const chat = $('#chat');
+  const turn = el('div','turn');
+  const urow = el('div','u-row'); urow.appendChild(el('div','u-msg', t.q));
+  turn.appendChild(urow);
+
+  const arow = el('div','a-row');
+  arow.appendChild(el('div','a-mark', mark(21)));
+  const body = el('div','a-body');
+  arow.appendChild(body); turn.appendChild(arow);
+  chat.appendChild(turn);
+  autoscroll(true);
+
+  const run = () => playBlocks(body, t.b, 0, () => finishAnswer(body, t));
+
+  if(t.tool){
+    const chip = el('div','blk tool');
+    chip.innerHTML = '<span class="dot"></span><span class="nm">'+t.tool.n+'</span><span class="dt">'+t.tool.d+'</span>';
+    body.appendChild(chip);
+    setTimeout(() => { chip.classList.add('done'); run(); }, state.instant ? 0 : 780);
+  } else run();
+}
+
+function finishAnswer(body, t){
+  state.busy = false; $('#send').disabled = false;
+  state.seen.add(t.id);
+
+  const f = el('div','follow');
+  f.appendChild(el('div','follow-l','Keep going'));
+  (t.next||[]).forEach(id => {
+    const n = byId(id); if(!n) return;
+    const c = el('button','fchip', n.title);
+    c.onclick = () => openThread(id);
+    f.appendChild(c);
+  });
+  body.appendChild(f);
+  prefill(nextUp(t));
+  autoscroll();
+}
+
+function nextUp(t){
+  const pool = threadsFor(state.aud);
+  const unseen = pool.find(x => !state.seen.has(x.id) && x.id !== t.id);
+  if(unseen) return unseen;
+  const fromNext = (t.next||[]).map(byId).find(Boolean);
+  return fromNext || pool[0];
+}
+
+function prefill(t){
+  if(!t) return;
+  const inp = $('#input');
+  inp.value = t.q;
+  inp.dataset.thread = t.id;
+  sizeInput();
+}
+
+function openThread(id, opts){
+  const t = byId(id); if(!t) return;
+  skipAll();
+  state.threadId = id;
+  document.title = t.title + ' | James Wilson';
+  $('#tb-title').textContent = t.title;
+  $('#home').style.display = 'none';
+  const chat = $('#chat');
+  chat.style.display = '';
+  if(!opts || !opts.append) chat.innerHTML = '';
+  renderSidebar();
+  answer(t);
+  closeSidebar();
+}
+
+/* ── FREE TEXT ── */
+const STOP = new Set(['the','a','an','is','are','was','and','or','to','of','in','on','for','he','him','his','james','me','i','you','what','how','why','do','does','about','it','that','this','with','at','be','can','any','actually','really','tell','ask']);
+function match(q){
+  const words = q.toLowerCase().replace(/[^a-z0-9\s]/g,' ').split(/\s+/).filter(w => w.length>2 && !STOP.has(w));
+  if(!words.length) return null;
+  let best=null, bestScore=0;
+  T.forEach(t => {
+    const hay = (t.title+' '+t.q+' '+t.id+' '+JSON.stringify(t.b)).toLowerCase();
+    let s=0; words.forEach(w => { if(hay.includes(w)) s += (t.title+' '+t.q).toLowerCase().includes(w) ? 3 : 1; });
+    if(s>bestScore){ bestScore=s; best=t; }
+  });
+  return bestScore >= 3 ? best : null;
+}
+
+function askCustom(text){
+  const hit = match(text);
+  if(hit){ openThread(hit.id); return; }
+
+  state.instant=false; state.busy=true; $('#send').disabled=true;
+  $('#home').style.display='none';
+  const chat = $('#chat'); chat.style.display='';
+  const turn = el('div','turn');
+  const urow = el('div','u-row'); urow.appendChild(el('div','u-msg', text));
+  turn.appendChild(urow);
+  const arow = el('div','a-row');
+  arow.appendChild(el('div','a-mark', mark(21)));
+  const body = el('div','a-body'); arow.appendChild(body); turn.appendChild(arow);
+  chat.appendChild(turn); autoscroll(true);
+
+  const blocks = [
+    {t:'p', lead:true, c:'I have not written that one.'},
+    {t:'p', c:'This is not a model, it is me with a text editor and a limited amount of free time. So the coverage has gaps, and you have just found one.'},
+    {t:'p', c:'Ask me directly at <a href="mailto:james@ethiqrec.com">james@ethiqrec.com</a>, which is faster than it sounds. Or try one of the ones I did get around to writing.'}
+  ];
+  playBlocks(body, blocks, 0, () => {
+    state.busy=false; $('#send').disabled=false;
+    const f = el('div','follow');
+    f.appendChild(el('div','follow-l','Try one of these'));
+    threadsFor(state.aud).slice(0,4).forEach(t => {
+      const c = el('button','fchip', t.title);
+      c.onclick = () => openThread(t.id);
+      f.appendChild(c);
+    });
+    body.appendChild(f);
+    prefill(threadsFor(state.aud)[0]);
+    autoscroll();
+  });
+}
+
+function submit(){
+  if(state.busy) { skipAll(); return; }
+  const inp = $('#input');
+  const text = inp.value.trim();
+  if(!text) return;
+  const pre = inp.dataset.thread;
+  const t = pre && byId(pre);
+  inp.value=''; delete inp.dataset.thread; sizeInput();
+  if(t && text === t.q) openThread(t.id, {append: !!state.threadId});
+  else askCustom(text);
+}
+
+/* ── INPUT ── */
+function sizeInput(){
+  const i = $('#input');
+  i.style.height='auto';
+  i.style.height = Math.min(i.scrollHeight, 150)+'px';
+}
+$('#input').addEventListener('input', () => { delete $('#input').dataset.thread; sizeInput(); });
+$('#input').addEventListener('keydown', e => {
+  if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); submit(); }
+});
+
+/* ── MODEL MENU ── */
+function renderModel(){
+  const m = $('#model-menu'); m.innerHTML='';
+  MODELS.forEach((mod,i) => {
+    const b = el('button','mi'+(i===state.model?' on':''));
+    b.innerHTML = '<div class="mi-n">'+mod.n+'</div><div class="mi-d">'+mod.d+'</div>';
+    b.onclick = () => { state.model=i; $('#model-name').textContent=mod.n; m.classList.remove('open'); renderModel(); };
+    m.appendChild(b);
+  });
+}
+function toggleModel(e){ e.stopPropagation(); $('#model-menu').classList.toggle('open'); }
+document.addEventListener('click', () => $('#model-menu').classList.remove('open'));
+
+/* ── THEME ── */
+const SUN = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
+const MOON = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>';
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme', t);
+  $('#theme').innerHTML = t==='light' ? MOON : SUN;
+  try{ localStorage.setItem('jw-theme', t); }catch(e){}
+}
+function toggleTheme(){
+  applyTheme(document.documentElement.getAttribute('data-theme')==='light' ? 'dark' : 'light');
+}
+
+/* ── PLAYBACK ── */
+function playback(){
+  const seq = ['start','why-site','path'];
+  let i = 0;
+  const step = () => {
+    if(i >= seq.length) return;
+    const t = byId(seq[i++]);
+    prefill(t);
+    setTimeout(() => {
+      openThread(t.id, {append: i>1});
+      const wait = setInterval(() => {
+        if(!state.busy){ clearInterval(wait); setTimeout(step, 1700); }
+      }, 300);
+    }, 900);
+  };
+  setTimeout(step, 700);
+}
+
+/* ── BOOT ── */
+(function init(){
+  $('#brand-mark').innerHTML = markSmall(15);
+  const sysLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+  let th = sysLight ? 'light' : 'dark';
+  try{ th = localStorage.getItem('jw-theme') || th; }catch(e){}
+  applyTheme(th);
+  renderModel();
+
+  const params = new URLSearchParams(location.search);
+  let a = params.get('as');
+  if(!a){ try{ a = localStorage.getItem('jw-aud'); }catch(e){} }
+  setAud(AUD[a] ? a : 'nosy', true);
+  renderHome();
+
+  document.getElementById('scroll').addEventListener('click', e => {
+    if(e.target.closest('button, a')) return;
+    skipAll();
+  });
+  document.addEventListener('keydown', e => {
+    if(e.key==='Escape'){ skipAll(); closeSidebar(); }
+  });
+
+  const deep = params.get('t');
+  if(deep && byId(deep)) { openThread(deep); }
+  else if(params.get('mode')==='playback') playback();
+})();
 </script>
 </body>
 </html>
